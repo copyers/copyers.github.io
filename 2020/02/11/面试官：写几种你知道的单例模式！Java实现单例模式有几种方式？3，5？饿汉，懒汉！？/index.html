@@ -23,7 +23,7 @@
   <meta name="description" content="本文详细阐述了单例模式的最全的八种写法并比较其存在的优劣">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？">
-<meta property="og:url" content="https://exclusiver.gitee.io/blog/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/index.html">
+<meta property="og:url" content="https://exclusiver.gitee.io/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/index.html">
 <meta property="og:site_name" content="补 阙 阁">
 <meta property="og:description" content="本文详细阐述了单例模式的最全的八种写法并比较其存在的优劣">
 <meta property="og:locale" content="zh_CN">
@@ -33,7 +33,7 @@
 <meta property="article:tag" content="Java,Design Pattern">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://exclusiver.gitee.io/blog/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/">
+<link rel="canonical" href="https://exclusiver.gitee.io/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/">
 
 
 <script id="page-configurations">
@@ -210,7 +210,7 @@
   <section id = "posts" class = "posts-expand">
   <article itemscope itemtype="http://schema.org/Article" class="post " lang="zh-CN">
     <div class = "post-block">
-    <link itemprop="mainEntityOfPage" href="https://exclusiver.gitee.io/blog/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="https://exclusiver.gitee.io/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/timg.jpg">
