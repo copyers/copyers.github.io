@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.1","sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true,"offset":12,"b2t":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文详细阐述了单例模式的最全的八种写法并比较其存在的优劣">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？">
+<meta property="og:url" content="http://yoursite.com/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/index.html">
+<meta property="og:site_name" content="补 阙 阁">
+<meta property="og:description" content="本文详细阐述了单例模式的最全的八种写法并比较其存在的优劣">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-11T05:11:42.000Z">
+<meta property="article:modified_time" content="2020-02-11T13:28:26.207Z">
+<meta property="article:author" content="Doug Li">
+<meta property="article:tag" content="Java,Design Pattern">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？ | 补 阙 阁</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a452b4c4a1cd7c9a9f62d952a88dc832";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<script type="text/javascript" src="/js/jquery/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/src/dytitle.js"></script>
+
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">补 阙 阁</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">不积跬步无以至千里</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <section id = "posts" class = "posts-expand">
+  <article itemscope itemtype="http://schema.org/Article" class="post " lang="zh-CN">
+    <div class = "post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/timg.jpg">
+      <meta itemprop="name" content="Doug Li">
+      <meta itemprop="description" content="言念君子，当温其如玉">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="补 阙 阁">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-02-11 13:11:42 / 修改时间：21:28:26" itemprop="dateCreated datePublished" datetime="2020-02-11T13:11:42+08:00">2020-02-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本文详细阐述了单例模式的最全的八种写法并比较其存在的优劣</div>
+
+        </div>
+      </header>
+
+   
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>在面试中经常会遇到单例模式的问题，动不动就是你知道几种单例模式，请手写几种你知道的单例模式，为了能彻底厘清该问题，本文详细阐述了单例模式的最全的八种写法以及茴香豆的茴字的四种写法（手动狗头），并比较其存在的优劣，如果本文对你有所帮助的话点赞哦亲。</p>
+</blockquote>
+<a id="more"></a>
+<ul>
+<li><h4 id="什么是设计模式（Design-Pattern）？"><a href="#什么是设计模式（Design-Pattern）？" class="headerlink" title="什么是设计模式（Design Pattern）？"></a>什么是设计模式（Design Pattern）？</h4><p>设计模式是人类在解决各类问题时所总结出来的有用的经验，它不是软件工程中特有的概念。具体来说<strong>设计模式是一种思想</strong>，是解决某类问题的通用方案，代表了最佳实践，也是前人经过相当长时间的试验和错误而分析总结出来的。</p>
+</li>
+<li><h4 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h4><p>设计模式总共分为三类，总共<strong>23</strong>种</p>
+<ul>
+<li><strong>创建型</strong> ：单例模式、抽象工厂模式、原型模式、建造者模式、工厂模式</li>
+<li><strong>结构型</strong> ：适配器模式、桥接模式、装饰者模式、组合模式、外观模式、享元模式、代理模式</li>
+<li><strong>行为型</strong> ： 模板方法模式、命令模式、访问者模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式（责任链模式）</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><font size = 6>正文开始</font></p>
+</blockquote>
+<ul>
+<li><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p><strong>单例模式就是通过某种实现方式使得在整个软件系统中，对某个类只能存在一个对象实例，并且该类只提供一个取得该对象实例的静态方法。</strong></p>
+<blockquote>
+<p>应用场景：</p>
+<p>​        1、比如Windows的资源管理器，同一台Windows上不能同时打开两个资源管理器。</p>
+<p>​        2、数据库连接池，因为数据库连接是一种数据库资源，为了节省打开或者关闭数据库连接所引起的损耗，单例模式的使用就尤为重要。</p>
+<p>​        3、Spring对bean的管理，可以通过scope选择该bean是单例（singleton）还是多例（prototype）。</p>
+</blockquote>
+<p>综上所述，单例模式在软件工程中使用还是比较频繁的，为了能在面试中能够脱颖而出让面试官中意你，并且工作中遇到能熟练运用，下面主要通过代码的方式来详细介绍单例模式的八种实现方式。</p>
+<p><strong>单例模式的八种实现方式</strong></p>
+<blockquote>
+<ol>
+<li><strong>饿汉式（静态常量）</strong></li>
+<li>饿汉式（静态代码块）</li>
+<li>懒汉式（线程不安全）</li>
+<li>懒汉式（线程安全，同步方法实现）</li>
+<li>懒汉式（线程安全，同步代码块实现）</li>
+<li><strong>双重检查（Double Check）</strong></li>
+<li><strong>静态内部类</strong></li>
+<li><strong>枚举</strong></li>
+</ol>
+</blockquote>
+</li>
+<li><h4 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h4></li>
+</ul>
+<h4 id="1-饿汉式（静态常量）"><a href="#1-饿汉式（静态常量）" class="headerlink" title="1. 饿汉式（静态常量）"></a>1. 饿汉式（静态常量）</h4><p>  ​    步骤：</p>
+<p>  ​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>  ​    ②、提供一个同类型的常量,用于接收内部实例</p>
+<p>  ​    ③、提供一个<code>public</code>方法供外部调用以获取生成的实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、定义一个Singleton类型的常量,用于接收Singleton内部实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>实现较为简单，定义为常量即在类加载的时候就完成实例化。通过<code>ClassLoader</code>机制避免了线程安全的问题。</p>
+</blockquote>
+</li>
+<li><p><strong>缺点：</strong></p>
+<blockquote>
+<p>根据<code>JVM</code>加载类的方式得知类加载器并不需要等到某个类被主动使用时才加载，<code>JVM</code>允许类加载器在预料到某个类将要被使用时就预先加载它，所以类加载是一种<font color=#ff0000><strong>不确定行为</strong></font>，而这种饿汉式的实现方式会在类加载的时候就完成实例化，所以不能达到懒加载（<code>Lazy Loading</code>）的效果。<font color=#ff0000><strong>可能造成内存浪费。</strong></font></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-饿汉式（静态代码块）"><a href="#2-饿汉式（静态代码块）" class="headerlink" title="2. 饿汉式（静态代码块）"></a>2. 饿汉式（静态代码块）</h4><p>  ​    步骤：</p>
+<p>  ​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>  ​    ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
+<p>  ​    ③、通过静态代码块创建对象实例</p>
+<p>  ​    ④、提供一个<code>public</code>方法供外部调用以获取生成的实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、定义实例对象准备接收</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3、通过静态代码块创建对象实例</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//4、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>该方法优缺点同上（<font color=#ff0000>可能造成内存浪费</font>）</strong></li>
+</ul>
+<h4 id="3-懒汉式（线程不安全）"><a href="#3-懒汉式（线程不安全）" class="headerlink" title="3. 懒汉式（线程不安全）"></a>3. 懒汉式（线程不安全）</h4><p>​        步骤：</p>
+<p>​        ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>​        ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
+<p>​        ③、提供一个<code>public</code>方法供外部调用以获取生成的实例，首先判断该实例是否已经生成，如果已经生成则直接使用，否则再实例化生成。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2、定义一个static实例对象接收对象实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>实现简单且可以实现懒加载（Lazy Loading）</p>
+</blockquote>
+</li>
+<li><p><strong>缺点：</strong></p>
+<blockquote>
+<p>if(null == instance)该句代码在多线程环境存在线程不安全问题，可能生成多个实例，破坏了单例模式。<font color=#ff0000><strong>实际开发中不要使用这种方式。</strong></font></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="4-懒汉式（线程安全，同步方法实现）"><a href="#4-懒汉式（线程安全，同步方法实现）" class="headerlink" title="4. 懒汉式（线程安全，同步方法实现）"></a>4. 懒汉式（线程安全，同步方法实现）</h4><p>​    步骤：</p>
+<p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>​    ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
+<p>​    ③、提供一个<code>public</code>方法供外部调用以获取生成的实例并通过<code>synchronized</code>加锁，首先判断该实例是否已经生成，如果已经生成则直接使用，否则再实例化生成。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2、定义一个static实例对象接收对象实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，通过synchronized加锁，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>解决了懒汉式了线程安全的问题。</p>
+</blockquote>
+</li>
+<li><p><strong>缺点：</strong></p>
+<blockquote>
+<p>由于通过synchronized加锁，多线程环境下获取对象实例效率极低。<font color=#ff0000><strong>实际开发不推荐使用。</strong></font></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="5-懒汉式（线程安全，同步代码块实现）"><a href="#5-懒汉式（线程安全，同步代码块实现）" class="headerlink" title="5. 懒汉式（线程安全，同步代码块实现）"></a>5. 懒汉式（线程安全，同步代码块实现）</h4><p>​    步骤：</p>
+<p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>​    ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
+<p>​    ③、提供一个<code>public</code>方法供外部调用以获取生成的实例并通过<code>synchronized</code>加锁，首先判断该实例是否已经生成，如果已经生成则直接使用，否则再实例化生成。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2、定义一个static实例对象接收对象实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，通过synchronized同步代码块加锁，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">         		instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">          &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>缺点：</strong></p>
+<blockquote>
+<p>通过synchronized代码块加锁，依然线程不安全。<font color=#ff0000><strong>实际开发不推荐使用。</strong></font></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="6-双重检查"><a href="#6-双重检查" class="headerlink" title="6. 双重检查"></a>6. 双重检查</h4><p>步骤：</p>
+<p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>​    ②、定义<code>volatile</code>实例对象,保证生成实例对象的可见性,并用于接收静态代码块生成的内部实例</p>
+<p>​    ③、定义一个public方法提供给外部调用，获取实例对象，同时再在内部进行两次判断，第二次进行synchronized代码块加锁，一旦实例化成功，锁外的线程即可通过<code>volatile</code>获得实例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、定义volatile实例对象,保证数据可见性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象，同时再在内部进行进行synchronized代码块加锁</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">                    instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>实现了懒加载（<code>Lazy Loading</code>）</p>
+<p>双重检查，保证线程安全</p>
+<p>实例化代码只用执行一次，多线程后面再次访问时可通过<code>volatile</code>通知。</p>
+</blockquote>
+</li>
+</ul>
+<p><font color=#ff0000><strong>推荐使用。</strong></font></p>
+<h4 id="7-静态内部类"><a href="#7-静态内部类" class="headerlink" title="7. 静态内部类"></a>7. 静态内部类</h4><p>​    步骤：</p>
+<p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>​    ②、通过静态内部类的属性获得<code>Singleton</code>实例</p>
+<p>​    ③、定义一个<code>public</code>方法提供给外部调用，获取实例对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、通过静态内部类的属性获得Singleton实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonInstance</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonInstance.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>实现了懒加载（<code>Lazy Loading</code>）</p>
+<p>只有当<code>getInstance()</code>方法第一次被调用时，才会去导致虚拟机加载<code>SingletonInstance</code>类，而类的静态属性只会在第一次加载类的时候初始化，所以这种方式通过<code>JVM</code>的加载机制以保证线程安全。</p>
+</blockquote>
+</li>
+</ul>
+<p><font color=#ff0000><strong>推荐使用。</strong></font></p>
+<h4 id="8-枚举"><a href="#8-枚举" class="headerlink" title="8. 枚举"></a>8. 枚举</h4><p>​    步骤：</p>
+<p>​    ①、通过枚举类属性实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="keyword">enum</span> Singleton &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>线程安全，实现简单</p>
+<p>防止反序列化重新创建新的对象</p>
+</blockquote>
+</li>
+</ul>
+<p><font color=#ff0000><strong>强烈推荐使用。</strong></font></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>单例模式保证了 系统内存中该类只存在一个对象，节省了系统资源，对于一些需要频繁创建销毁的对象，使用单例模式可以极大地提高系统性能，例如数据库连接池，<code>session</code>工厂等。</p>
+
+        <div>
+          <p id="div-border-left-red">
+          <b>本文为个人原创</b><br/>
+            <span>
+            <br/><b>转载请注明出处，谢谢！</b>
+            </span>
+          </p>
+      </div>
+       <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
+    
+    </div>
+
+    
+      
+
+    
+    
+    
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java-Design-Pattern/" rel="tag"># Java,Design Pattern</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/11/%E9%83%BD2020%E5%B9%B4%E4%BA%86%E4%BD%A0%E8%BF%98%E5%9C%A8%E9%97%AD%E9%97%A8%E9%80%A0%E8%BD%A6%E5%90%97%EF%BC%9F%E5%BF%AB%E6%9D%A5%E7%9C%8B%E7%9C%8B%E8%BF%99%E7%AF%87%E9%9D%A2%E5%90%91B%E7%AB%99%E5%AD%A6%E4%B9%A0Java%E4%B9%8B%E6%9C%80%E6%96%B0%E6%9C%80%E5%85%A8%E6%8E%A8%E8%8D%90%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" rel="next" title="都2020年了你还在闭门造车吗？快来看看这篇面向B站学习Java之最新最全推荐（长期更新）">
+      都2020年了你还在闭门造车吗？快来看看这篇面向B站学习Java之最新最全推荐（长期更新） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+    </div>
+  </article>
+  </section>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是设计模式（Design-Pattern）？"><span class="nav-number">1.</span> <span class="nav-text">什么是设计模式（Design Pattern）？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分类："><span class="nav-number">2.</span> <span class="nav-text">分类：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单例模式"><span class="nav-number">3.</span> <span class="nav-text">单例模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java实现"><span class="nav-number">4.</span> <span class="nav-text">Java实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-饿汉式（静态常量）"><span class="nav-number">5.</span> <span class="nav-text">1. 饿汉式（静态常量）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-饿汉式（静态代码块）"><span class="nav-number">6.</span> <span class="nav-text">2. 饿汉式（静态代码块）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-懒汉式（线程不安全）"><span class="nav-number">7.</span> <span class="nav-text">3. 懒汉式（线程不安全）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-懒汉式（线程安全，同步方法实现）"><span class="nav-number">8.</span> <span class="nav-text">4. 懒汉式（线程安全，同步方法实现）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-懒汉式（线程安全，同步代码块实现）"><span class="nav-number">9.</span> <span class="nav-text">5. 懒汉式（线程安全，同步代码块实现）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-双重检查"><span class="nav-number">10.</span> <span class="nav-text">6. 双重检查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-静态内部类"><span class="nav-number">11.</span> <span class="nav-text">7. 静态内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-枚举"><span class="nav-number">12.</span> <span class="nav-text">8. 枚举</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/">
+    <img class="site-author-image" itemprop="image" alt="Doug Li"
+      src="/images/timg.jpg">
+  <a/>
+  <p class="site-author-name" itemprop="name">Doug Li</p>
+  <div class="site-description" itemprop="description">言念君子，当温其如玉</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/copyers" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;copyers" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1206227301@qq.com" title="E-Mail → mailto:1206227301@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/YueYingGuang" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;YueYingGuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-list"></i>
+      近期文章
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://copyers.github.io/" title="http:&#x2F;&#x2F;copyers.github.io" rel="noopener" target="_blank">我的hexo博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://copyers.github.io/" title="http:&#x2F;&#x2F;copyers.github.io" rel="noopener" target="_blank">怎么打造炫酷的hexo博客</a>
+        </li>
+    </ul>
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1318881224&auto=1&height=66"></iframe>
+  </div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+  <div id="days" style="font-size:18;color:#CCCCCC"></div>
+    <script>
+    function show_date_time(){
+        window.setTimeout("show_date_time()", 1000);
+        BirthDay=new Date("02/11/2020 16:06:14");
+        today=new Date();
+    timeold=(today.getTime()-BirthDay.getTime());
+    sectimeold=timeold/1000
+    secondsold=Math.floor(sectimeold);
+    msPerDay=24*60*60*1000
+    e_daysold=timeold/msPerDay
+    daysold=Math.floor(e_daysold);
+    e_hrsold=(e_daysold-daysold)*24;
+    hrsold=setzero(Math.floor(e_hrsold));
+    e_minsold=(e_hrsold-hrsold)*60;
+    minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+    seconds=setzero(Math.floor((e_minsold-minsold)*60));
+    document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+    }
+    function setzero(i){
+    if (i<10)
+    {i="0" + i};
+    return i;
+    }
+    show_date_time();
+</script>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Doug Li</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
+  <script>
+  $("body").backstretch("");
+  </script>
+</body>
+</html>

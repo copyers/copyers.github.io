@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Java 将中文文件名称修改为拼音首字母、拼音全称）</title>
+    <url>/2020/02/11/Java-%E5%B0%86%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9%E4%B8%BA%E6%8B%BC%E9%9F%B3%E9%A6%96%E5%AD%97%E6%AF%8D%E3%80%81%E6%8B%BC%E9%9F%B3%E5%85%A8%E7%A7%B0/</url>
+    <content><![CDATA[<p>在日常工作中，由于一些软件导入文件时对中文不支持，需要修改文件名称为拼音或者拼音首字母，修改方式也多种多样，本文通过Java来进行修改。</p>
+<a id="more"></a>
+
+<blockquote>
+<p>正文</p>
+</blockquote>
+<p>在日常工作中，由于一些软件导入文件时对中文不支持，需要修改文件名称为拼音或者拼音首字母，修改方式也多种多样，本文通过Java来进行修改。</p>
+<ul>
+<li><h3 id="引入Maven依赖"><a href="#引入Maven依赖" class="headerlink" title="引入Maven依赖"></a>引入Maven依赖</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.belerweb<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pinyin4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.hutool<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hutool-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="中文转拼音"><a href="#中文转拼音" class="headerlink" title="中文转拼音"></a>中文转拼音</h3><p>主要通过pinyin4j进行处理。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取汉字串拼音首字母，英文字符不变</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> chinese</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getFirstSpell</span><span class="params">(String chinese)</span> </span>&#123;</span><br><span class="line">        StringBuffer pybf = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">        <span class="keyword">char</span>[] arr = chinese.toCharArray();</span><br><span class="line">        HanyuPinyinOutputFormat defaultFormat = <span class="keyword">new</span> HanyuPinyinOutputFormat();</span><br><span class="line">        defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);</span><br><span class="line">        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] &gt; <span class="number">128</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    String[] temp = PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat);</span><br><span class="line">                    <span class="keyword">if</span> (temp != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        pybf.append(temp[<span class="number">0</span>].charAt(<span class="number">0</span>));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (BadHanyuPinyinOutputFormatCombination e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                pybf.append(arr[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pybf.toString().replaceAll(<span class="string">"\\W"</span>, <span class="string">""</span>).trim().toUpperCase();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取汉字串拼音，英文字符不变</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> chinese</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getFullSpell</span><span class="params">(String chinese)</span> </span>&#123;</span><br><span class="line">        StringBuffer pybf = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">        <span class="keyword">char</span>[] arr = chinese.toCharArray();</span><br><span class="line">        HanyuPinyinOutputFormat defaultFormat = <span class="keyword">new</span> HanyuPinyinOutputFormat();</span><br><span class="line">        defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);</span><br><span class="line">        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] &gt; <span class="number">128</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    pybf.append(PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat)[<span class="number">0</span>]);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (BadHanyuPinyinOutputFormatCombination e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                pybf.append(arr[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pybf.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><h3 id="批量修改"><a href="#批量修改" class="headerlink" title="批量修改"></a>批量修改</h3><p>使用<strong>Hutool</strong>的<code>IOUtil、FileUtil</code>工具类对文件进行复制。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1、待转换文件所在文件夹</span></span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"E:\\needConvert\\"</span>);</span><br><span class="line">        <span class="comment">//2、转换之后文件生成的文件夹位置</span></span><br><span class="line">        File filecopy = <span class="keyword">new</span> File(<span class="string">"E:\\converted\\"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!filecopy.exists()) &#123;</span><br><span class="line">            filecopy.mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        BufferedInputStream in = <span class="keyword">null</span>;</span><br><span class="line">        BufferedOutputStream out = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        File[] filelist = file.listFiles();</span><br><span class="line">        <span class="keyword">for</span> (File fi : filelist) &#123;</span><br><span class="line">            <span class="comment">//1、获取到文件名</span></span><br><span class="line">            String substring = fi.getName().substring(<span class="number">0</span>, fi.getName().indexOf(<span class="string">'.'</span>));</span><br><span class="line">            <span class="comment">//2、文件名中文转换为拼音首字母</span></span><br><span class="line">            String newPrefix = getFirstSpell(substring);</span><br><span class="line">            <span class="comment">//3、获取文件的后缀</span></span><br><span class="line">            String suffix = fi.getName().substring(fi.getName().lastIndexOf(<span class="string">'.'</span>));</span><br><span class="line">            <span class="comment">//4、将需要处理的文件输入到流中</span></span><br><span class="line">            in = FileUtil.getInputStream(fi);</span><br><span class="line">            <span class="comment">//5、新文件的名称及地址：filecopy + newPrefix + suffix</span></span><br><span class="line">            String newFilePath = filecopy + File.separator + newPrefix + suffix;</span><br><span class="line"></span><br><span class="line">            File newfile = <span class="keyword">new</span> File(newFilePath);</span><br><span class="line">            <span class="keyword">if</span> (!newfile.exists()) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    newfile.createNewFile();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            out = FileUtil.getOutputStream(newFilePath);</span><br><span class="line">            <span class="comment">//6、使用Hutool进行复制</span></span><br><span class="line">            <span class="keyword">long</span> copyTime = IoUtil.copy(in, out, IoUtil.DEFAULT_BUFFER_SIZE);</span><br><span class="line">            System.out.printf(<span class="string">"转换耗时: %d \n"</span>, copyTime);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (in != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (out != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                out.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>代码地址： <a href="https://github.com/copyers/JavaUtils" target="_blank" rel="noopener">https://github.com/copyers/JavaUtils</a>.<br>以上就是通过Java来转换中文的过程，不过个人觉得批量修改文件名可以通过脚本来遍历修改，更加方便快捷。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>MAVEN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>都2020年了你还在闭门造车吗？快来看看这篇面向B站学习Java之最新最全推荐（长期更新）</title>
+    <url>/2020/02/11/%E9%83%BD2020%E5%B9%B4%E4%BA%86%E4%BD%A0%E8%BF%98%E5%9C%A8%E9%97%AD%E9%97%A8%E9%80%A0%E8%BD%A6%E5%90%97%EF%BC%9F%E5%BF%AB%E6%9D%A5%E7%9C%8B%E7%9C%8B%E8%BF%99%E7%AF%87%E9%9D%A2%E5%90%91B%E7%AB%99%E5%AD%A6%E4%B9%A0Java%E4%B9%8B%E6%9C%80%E6%96%B0%E6%9C%80%E5%85%A8%E6%8E%A8%E8%8D%90%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
+    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200130212950684.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+<a id="more"></a>
+
+<h3 id="新型冠状病毒的肆虐，提醒大家少出门、戴口罩、勤洗手，武汉加油，中国加油！！！"><a href="#新型冠状病毒的肆虐，提醒大家少出门、戴口罩、勤洗手，武汉加油，中国加油！！！" class="headerlink" title="新型冠状病毒的肆虐，提醒大家少出门、戴口罩、勤洗手，武汉加油，中国加油！！！"></a>新型冠状病毒的肆虐，提醒大家少出门、戴口罩、勤洗手，武汉加油，中国加油！！！</h3><p>趁着这段时间回顾了2019年自己的学习情况，2019年其实主要是通过B站观看视频教程进行学习，个人几乎把以下推荐的全部视频都抽时间看了一遍以上，筛选了以下教程推荐给想要学习Java的同学，该教程涵盖了<strong>Java从入门</strong>、<strong>进阶以及到高级</strong>的全部知识，适合现在想要学习Java的所有同学，同时也非常感谢互联网，感谢小破站，感谢各大慷慨的教育机构，感谢韩顺平老师，感谢周阳老师，感谢雷丰阳老师等等，正是他们的无私让现在学习变得越来越简单。</p>
+<blockquote>
+<p>以下分享的视频教程99%来源于B站（哔哩哔哩）其余来自于慕课网，目前还有中间件及Java面试部分未整理，以后如果发现好的视频教程也会不定期更新。</p>
+</blockquote>
+<h3 id="正-文"><a href="#正-文" class="headerlink" title="正 文"></a>正 文</h3><h4 id="一、Java基础"><a href="#一、Java基础" class="headerlink" title="一、Java基础"></a>一、Java基础</h4><p>1、尚硅谷宋红康（强力推荐）：<a href="https://www.bilibili.com/video/av48144058" target="_blank" rel="noopener">https://www.bilibili.com/video/av48144058</a></p>
+<p>2、黑马Java基础+就业班+各种项目idea版本（推荐）：<a href="https://www.bilibili.com/video/av55246614" target="_blank" rel="noopener">https://www.bilibili.com/video/av55246614</a></p>
+<p>3、动力节点Java零基础教程视频： <a href="https://www.bilibili.com/video/av11361088" target="_blank" rel="noopener">https://www.bilibili.com/video/av11361088</a></p>
+<p>4、北京尚学堂高琪（推荐）：<a href="https://www.bilibili.com/video/av30023103" target="_blank" rel="noopener">https://www.bilibili.com/video/av30023103</a></p>
+<p>5、求知讲堂：2019求知讲堂零基础Java入门编程视频教程 高口碑 无废话 无尿点 ： <a href="https://www.bilibili.com/video/av76235341" target="_blank" rel="noopener">https://www.bilibili.com/video/av76235341</a></p>
+<h4 id="二、数据结构与算法"><a href="#二、数据结构与算法" class="headerlink" title="二、数据结构与算法"></a>二、数据结构与算法</h4><p>1、郝斌-数据结构入门：<a href="https://www.bilibili.com/video/av6159200" target="_blank" rel="noopener">https://www.bilibili.com/video/av6159200</a></p>
+<p>2、尚硅谷韩顺平图解Java数据结构与算法: <a href="https://www.bilibili.com/video/av54029771" target="_blank" rel="noopener">https://www.bilibili.com/video/av54029771</a></p>
+<h4 id="三、图解Java设计模式"><a href="#三、图解Java设计模式" class="headerlink" title="三、图解Java设计模式"></a>三、图解Java设计模式</h4><p>1、尚硅谷韩顺平：<a href="https://www.bilibili.com/video/av57936239" target="_blank" rel="noopener">https://www.bilibili.com/video/av57936239</a></p>
+<h4 id="四、Java源码"><a href="#四、Java源码" class="headerlink" title="四、Java源码"></a>四、Java源码</h4><p>1 、Java 源码分析：<a href="https://www.bilibili.com/video/av74161334" target="_blank" rel="noopener">https://www.bilibili.com/video/av74161334</a></p>
+<p>2、HashMap源码解读：<a href="https://www.bilibili.com/video/av75133052" target="_blank" rel="noopener">https://www.bilibili.com/video/av75133052</a></p>
+<h4 id="五、Java框架整合"><a href="#五、Java框架整合" class="headerlink" title="五、Java框架整合"></a>五、Java框架整合</h4><p>1、尚硅谷Java视频教程_SSM整合视频教程：<a href="https://www.bilibili.com/video/av21045215" target="_blank" rel="noopener">https://www.bilibili.com/video/av21045215</a></p>
+<p>2、尚硅谷雷丰阳大神的Spring、Spring MVC、MyBatis课程：<a href="https://www.bilibili.com/video/av56193747" target="_blank" rel="noopener">https://www.bilibili.com/video/av56193747</a></p>
+<p>3、黑马SSM教程：<a href="https://www.bilibili.com/video/av47952553" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952553</a></p>
+<p>4、SSM框架视频整合+(传智播客)：<a href="https://www.bilibili.com/video/av29422149" target="_blank" rel="noopener">https://www.bilibili.com/video/av29422149</a></p>
+<p>5、SSM框架整合教学IDEA版最新：<a href="https://www.bilibili.com/video/av73118229" target="_blank" rel="noopener">https://www.bilibili.com/video/av73118229</a></p>
+<h4 id="六、Spring源码"><a href="#六、Spring源码" class="headerlink" title="六、Spring源码"></a>六、Spring源码</h4><p>1、spring源码全集：<a href="https://www.bilibili.com/video/av71093907" target="_blank" rel="noopener">https://www.bilibili.com/video/av71093907</a></p>
+<p>2、Spring4.x入门视频教程_王泽(广陵散)：<a href="https://www.bilibili.com/video/av40323796" target="_blank" rel="noopener">https://www.bilibili.com/video/av40323796</a></p>
+<p>3、spring-spring注解驱动开发-源码版-雷丰阳-尚硅谷：<a href="https://www.bilibili.com/video/av71252572" target="_blank" rel="noopener">https://www.bilibili.com/video/av71252572</a></p>
+<p>4、Spring5最新完整教程IDEA版【通俗易懂】：<a href="https://www.bilibili.com/video/av71110355" target="_blank" rel="noopener">https://www.bilibili.com/video/av71110355</a></p>
+<h4 id="七、SpringMVC"><a href="#七、SpringMVC" class="headerlink" title="七、SpringMVC"></a>七、SpringMVC</h4><p>1、尚硅谷佟刚Java视频教程_SpringMVC视频：<a href="https://www.bilibili.com/video/av21272240" target="_blank" rel="noopener">https://www.bilibili.com/video/av21272240</a></p>
+<p>2、SpringMVC最新教程IDEA版：<a href="https://www.bilibili.com/video/av71874024" target="_blank" rel="noopener">https://www.bilibili.com/video/av71874024</a></p>
+<p>3、黑马程序员SpringMVC：<a href="https://www.bilibili.com/video/av18288362" target="_blank" rel="noopener">https://www.bilibili.com/video/av18288362</a></p>
+<p>4、千锋Java：SpringMVC框架教程：<a href="https://www.bilibili.com/video/av45556876" target="_blank" rel="noopener">https://www.bilibili.com/video/av45556876</a></p>
+<h4 id="八、Mybatis、MyBatisPlus"><a href="#八、Mybatis、MyBatisPlus" class="headerlink" title="八、Mybatis、MyBatisPlus"></a>八、Mybatis、MyBatisPlus</h4><p>1、尚硅谷Java视频教程_MyBatis视频教程（源码级讲授的MyBatis视频）：<a href="https://www.bilibili.com/video/av21272940" target="_blank" rel="noopener">https://www.bilibili.com/video/av21272940</a></p>
+<p>2、尚硅谷MyBatisPlus教程：<a href="https://www.bilibili.com/video/av27212529" target="_blank" rel="noopener">https://www.bilibili.com/video/av27212529</a></p>
+<p>3、Mybatis最新完整教程IDEA版【通俗易懂】：<a href="https://www.bilibili.com/video/av69742084" target="_blank" rel="noopener">https://www.bilibili.com/video/av69742084</a></p>
+<p>4、MyBatis-Plus入门：<a href="https://www.imooc.com/learn/1130" target="_blank" rel="noopener">https://www.imooc.com/learn/1130</a></p>
+<p>5、MyBatis-Plus进阶：<a href="https://www.imooc.com/learn/1171" target="_blank" rel="noopener">https://www.imooc.com/learn/1171</a></p>
+<h4 id="九、SpringBoot（部分还在更新中）"><a href="#九、SpringBoot（部分还在更新中）" class="headerlink" title="九、SpringBoot（部分还在更新中）"></a>九、SpringBoot（部分还在更新中）</h4><p>1、尚硅谷SpringBoot整合篇：<a href="https://www.bilibili.com/video/av23284778" target="_blank" rel="noopener">https://www.bilibili.com/video/av23284778</a></p>
+<p>2、SpringBoot最新教程IDEA版：<a href="https://www.bilibili.com/video/av75233634" target="_blank" rel="noopener">https://www.bilibili.com/video/av75233634</a></p>
+<p>3、2020年最新springboot2.0+shiro+jwt+redis+swagger+layui+thymeleaf 前后端：<a href="https://www.bilibili.com/video/av78917587" target="_blank" rel="noopener">https://www.bilibili.com/video/av78917587</a></p>
+<p>4、尚硅谷好评如潮【SpringBoot】视频：<a href="https://www.bilibili.com/video/av20965295" target="_blank" rel="noopener">https://www.bilibili.com/video/av20965295</a></p>
+<p>5、SpringBoot项目实战 视频教程全集 | 35小时：<a href="https://www.bilibili.com/video/av62800055" target="_blank" rel="noopener">https://www.bilibili.com/video/av62800055</a></p>
+<p>6、SpringBoot项目实战：企业项目管理系统：<a href="https://www.bilibili.com/video/av65870246" target="_blank" rel="noopener">https://www.bilibili.com/video/av65870246</a></p>
+<h4 id="十、SpringCloud（部分还在更新中）"><a href="#十、SpringCloud（部分还在更新中）" class="headerlink" title="十、SpringCloud（部分还在更新中）"></a>十、SpringCloud（部分还在更新中）</h4><p>1、SpringCloud-尚硅谷：<a href="https://www.bilibili.com/video/av49106064" target="_blank" rel="noopener">https://www.bilibili.com/video/av49106064</a></p>
+<p>2、2018千锋Java高级教程-Java微服务架构：<a href="https://www.bilibili.com/video/av36042649" target="_blank" rel="noopener">https://www.bilibili.com/video/av36042649</a></p>
+<p>3、SpringCloud最新教程IDEA版：<a href="https://www.bilibili.com/video/av76020761" target="_blank" rel="noopener">https://www.bilibili.com/video/av76020761</a></p>
+<p>4、SpringCloud+Vue项目实战——社交项目：<a href="https://www.bilibili.com/video/av63499215" target="_blank" rel="noopener">https://www.bilibili.com/video/av63499215</a></p>
+<h4 id="十一、JVM"><a href="#十一、JVM" class="headerlink" title="十一、JVM"></a>十一、JVM</h4><p>1、juc 与 jvm - Java 必学 2019版本-阳哥- 尚硅谷- idea：<a href="https://www.bilibili.com/video/av70166821" target="_blank" rel="noopener">https://www.bilibili.com/video/av70166821</a></p>
+<p>2、尚硅谷_JVM从入门到精通宋红康2020版（持续更新中）：<a href="https://www.bilibili.com/video/av83622425" target="_blank" rel="noopener">https://www.bilibili.com/video/av83622425</a></p>
+<p>3、深入理解JVM-张龙：<a href="https://www.bilibili.com/video/av78983356" target="_blank" rel="noopener">https://www.bilibili.com/video/av78983356</a></p>
+<h4 id="十二、MySQL"><a href="#十二、MySQL" class="headerlink" title="十二、MySQL"></a>十二、MySQL</h4><p>1、尚硅谷周阳（强力推荐）：<a href="https://www.bilibili.com/video/av21334868" target="_blank" rel="noopener">https://www.bilibili.com/video/av21334868</a></p>
+<p>2、MySQL 基础+高级篇- 数据库 -sql -尚硅谷：<a href="https://www.bilibili.com/video/av49181542" target="_blank" rel="noopener">https://www.bilibili.com/video/av49181542</a></p>
+<h4 id="十三、Linux"><a href="#十三、Linux" class="headerlink" title="十三、Linux"></a>十三、Linux</h4><p>1、尚硅谷_韩顺平_Linux教程：<a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">https://www.bilibili.com/video/av21303002</a></p>
+<h4 id="十四、工具篇"><a href="#十四、工具篇" class="headerlink" title="十四、工具篇"></a>十四、工具篇</h4><p><strong>MAVEN</strong></p>
+<p>1、尚硅谷Java视频教程_Maven视频: <a href="https://www.bilibili.com/video/av36557763" target="_blank" rel="noopener">https://www.bilibili.com/video/av36557763</a></p>
+<p>2、Maven基础篇：<a href="https://www.bilibili.com/video/av54119831" target="_blank" rel="noopener">https://www.bilibili.com/video/av54119831</a></p>
+<p><strong>IDEA</strong></p>
+<p>1、尚硅谷Java视频教程_IDEA视频教程：<a href="https://www.bilibili.com/video/av30080993" target="_blank" rel="noopener">https://www.bilibili.com/video/av30080993</a></p>
+<p>2、IDEA教程-干货大合集：<a href="https://www.bilibili.com/video/av34324988" target="_blank" rel="noopener">https://www.bilibili.com/video/av34324988</a></p>
+<p>3、idea超详细使用教程：<a href="https://www.bilibili.com/video/av67438327" target="_blank" rel="noopener">https://www.bilibili.com/video/av67438327</a></p>
+<p><strong>Git</strong></p>
+<p>1、学会Git玩转Github： <a href="https://www.bilibili.com/video/av10475153" target="_blank" rel="noopener">https://www.bilibili.com/video/av10475153</a></p>
+<p>2、尚硅谷_Git&amp;GitHub：<a href="https://www.bilibili.com/video/av24441039" target="_blank" rel="noopener">https://www.bilibili.com/video/av24441039</a></p>
+<p>3、1小时玩转 Git/Github：<a href="https://www.bilibili.com/video/av55780016" target="_blank" rel="noopener">https://www.bilibili.com/video/av55780016</a></p>
+<blockquote>
+<p>相信看完以上教程，吸收完其中的知识点，那么你会对Java有一个更深刻的认识，不过就像韩顺平老师说的那样，“纸上得来终觉浅，绝知此事要躬行”，应用型的知识技能一定要经常使用，经常练才能理解，才能掌握，所以一定要将所学到的知识应用到实际项目中，这样才能通过解决问题来获得更快的成长。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Spring</tag>
+        <tag>SpringMVC</tag>
+        <tag>Mybatis</tag>
+        <tag>SpringBoot</tag>
+        <tag>MySQL</tag>
+        <tag>Git</tag>
+        <tag>IDEA</tag>
+        <tag>JVM</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？</title>
+    <url>/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/</url>
+    <content><![CDATA[<blockquote>
+<p>在面试中经常会遇到单例模式的问题，动不动就是你知道几种单例模式，请手写几种你知道的单例模式，为了能彻底厘清该问题，本文详细阐述了单例模式的最全的八种写法以及茴香豆的茴字的四种写法（手动狗头），并比较其存在的优劣，如果本文对你有所帮助的话点赞哦亲。</p>
+</blockquote>
+<a id="more"></a>
+<ul>
+<li><h4 id="什么是设计模式（Design-Pattern）？"><a href="#什么是设计模式（Design-Pattern）？" class="headerlink" title="什么是设计模式（Design Pattern）？"></a>什么是设计模式（Design Pattern）？</h4><p>设计模式是人类在解决各类问题时所总结出来的有用的经验，它不是软件工程中特有的概念。具体来说<strong>设计模式是一种思想</strong>，是解决某类问题的通用方案，代表了最佳实践，也是前人经过相当长时间的试验和错误而分析总结出来的。</p>
+</li>
+<li><h4 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h4><p>设计模式总共分为三类，总共<strong>23</strong>种</p>
+<ul>
+<li><strong>创建型</strong> ：单例模式、抽象工厂模式、原型模式、建造者模式、工厂模式</li>
+<li><strong>结构型</strong> ：适配器模式、桥接模式、装饰者模式、组合模式、外观模式、享元模式、代理模式</li>
+<li><strong>行为型</strong> ： 模板方法模式、命令模式、访问者模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式（责任链模式）</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><font size = 6>正文开始</font></p>
+</blockquote>
+<ul>
+<li><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p><strong>单例模式就是通过某种实现方式使得在整个软件系统中，对某个类只能存在一个对象实例，并且该类只提供一个取得该对象实例的静态方法。</strong></p>
+<blockquote>
+<p>应用场景：</p>
+<p>​        1、比如Windows的资源管理器，同一台Windows上不能同时打开两个资源管理器。</p>
+<p>​        2、数据库连接池，因为数据库连接是一种数据库资源，为了节省打开或者关闭数据库连接所引起的损耗，单例模式的使用就尤为重要。</p>
+<p>​        3、Spring对bean的管理，可以通过scope选择该bean是单例（singleton）还是多例（prototype）。</p>
+</blockquote>
+<p>综上所述，单例模式在软件工程中使用还是比较频繁的，为了能在面试中能够脱颖而出让面试官中意你，并且工作中遇到能熟练运用，下面主要通过代码的方式来详细介绍单例模式的八种实现方式。</p>
+<p><strong>单例模式的八种实现方式</strong></p>
+<blockquote>
+<ol>
+<li><strong>饿汉式（静态常量）</strong></li>
+<li>饿汉式（静态代码块）</li>
+<li>懒汉式（线程不安全）</li>
+<li>懒汉式（线程安全，同步方法实现）</li>
+<li>懒汉式（线程安全，同步代码块实现）</li>
+<li><strong>双重检查（Double Check）</strong></li>
+<li><strong>静态内部类</strong></li>
+<li><strong>枚举</strong></li>
+</ol>
+</blockquote>
+</li>
+<li><h4 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h4></li>
+</ul>
+<h4 id="1-饿汉式（静态常量）"><a href="#1-饿汉式（静态常量）" class="headerlink" title="1. 饿汉式（静态常量）"></a>1. 饿汉式（静态常量）</h4><p>  ​    步骤：</p>
+<p>  ​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>  ​    ②、提供一个同类型的常量,用于接收内部实例</p>
+<p>  ​    ③、提供一个<code>public</code>方法供外部调用以获取生成的实例</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、定义一个Singleton类型的常量,用于接收Singleton内部实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>实现较为简单，定义为常量即在类加载的时候就完成实例化。通过<code>ClassLoader</code>机制避免了线程安全的问题。</p>
+</blockquote>
+</li>
+<li><p><strong>缺点：</strong></p>
+<blockquote>
+<p>根据<code>JVM</code>加载类的方式得知类加载器并不需要等到某个类被主动使用时才加载，<code>JVM</code>允许类加载器在预料到某个类将要被使用时就预先加载它，所以类加载是一种<font color=#ff0000><strong>不确定行为</strong></font>，而这种饿汉式的实现方式会在类加载的时候就完成实例化，所以不能达到懒加载（<code>Lazy Loading</code>）的效果。<font color=#ff0000><strong>可能造成内存浪费。</strong></font></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-饿汉式（静态代码块）"><a href="#2-饿汉式（静态代码块）" class="headerlink" title="2. 饿汉式（静态代码块）"></a>2. 饿汉式（静态代码块）</h4><p>  ​    步骤：</p>
+<p>  ​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>  ​    ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
+<p>  ​    ③、通过静态代码块创建对象实例</p>
+<p>  ​    ④、提供一个<code>public</code>方法供外部调用以获取生成的实例</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、定义实例对象准备接收</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3、通过静态代码块创建对象实例</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//4、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>该方法优缺点同上（<font color=#ff0000>可能造成内存浪费</font>）</strong></li>
+</ul>
+<h4 id="3-懒汉式（线程不安全）"><a href="#3-懒汉式（线程不安全）" class="headerlink" title="3. 懒汉式（线程不安全）"></a>3. 懒汉式（线程不安全）</h4><p>​        步骤：</p>
+<p>​        ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>​        ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
+<p>​        ③、提供一个<code>public</code>方法供外部调用以获取生成的实例，首先判断该实例是否已经生成，如果已经生成则直接使用，否则再实例化生成。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2、定义一个static实例对象接收对象实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>实现简单且可以实现懒加载（Lazy Loading）</p>
+</blockquote>
+</li>
+<li><p><strong>缺点：</strong></p>
+<blockquote>
+<p>if(null == instance)该句代码在多线程环境存在线程不安全问题，可能生成多个实例，破坏了单例模式。<font color=#ff0000><strong>实际开发中不要使用这种方式。</strong></font></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="4-懒汉式（线程安全，同步方法实现）"><a href="#4-懒汉式（线程安全，同步方法实现）" class="headerlink" title="4. 懒汉式（线程安全，同步方法实现）"></a>4. 懒汉式（线程安全，同步方法实现）</h4><p>​    步骤：</p>
+<p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>​    ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
+<p>​    ③、提供一个<code>public</code>方法供外部调用以获取生成的实例并通过<code>synchronized</code>加锁，首先判断该实例是否已经生成，如果已经生成则直接使用，否则再实例化生成。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2、定义一个static实例对象接收对象实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，通过synchronized加锁，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>解决了懒汉式了线程安全的问题。</p>
+</blockquote>
+</li>
+<li><p><strong>缺点：</strong></p>
+<blockquote>
+<p>由于通过synchronized加锁，多线程环境下获取对象实例效率极低。<font color=#ff0000><strong>实际开发不推荐使用。</strong></font></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="5-懒汉式（线程安全，同步代码块实现）"><a href="#5-懒汉式（线程安全，同步代码块实现）" class="headerlink" title="5. 懒汉式（线程安全，同步代码块实现）"></a>5. 懒汉式（线程安全，同步代码块实现）</h4><p>​    步骤：</p>
+<p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>​    ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
+<p>​    ③、提供一个<code>public</code>方法供外部调用以获取生成的实例并通过<code>synchronized</code>加锁，首先判断该实例是否已经生成，如果已经生成则直接使用，否则再实例化生成。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2、定义一个static实例对象接收对象实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，通过synchronized同步代码块加锁，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">         		instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">          &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>缺点：</strong></p>
+<blockquote>
+<p>通过synchronized代码块加锁，依然线程不安全。<font color=#ff0000><strong>实际开发不推荐使用。</strong></font></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="6-双重检查"><a href="#6-双重检查" class="headerlink" title="6. 双重检查"></a>6. 双重检查</h4><p>步骤：</p>
+<p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>​    ②、定义<code>volatile</code>实例对象,保证生成实例对象的可见性,并用于接收静态代码块生成的内部实例</p>
+<p>​    ③、定义一个public方法提供给外部调用，获取实例对象，同时再在内部进行两次判断，第二次进行synchronized代码块加锁，一旦实例化成功，锁外的线程即可通过<code>volatile</code>获得实例。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、定义volatile实例对象,保证数据可见性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象，同时再在内部进行进行synchronized代码块加锁</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">                    instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>实现了懒加载（<code>Lazy Loading</code>）</p>
+<p>双重检查，保证线程安全</p>
+<p>实例化代码只用执行一次，多线程后面再次访问时可通过<code>volatile</code>通知。</p>
+</blockquote>
+</li>
+</ul>
+<p><font color=#ff0000><strong>推荐使用。</strong></font></p>
+<h4 id="7-静态内部类"><a href="#7-静态内部类" class="headerlink" title="7. 静态内部类"></a>7. 静态内部类</h4><p>​    步骤：</p>
+<p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
+<p>​    ②、通过静态内部类的属性获得<code>Singleton</code>实例</p>
+<p>​    ③、定义一个<code>public</code>方法提供给外部调用，获取实例对象。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、通过静态内部类的属性获得Singleton实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonInstance</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonInstance.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>实现了懒加载（<code>Lazy Loading</code>）</p>
+<p>只有当<code>getInstance()</code>方法第一次被调用时，才会去导致虚拟机加载<code>SingletonInstance</code>类，而类的静态属性只会在第一次加载类的时候初始化，所以这种方式通过<code>JVM</code>的加载机制以保证线程安全。</p>
+</blockquote>
+</li>
+</ul>
+<p><font color=#ff0000><strong>推荐使用。</strong></font></p>
+<h4 id="8-枚举"><a href="#8-枚举" class="headerlink" title="8. 枚举"></a>8. 枚举</h4><p>​    步骤：</p>
+<p>​    ①、通过枚举类属性实现</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="keyword">enum</span> Singleton &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>优点：</strong></p>
+<blockquote>
+<p>线程安全，实现简单</p>
+<p>防止反序列化重新创建新的对象</p>
+</blockquote>
+</li>
+</ul>
+<p><font color=#ff0000><strong>强烈推荐使用。</strong></font></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>单例模式保证了 系统内存中该类只存在一个对象，节省了系统资源，对于一些需要频繁创建销毁的对象，使用单例模式可以极大地提高系统性能，例如数据库连接池，<code>session</code>工厂等。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java,Design Pattern</tag>
+      </tags>
+  </entry>
+</search>
