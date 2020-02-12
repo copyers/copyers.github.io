@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"exclusiver.gitee.io","root":"/blog/","scheme":"Muse","version":"7.7.1","sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true,"offset":12,"b2t":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="排序算法是我们在数据结构与算法中必学掌握的重点，下面着重以代码的方式复习一下冒泡排序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法——Java排序算法之冒泡排序及优化">
+<meta property="og:url" content="https://exclusiver.gitee.io/blog/2020/02/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94Java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B9%8B%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%8F%8A%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="补 阙 阁">
+<meta property="og:description" content="排序算法是我们在数据结构与算法中必学掌握的重点，下面着重以代码的方式复习一下冒泡排序。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-12T07:18:36.000Z">
+<meta property="article:modified_time" content="2020-02-12T07:21:05.725Z">
+<meta property="article:author" content="Doug Li">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="数据结构与算法">
+<meta property="article:tag" content="排序">
+<meta property="article:tag" content="冒泡排序">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://exclusiver.gitee.io/blog/2020/02/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94Java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B9%8B%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%8F%8A%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>数据结构与算法——Java排序算法之冒泡排序及优化 | 补 阙 阁</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a452b4c4a1cd7c9a9f62d952a88dc832";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script type="text/javascript" src="/blog/js/jquery/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="/blog/js/src/dytitle.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+
+
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">补 阙 阁</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">不积跬步无以至千里</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <section id = "posts" class = "posts-expand">
+  <article itemscope itemtype="http://schema.org/Article" class="post " lang="zh-CN">
+    <div class = "post-block">
+    <link itemprop="mainEntityOfPage" href="https://exclusiver.gitee.io/blog/2020/02/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94Java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B9%8B%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%8F%8A%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/timg.jpg">
+      <meta itemprop="name" content="Doug Li">
+      <meta itemprop="description" content="言念君子，当温其如玉">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="补 阙 阁">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构与算法——Java排序算法之冒泡排序及优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-02-12 15:18:36 / 修改时间：15:21:05" itemprop="dateCreated datePublished" datetime="2020-02-12T15:18:36+08:00">2020-02-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+            <div class="post-description">排序算法是我们在数据结构与算法中必学掌握的重点，下面着重以代码的方式复习一下冒泡排序。</div>
+
+        </div>
+      </header>
+
+   
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>通过增加了判断数组在某一轮下是否已经有序的标识来提高冒泡排序的运算效率</p>
+<a id="more"></a>
+
+<hr>
+<blockquote>
+<p>排序算法是我们在数据结构与算法中必学掌握的重点，下面着重以代码的方式复习一下冒泡排序。</p>
+</blockquote>
+<ul>
+<li>普通的冒泡排序</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//普通的冒泡排序：比较相邻元素之间的大小，如果发现当前顺序与所期望的顺序不一致则进行交换</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length - <span class="number">1</span> - i; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>但是此时，该算法的平均时间复杂度为O(n^2)，当数据量较大的时候需要大量的时间，为此，出现了对上面算法的改进。</p>
+<ul>
+<li>改进一</li>
+</ul>
+<blockquote>
+<p>通过增加了判断数组在某一轮下是否已经有序的标识来提高冒泡排序的运算效率。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">improved1BubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line">        <span class="comment">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span></span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length - i - <span class="number">1</span>; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                    <span class="comment">//上面表示发生了数据交换，则把flag置为1</span></span><br><span class="line">                    flag = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>改进二</li>
+</ul>
+<blockquote>
+<p>记录上一轮最后比较位置作为下一轮比较的末位置缩短比较次数，因为我选定的顺序是从小到大，所以后面的顺序先确定。如果选定的顺序是从大到小，则该记录位置应该作为下一次的起始位置。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在每轮比较中增加一个判断标识，如果当前一轮中一次数据交换都没有发生，则说明数据已经有序，后面的轮数也不用再进行，直接break跳出循环</span></span><br><span class="line"><span class="comment">//当产生了数据交换则记录当前交换的位置作为下一轮起始位置</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">improved2BubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line">        <span class="comment">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span></span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//pos用于记录最后一次交换的位置</span></span><br><span class="line">        <span class="keyword">int</span> pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//innerlength用于记录内层比较的位置</span></span><br><span class="line">        <span class="keyword">int</span> innerlength = length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; innerlength; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                    <span class="comment">//上面表示发生了数据交换，则把flag置为1</span></span><br><span class="line">                    flag = <span class="number">1</span>;</span><br><span class="line">                    <span class="comment">//记录当前轮最后交换的位置</span></span><br><span class="line">                    <span class="comment">// 因为这里我选择的顺序是从小到大，所以是后面的顺序是最先确定，下一轮判断到该位置即可</span></span><br><span class="line">                    <span class="comment">// 如果选择的顺序是从大到小，则前面的顺序是最先确定，下一轮要从该位置开始</span></span><br><span class="line">                    pos = j;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//下一轮循环至该位置即可</span></span><br><span class="line">            innerlength = pos;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>改进三</li>
+</ul>
+<blockquote>
+<p>在上一算法的基础上，新增了在当前轮数中增加同时寻找最小值。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在每轮比较中增加一个判断标识，如果当前一轮中一次数据交换都没有发生，则说明数据已经有序，后面的轮数也不用再进行，直接break跳出循环</span></span><br><span class="line">    <span class="comment">//当产生了数据交换则记录当前交换的位置作为下一轮起始位置，同时在每轮中增加寻找最小数的过程</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">improved3BubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line">        <span class="comment">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span></span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//pos用于记录最后一次交换的位置</span></span><br><span class="line">        <span class="keyword">int</span> pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//寻找最小值的下标</span></span><br><span class="line">        <span class="keyword">int</span> minindex = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//innerlength用于记录内层比较的位置</span></span><br><span class="line">        <span class="keyword">int</span> innerlength = length - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换最小数</span></span><br><span class="line">        <span class="keyword">int</span> tempmin = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//用于记录最小数交换的位置</span></span><br><span class="line">        <span class="keyword">int</span> minnext = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; innerlength; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                    <span class="comment">//上面表示发生了数据交换，则把flag置为1</span></span><br><span class="line">                    flag = <span class="number">1</span>;</span><br><span class="line">                    <span class="comment">//记录当前轮最后交换的位置</span></span><br><span class="line">                    <span class="comment">// 因为这里我选择的顺序是从小到大，所以是后面的顺序是最先确定，所以下一轮判断到该位置即可</span></span><br><span class="line">                    <span class="comment">// 如果选择的顺序是从大到小，则前面的顺序是最先确定，下一轮要从该位置开始</span></span><br><span class="line">                    pos = j;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//下一轮循环至该位置即可</span></span><br><span class="line">            innerlength = pos;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//反向寻找最小值</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = innerlength; j &gt; minindex; j--) &#123;</span><br><span class="line">                tempmin = arrs[j];</span><br><span class="line">                arrs[j] = arrs[j - <span class="number">1</span>];</span><br><span class="line">                arrs[j - <span class="number">1</span>] = tempmin;</span><br><span class="line">                flag = <span class="number">1</span>;</span><br><span class="line">                <span class="comment">//记录作为下一次的起始位置</span></span><br><span class="line">                minnext = j;</span><br><span class="line">            &#125;</span><br><span class="line">            minindex = minnext;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>但是不管怎么优化，因为涉及到两次遍历数组，冒泡排序的最好时间复杂度为O(n)，最坏时间复杂度依然为O(n^2)。</p>
+
+        <div>
+          <p id="div-border-left-red">
+          <b>本文为个人原创</b><br/>
+            <span>
+            <br/><b>转载请注明出处，谢谢！</b>
+            </span>
+          </p>
+      </div>
+       <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
+    
+    </div>
+
+    
+      
+
+    
+    
+    
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/Java/" rel="tag"># Java</a>
+              <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag"># 数据结构与算法</a>
+              <a href="/blog/tags/%E6%8E%92%E5%BA%8F/" rel="tag"># 排序</a>
+              <a href="/blog/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/" rel="tag"># 冒泡排序</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2020/02/12/MATLAB%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8B%E5%9B%BE%E5%83%8F%E5%BD%A2%E7%8A%B6%E8%AF%86%E5%88%AB/" rel="prev" title="MATLAB图像处理（一）——计算机图形学之图像形状识别">
+      <i class="fa fa-chevron-left"></i> MATLAB图像处理（一）——计算机图形学之图像形状识别
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+    </div>
+  </article>
+  </section>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/">
+    <img class="site-author-image" itemprop="image" alt="Doug Li"
+      src="/blog/images/timg.jpg">
+  <a/>
+  <p class="site-author-name" itemprop="name">Doug Li</p>
+  <div class="site-description" itemprop="description">言念君子，当温其如玉</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/copyers" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;copyers" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1206227301@qq.com" title="E-Mail → mailto:1206227301@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/YueYingGuang" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;YueYingGuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-list"></i>
+      近期文章
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://exclusiver.gitee.io/blog/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/" title="https:&#x2F;&#x2F;exclusiver.gitee.io&#x2F;blog&#x2F;2020&#x2F;02&#x2F;11&#x2F;%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F&#x2F;">面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://exclusiver.gitee.io/blog/2020/02/11/%E9%83%BD2020%E5%B9%B4%E4%BA%86%E4%BD%A0%E8%BF%98%E5%9C%A8%E9%97%AD%E9%97%A8%E9%80%A0%E8%BD%A6%E5%90%97%EF%BC%9F%E5%BF%AB%E6%9D%A5%E7%9C%8B%E7%9C%8B%E8%BF%99%E7%AF%87%E9%9D%A2%E5%90%91B%E7%AB%99%E5%AD%A6%E4%B9%A0Java%E4%B9%8B%E6%9C%80%E6%96%B0%E6%9C%80%E5%85%A8%E6%8E%A8%E8%8D%90%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" title="https:&#x2F;&#x2F;exclusiver.gitee.io&#x2F;blog&#x2F;2020&#x2F;02&#x2F;11&#x2F;%E9%83%BD2020%E5%B9%B4%E4%BA%86%E4%BD%A0%E8%BF%98%E5%9C%A8%E9%97%AD%E9%97%A8%E9%80%A0%E8%BD%A6%E5%90%97%EF%BC%9F%E5%BF%AB%E6%9D%A5%E7%9C%8B%E7%9C%8B%E8%BF%99%E7%AF%87%E9%9D%A2%E5%90%91B%E7%AB%99%E5%AD%A6%E4%B9%A0Java%E4%B9%8B%E6%9C%80%E6%96%B0%E6%9C%80%E5%85%A8%E6%8E%A8%E8%8D%90%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89&#x2F;">都2020年了你还在闭门造车吗？快来看看这篇面向B站学习Java之最新最全推荐（长期更新）</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://exclusiver.gitee.io/blog/2020/02/11/Java-%E5%B0%86%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9%E4%B8%BA%E6%8B%BC%E9%9F%B3%E9%A6%96%E5%AD%97%E6%AF%8D%E3%80%81%E6%8B%BC%E9%9F%B3%E5%85%A8%E7%A7%B0/" title="https:&#x2F;&#x2F;exclusiver.gitee.io&#x2F;blog&#x2F;2020&#x2F;02&#x2F;11&#x2F;Java-%E5%B0%86%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9%E4%B8%BA%E6%8B%BC%E9%9F%B3%E9%A6%96%E5%AD%97%E6%AF%8D%E3%80%81%E6%8B%BC%E9%9F%B3%E5%85%A8%E7%A7%B0&#x2F;">Java 将中文文件名称修改为拼音首字母、拼音全称）</a>
+        </li>
+    </ul>
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1318881224&auto=0&height=66"></iframe>
+  </div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Doug Li</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">23k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">21 分钟</span>
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2020,02,11,15,00,00); //北京时间2020-2-11 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+	siteTime();
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
+  <script>
+  //$("body").backstretch("https://dss0.bdstatic.com/k4oZeXSm1A5BphGlnYG/skin/879.jpg?2");
+  </script>
+<script src="/blog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/blog/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":0,"vOffset":-20},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>

@@ -1,6 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>数据结构与算法——Java排序算法之冒泡排序及优化</title>
+    <url>/blog/2020/02/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94Java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B9%8B%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%8F%8A%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<p>通过增加了判断数组在某一轮下是否已经有序的标识来提高冒泡排序的运算效率</p>
+<a id="more"></a>
+
+<hr>
+<blockquote>
+<p>排序算法是我们在数据结构与算法中必学掌握的重点，下面着重以代码的方式复习一下冒泡排序。</p>
+</blockquote>
+<ul>
+<li>普通的冒泡排序</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//普通的冒泡排序：比较相邻元素之间的大小，如果发现当前顺序与所期望的顺序不一致则进行交换</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length - <span class="number">1</span> - i; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>但是此时，该算法的平均时间复杂度为O(n^2)，当数据量较大的时候需要大量的时间，为此，出现了对上面算法的改进。</p>
+<ul>
+<li>改进一</li>
+</ul>
+<blockquote>
+<p>通过增加了判断数组在某一轮下是否已经有序的标识来提高冒泡排序的运算效率。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">improved1BubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line">        <span class="comment">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span></span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length - i - <span class="number">1</span>; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                    <span class="comment">//上面表示发生了数据交换，则把flag置为1</span></span><br><span class="line">                    flag = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>改进二</li>
+</ul>
+<blockquote>
+<p>记录上一轮最后比较位置作为下一轮比较的末位置缩短比较次数，因为我选定的顺序是从小到大，所以后面的顺序先确定。如果选定的顺序是从大到小，则该记录位置应该作为下一次的起始位置。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//在每轮比较中增加一个判断标识，如果当前一轮中一次数据交换都没有发生，则说明数据已经有序，后面的轮数也不用再进行，直接break跳出循环</span></span><br><span class="line"><span class="comment">//当产生了数据交换则记录当前交换的位置作为下一轮起始位置</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">improved2BubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line">        <span class="comment">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span></span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//pos用于记录最后一次交换的位置</span></span><br><span class="line">        <span class="keyword">int</span> pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//innerlength用于记录内层比较的位置</span></span><br><span class="line">        <span class="keyword">int</span> innerlength = length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; innerlength; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                    <span class="comment">//上面表示发生了数据交换，则把flag置为1</span></span><br><span class="line">                    flag = <span class="number">1</span>;</span><br><span class="line">                    <span class="comment">//记录当前轮最后交换的位置</span></span><br><span class="line">                    <span class="comment">// 因为这里我选择的顺序是从小到大，所以是后面的顺序是最先确定，下一轮判断到该位置即可</span></span><br><span class="line">                    <span class="comment">// 如果选择的顺序是从大到小，则前面的顺序是最先确定，下一轮要从该位置开始</span></span><br><span class="line">                    pos = j;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//下一轮循环至该位置即可</span></span><br><span class="line">            innerlength = pos;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>改进三</li>
+</ul>
+<blockquote>
+<p>在上一算法的基础上，新增了在当前轮数中增加同时寻找最小值。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//在每轮比较中增加一个判断标识，如果当前一轮中一次数据交换都没有发生，则说明数据已经有序，后面的轮数也不用再进行，直接break跳出循环</span></span><br><span class="line">    <span class="comment">//当产生了数据交换则记录当前交换的位置作为下一轮起始位置，同时在每轮中增加寻找最小数的过程</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">improved3BubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line">        <span class="comment">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span></span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//pos用于记录最后一次交换的位置</span></span><br><span class="line">        <span class="keyword">int</span> pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//寻找最小值的下标</span></span><br><span class="line">        <span class="keyword">int</span> minindex = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//innerlength用于记录内层比较的位置</span></span><br><span class="line">        <span class="keyword">int</span> innerlength = length - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换最小数</span></span><br><span class="line">        <span class="keyword">int</span> tempmin = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//用于记录最小数交换的位置</span></span><br><span class="line">        <span class="keyword">int</span> minnext = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; innerlength; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                    <span class="comment">//上面表示发生了数据交换，则把flag置为1</span></span><br><span class="line">                    flag = <span class="number">1</span>;</span><br><span class="line">                    <span class="comment">//记录当前轮最后交换的位置</span></span><br><span class="line">                    <span class="comment">// 因为这里我选择的顺序是从小到大，所以是后面的顺序是最先确定，所以下一轮判断到该位置即可</span></span><br><span class="line">                    <span class="comment">// 如果选择的顺序是从大到小，则前面的顺序是最先确定，下一轮要从该位置开始</span></span><br><span class="line">                    pos = j;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//下一轮循环至该位置即可</span></span><br><span class="line">            innerlength = pos;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//反向寻找最小值</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = innerlength; j &gt; minindex; j--) &#123;</span><br><span class="line">                tempmin = arrs[j];</span><br><span class="line">                arrs[j] = arrs[j - <span class="number">1</span>];</span><br><span class="line">                arrs[j - <span class="number">1</span>] = tempmin;</span><br><span class="line">                flag = <span class="number">1</span>;</span><br><span class="line">                <span class="comment">//记录作为下一次的起始位置</span></span><br><span class="line">                minnext = j;</span><br><span class="line">            &#125;</span><br><span class="line">            minindex = minnext;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>但是不管怎么优化，因为涉及到两次遍历数组，冒泡排序的最好时间复杂度为O(n)，最坏时间复杂度依然为O(n^2)。</p>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>数据结构与算法</tag>
+        <tag>排序</tag>
+        <tag>冒泡排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MATLAB图像处理（一）——计算机图形学之图像形状识别</title>
+    <url>/blog/2020/02/12/MATLAB%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8B%E5%9B%BE%E5%83%8F%E5%BD%A2%E7%8A%B6%E8%AF%86%E5%88%AB/</url>
+    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20190718133000508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+<a id="more"></a>
+
+<h1>MATLAB图像处理（一）——计算机图形学之图像形状识别</h1>
+由于遇到了很多次这个课题，这次做完之后结合手上的资料总结一下。
+
+<h2 >基本步骤：</h2>
+<h3 ><a href="#1" target="_self">1、读取彩色图像转化为二值图像；</a></h3>
+<h3><a href="#2" target="_self">2、确定图像中的形状边界；</a></h3>
+<h3 ><a href="#3" target="_self">3、确定所需形状的目标；</a></h3>
+本文主要通过识别圆形目标来进行说明，原图如下所示，本例需要识别出下图中的圆形物体：
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190718133000508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70)
+
+<h2 id="1">1、读取彩色图像转化为二值图像</h2>
+针对图像中可能有不同形状的目标物体，为了进行目标筛选，可以先通过形状判断，过滤掉我们不需要的物体，极大地提高图像识别的效率。
+
+<p>1） 读取彩色图像</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% 1、读取图像并转化为二值图像</span><br><span class="line">RGB &#x3D; imread(&#39;ImageSeg.png&#39;);</span><br><span class="line">figure;imshow(RGB);title(&#39;原图像&#39;);</span><br></pre></td></tr></table></figure>
+<p>2）将彩色图像转化为二值图像</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% 转化为灰度图像</span><br><span class="line">I &#x3D; rgb2gray(RGB);</span><br><span class="line">% 设置阈值</span><br><span class="line">threshold &#x3D; graythresh(I);</span><br><span class="line">% 转化为二值图像</span><br><span class="line">bw &#x3D; im2bw(I,threshold);</span><br></pre></td></tr></table></figure>
+<p>注意：如果使用阈值公式进行转化，转化出的效果如果不符合预期的话需要手动调整阈值，上面代码的效果如下：<br><img src="https://img-blog.csdnimg.cn/20190718133707689.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>所以我们根据图像像素的特性人为调整阈值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bw &#x3D; im2bw(I,0.69);</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20190718133845638.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>调整后的二值图像如上图所示，可以看到物体形状非常清晰，但是明显看到背景有许多噪点，所以在这里为了去除这些噪点我们进行了人工去噪，去噪的代码如下，即简单的领域判断。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% 通过领域判断手动去噪</span><br><span class="line">[m,n] &#x3D; size(bw);</span><br><span class="line">for i &#x3D; 2:m-1</span><br><span class="line">   for j &#x3D; 2:n-1</span><br><span class="line">       %同上下元素判断       </span><br><span class="line">       if(bw(i,j)~&#x3D;bw(i+1,j) &amp;&amp; bw(i,j)~&#x3D;bw(i-1,j))</span><br><span class="line">           bw(i,j) &#x3D; 1;</span><br><span class="line">       %同左右元素判断</span><br><span class="line">       elseif(bw(i,j)~&#x3D;bw(i,j+1) &amp;&amp; bw(i,j)~&#x3D;bw(i,j-1))</span><br><span class="line">           bw(i,j) &#x3D; 1;</span><br><span class="line">       %同斜边元素判断</span><br><span class="line">       elseif(bw(i,j)~&#x3D;bw(i+1,j+1) &amp;&amp; bw(i,j)~&#x3D;bw(i-1,j-1))</span><br><span class="line">           bw(i,j) &#x3D; 1;</span><br><span class="line">       %同斜边元素判断</span><br><span class="line">       elseif(bw(i,j)~&#x3D;bw(i-1,j+1) &amp;&amp; bw(i,j)~&#x3D;bw(i+1,j-1))</span><br><span class="line">           bw(i,j) &#x3D; 1;</span><br><span class="line">       end</span><br><span class="line">   end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>去噪之后的二值图像为：<br><img src="https://img-blog.csdnimg.cn/20190718134319330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>然后对以上图像进行取反，以备下面使用。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for i &#x3D; 1:m</span><br><span class="line">    for j &#x3D; 1:n</span><br><span class="line">        bw(i,j) &#x3D; ~bw(i,j);</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>结果为<br><img src="https://img-blog.csdnimg.cn/20190718134548374.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="2">2、确定图像中的形状边界</h2>
+首先去除小目标，由于本例图像中不存在小目标，所以可省略该步骤，其次进行孔洞填充并进行白色描边，最后通过bwboundaries函数确定图像边界。
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% 去除小目标，因为本图没有小目标，所以可以不需要本条语句</span><br><span class="line">bw &#x3D; bwareaopen(bw,30);</span><br><span class="line">% 图形学结构元素构建，圆形</span><br><span class="line">se &#x3D; strel(&#39;disk&#39;,8);</span><br><span class="line">% 关操作</span><br><span class="line">bw &#x3D; imclose(bw,se);</span><br><span class="line">% 填充孔洞</span><br><span class="line">bw &#x3D; imfill(bw,&#39;holes&#39;);</span><br><span class="line">% 二值化图像显示</span><br><span class="line">figure(1);imshow(bw);title(&#39;二值图像&#39;);</span><br><span class="line">[B,L] &#x3D; bwboundaries(bw,&#39;noholes&#39;);</span><br><span class="line">figure(2);imshow(label2rgb(L,@jet,[.5 .5 .5]));</span><br><span class="line">hold on;</span><br><span class="line">for k &#x3D; 1:length(B)</span><br><span class="line">boundary &#x3D; B&#123;k&#125;;</span><br><span class="line">% 显示白色边界</span><br><span class="line">plot(boundary(:,2),boundary(:,1),&#39;w&#39;,&#39;LineWidth&#39;,2)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20190718135018675.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="3">3、确定所需形状的目标</h2>
+确定圆形目标，求取图形周长，圆心，面积，人为设置阈值进行过滤，在这里我设置阈值为0.85，即形状比对大于这个阈值的就是我们所需要的目标物体。
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hold on;</span><br><span class="line">% 确定圆形目标</span><br><span class="line">stats &#x3D; regionprops(L,&#39;Area&#39;,&#39;Centroid&#39;);</span><br><span class="line">% 设置求面积</span><br><span class="line">threshold &#x3D; 0.85;</span><br><span class="line">for k &#x3D; 1:length(B)</span><br><span class="line">    boundary &#x3D; B&#123;k&#125;;</span><br><span class="line">    delta_sq &#x3D; diff(boundary).^2;</span><br><span class="line">    % 求周长     </span><br><span class="line">    perimeter &#x3D; sum(sqrt(sum(delta_sq,2)));</span><br><span class="line">    % 求面积     </span><br><span class="line">    area &#x3D; stats(k).Area;</span><br><span class="line">    metric &#x3D; 4*pi*area&#x2F;perimeter^2;</span><br><span class="line">    metric_string &#x3D; sprintf(&#39;%2.2f&#39;,metric);</span><br><span class="line">    % 根据阈值匹配</span><br><span class="line">    if metric &gt; threshold  </span><br><span class="line">       centroid &#x3D; stats(k).Centroid;</span><br><span class="line">       plot(centroid(1),centroid(2),&#39;ko&#39;);</span><br><span class="line">       text(centroid(1)-2,centroid(2)-2, &#39;这是圆形&#39;,&#39;Color&#39;,...</span><br><span class="line">        &#39;k&#39;,&#39;FontSize&#39;,14,&#39;FontWeight&#39;,&#39;bold&#39;);</span><br><span class="line">    end</span><br><span class="line">       text(boundary(1,2)-10,boundary(1,1)-12, metric_string,&#39;Color&#39;,...</span><br><span class="line">        &#39;k&#39;,&#39;FontSize&#39;,14,&#39;FontWeight&#39;,&#39;bold&#39;);</span><br><span class="line">end</span><br><span class="line">title(&#39;图像形状识别&#39;)</span><br></pre></td></tr></table></figure>
+<p>最后识别的效果图为：<br><img src="https://img-blog.csdnimg.cn/20190718135431953.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>源代码及所使用的文件链接：<a href="https://download.csdn.net/download/yueyingguang/11381702" target="_blank" rel="noopener">https://download.csdn.net/download/yueyingguang/11381702</a></p>
+]]></content>
+      <categories>
+        <category>MATLAB</category>
+      </categories>
+      <tags>
+        <tag>MATLAB</tag>
+        <tag>图像处理</tag>
+        <tag>图形学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java面试——关于synchronized与ReentrantLock的详细区别</title>
+    <url>/blog/2020/02/12/Java%E9%9D%A2%E8%AF%95%E2%80%94%E2%80%94%E5%85%B3%E4%BA%8Esynchronized%E4%B8%8EReentrantLock%E7%9A%84%E8%AF%A6%E7%BB%86%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/2020010912445595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+
+<a id="more"></a>
+
+<h2 id="synchronized与ReentrantLock的区别"><a href="#synchronized与ReentrantLock的区别" class="headerlink" title="synchronized与ReentrantLock的区别"></a>synchronized与ReentrantLock的区别</h2><blockquote>
+<p>工作与面试中经常会遇到Java常见的加锁方法，本文着重介绍一下synchronized与ReentrantLock的区别，总结一下目前在这方面学习到的知识。</p>
+</blockquote>
+<p>① <strong>底层实现</strong>上来说，synchronized 是<strong>JVM</strong>层面的锁，是<strong>Java关键字</strong>，通过monitor–对象来完成（monitorenter与monitorexit），对象只有在同步块或同步方法中才能调用wait/notify方法，ReentrantLock 是从jdk1.5以来（java.util.concurrent.locks.Lock）提供的<strong>API层面</strong>的锁。</p>
+<p>synchronzied的实现涉及到锁的升级，具体为无锁、偏向锁、自旋锁、向OS申请重量级锁，ReentrantLock实现则是通过利用CAS（CompareAndSwap）自旋机制保证线程操作的原子性和volatile保证数据可见性以实现锁的功能。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (<span class="keyword">new</span> Object())&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> ReentrantLock();</span><br></pre></td></tr></table></figure>
+
+<p>使用javap -c对如上代码进行反编译得到如下代码：<br><img src="https://img-blog.csdnimg.cn/2020010912445595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>② <strong>是否可手动释放：</strong></p>
+<ul>
+<li>synchronized 不需要用户去手动释放锁，synchronized 代码执行完后系统会自动让线程释放对锁的占用；</li>
+</ul>
+<ul>
+<li>ReentrantLock则需要用户去手动释放锁，如果没有手动释放锁，就可能导致死锁现象。一般通过lock()和unlock()方法配合try/finally语句块来完成，使用释放更加灵活。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> number = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> Condition condition = lock.newCondition();</span><br><span class="line">    <span class="keyword">private</span> AtomicInteger atomicInteger;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">increment</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (number != <span class="number">0</span>) &#123;</span><br><span class="line">                condition.await();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//do something</span></span><br><span class="line">            number++;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">"\t"</span> + number);</span><br><span class="line">            condition.signalAll();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>③ <strong>是否可中断</strong></p>
+<ul>
+<li><p>synchronized是不可中断类型的锁，除非加锁的代码中出现异常或正常执行完成；</p>
+</li>
+<li><p>ReentrantLock则可以中断，可通过trylock(long timeout,TimeUnit unit)设置超时方法或者将lockInterruptibly()放到代码块中，调用interrupt方法进行中断。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> sync.tryAcquireNanos(<span class="number">1</span>, unit.toNanos(timeout));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">lockInterruptibly</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    sync.acquireInterruptibly(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>④  <strong>是否公平锁</strong></p>
+<ul>
+<li><p>synchronized为非公平锁</p>
+</li>
+<li><p>ReentrantLock则即可以选公平锁也可以选非公平锁，通过构造方法new ReentrantLock时传入boolean值进行选择，为空默认false非公平锁，true为公平锁。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Creates an instance of &#123;<span class="doctag">@code</span> ReentrantLock&#125;.</span></span><br><span class="line"><span class="comment"> * This is equivalent to using &#123;<span class="doctag">@code</span> ReentrantLock(false)&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ReentrantLock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    sync = <span class="keyword">new</span> NonfairSync();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Creates an instance of &#123;<span class="doctag">@code</span> ReentrantLock&#125; with the</span></span><br><span class="line"><span class="comment"> * given fairness policy.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> fair &#123;<span class="doctag">@code</span> true&#125; if this lock should use a fair ordering policy</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ReentrantLock</span><span class="params">(<span class="keyword">boolean</span> fair)</span> </span>&#123;</span><br><span class="line">    sync = fair ? <span class="keyword">new</span> FairSync() : <span class="keyword">new</span> NonfairSync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>⑤ <strong>锁是否可绑定条件Condition</strong></p>
+<ul>
+<li><p>synchronized不能绑定；</p>
+</li>
+<li><p>ReentrantLock通过绑定Condition结合await()/singal()方法实现线程的精确唤醒，而不是像synchronized通过Object类的wait()/notify()/notifyAll()方法要么随机唤醒一个线程要么唤醒全部线程。</p>
+<p>  示例：用ReentrantLock绑定三个条件实现线程A打印一次1，线程B打印两次2，线程C打印三次3</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Resource</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> number = <span class="number">1</span>;<span class="comment">//A:1  B:2  C:3</span></span><br><span class="line">    <span class="keyword">private</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> Condition c1 = lock.newCondition();</span><br><span class="line">    <span class="keyword">private</span> Condition c2 = lock.newCondition();</span><br><span class="line">    <span class="keyword">private</span> Condition c3 = lock.newCondition();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1 判断</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print1</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        lock.lock();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//判断</span></span><br><span class="line">            <span class="keyword">while</span> (number != <span class="number">1</span>) &#123;</span><br><span class="line">                c1.await();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//2 do sth</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">2</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">"\t"</span> + number);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//3 通知</span></span><br><span class="line">            number = <span class="number">2</span>;</span><br><span class="line">            c2.signal();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1 判断</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print2</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        lock.lock();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//判断</span></span><br><span class="line">            <span class="keyword">while</span> (number != <span class="number">2</span>) &#123;</span><br><span class="line">                c2.await();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//2 do sth</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">"\t"</span> + number);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//3 通知</span></span><br><span class="line">            number = <span class="number">3</span>;</span><br><span class="line">            c3.signal();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1 判断</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print3</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        lock.lock();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//判断</span></span><br><span class="line">            <span class="keyword">while</span> (number != <span class="number">3</span>) &#123;</span><br><span class="line">                c3.await();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//2 do sth</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">"\t"</span> + number);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//3 通知</span></span><br><span class="line">            number = <span class="number">1</span>;</span><br><span class="line">            c1.signal();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Resource resource = <span class="keyword">new</span> Resource();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2</span>; i++) &#123;</span><br><span class="line">                resource.print1();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="string">"A"</span>).start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2</span>; i++) &#123;</span><br><span class="line">                resource.print2();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="string">"B"</span>).start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2</span>; i++) &#123;</span><br><span class="line">                resource.print3();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="string">"C"</span>).start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>输出结果为：</p>
+<p>A    1<br>B    2<br>B    2<br>C    3<br>C    3<br>C    3<br>A    1<br>B    2<br>B    2<br>C    3<br>C    3<br>C    3</p>
+<p>⑥ <strong>锁的对象</strong></p>
+<ul>
+<li>synchronzied锁的是对象，锁是保存在对象头里面的，根据对象头数据来标识是否有线程获得锁/争抢锁；ReentrantLock锁的是线程，根据进入的线程和int类型的state标识锁的获得/争抢。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>面试</tag>
+        <tag>锁</tag>
+        <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Navicat Premium 12下看不到PostgreSQL下已创建的表</title>
+    <url>/blog/2020/02/12/Navicat-Premium-%E4%B8%8B%E7%9C%8B%E4%B8%8D%E5%88%B0PostgreSQL%E4%B8%8B%E5%B7%B2%E5%88%9B%E5%BB%BA%E7%9A%84%E8%A1%A8/</url>
+    <content><![CDATA[<p>通过Navicat Premium 12连接PostgreSQL之后发现找不到已存在的表，通过PostgreSQL自带的连接工具可以看到表是已经存在了的。</p>
+<a id="more"></a>
+
+<h2 id="Navicat-Premium-12下看不到PostgreSQL下已创建的表"><a href="#Navicat-Premium-12下看不到PostgreSQL下已创建的表" class="headerlink" title="Navicat Premium 12下看不到PostgreSQL下已创建的表"></a>Navicat Premium 12下看不到PostgreSQL下已创建的表</h2><blockquote>
+<p>正文</p>
+</blockquote>
+<ul>
+<li><h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3></li>
+</ul>
+<blockquote>
+<p>通过Navicat Premium 12连接PostgreSQL之后发现找不到已存在的表，通过PostgreSQL自带的连接工具可以看到表是已经存在了的。</p>
+</blockquote>
+<ul>
+<li><h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><blockquote>
+<p>换最新版本Navicat Premium，这里使用Navicat Premium 15即可解决问题。</p>
+</blockquote>
+</li>
+<li><h3 id="网盘下载地址（附注册机）"><a href="#网盘下载地址（附注册机）" class="headerlink" title="网盘下载地址（附注册机）"></a>网盘下载地址（附注册机）</h3></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">百度网盘地址：   https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1_uPZwgL4EUC9P6r_MYs0nw</span><br><span class="line">提取码：        2h9f</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>PostgreSQL,Navicat</category>
+      </categories>
+      <tags>
+        <tag>Navicat</tag>
+        <tag>PostgreSQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java 将中文文件名称修改为拼音首字母、拼音全称）</title>
     <url>/blog/2020/02/11/Java-%E5%B0%86%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9%E4%B8%BA%E6%8B%BC%E9%9F%B3%E9%A6%96%E5%AD%97%E6%AF%8D%E3%80%81%E6%8B%BC%E9%9F%B3%E5%85%A8%E7%A7%B0/</url>
     <content><![CDATA[<p>在日常工作中，由于一些软件导入文件时对中文不支持，需要修改文件名称为拼音或者拼音首字母，修改方式也多种多样，本文通过Java来进行修改。</p>
@@ -287,7 +498,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Java,Design Pattern</tag>
+        <tag>Java</tag>
+        <tag>Design Pattern</tag>
       </tags>
   </entry>
 </search>
