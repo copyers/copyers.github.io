@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Java 将中文文件名称修改为拼音首字母、拼音全称）</title>
-    <url>/2020/02/11/Java-%E5%B0%86%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9%E4%B8%BA%E6%8B%BC%E9%9F%B3%E9%A6%96%E5%AD%97%E6%AF%8D%E3%80%81%E6%8B%BC%E9%9F%B3%E5%85%A8%E7%A7%B0/</url>
+    <url>/blog/2020/02/11/Java-%E5%B0%86%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9%E4%B8%BA%E6%8B%BC%E9%9F%B3%E9%A6%96%E5%AD%97%E6%AF%8D%E3%80%81%E6%8B%BC%E9%9F%B3%E5%85%A8%E7%A7%B0/</url>
     <content><![CDATA[<p>在日常工作中，由于一些软件导入文件时对中文不支持，需要修改文件名称为拼音或者拼音首字母，修改方式也多种多样，本文通过Java来进行修改。</p>
 <a id="more"></a>
 
@@ -31,7 +31,7 @@
   </entry>
   <entry>
     <title>都2020年了你还在闭门造车吗？快来看看这篇面向B站学习Java之最新最全推荐（长期更新）</title>
-    <url>/2020/02/11/%E9%83%BD2020%E5%B9%B4%E4%BA%86%E4%BD%A0%E8%BF%98%E5%9C%A8%E9%97%AD%E9%97%A8%E9%80%A0%E8%BD%A6%E5%90%97%EF%BC%9F%E5%BF%AB%E6%9D%A5%E7%9C%8B%E7%9C%8B%E8%BF%99%E7%AF%87%E9%9D%A2%E5%90%91B%E7%AB%99%E5%AD%A6%E4%B9%A0Java%E4%B9%8B%E6%9C%80%E6%96%B0%E6%9C%80%E5%85%A8%E6%8E%A8%E8%8D%90%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
+    <url>/blog/2020/02/11/%E9%83%BD2020%E5%B9%B4%E4%BA%86%E4%BD%A0%E8%BF%98%E5%9C%A8%E9%97%AD%E9%97%A8%E9%80%A0%E8%BD%A6%E5%90%97%EF%BC%9F%E5%BF%AB%E6%9D%A5%E7%9C%8B%E7%9C%8B%E8%BF%99%E7%AF%87%E9%9D%A2%E5%90%91B%E7%AB%99%E5%AD%A6%E4%B9%A0Java%E4%B9%8B%E6%9C%80%E6%96%B0%E6%9C%80%E5%85%A8%E6%8E%A8%E8%8D%90%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
     <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200130212950684.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
 <a id="more"></a>
 
@@ -116,7 +116,7 @@
   </entry>
   <entry>
     <title>面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？</title>
-    <url>/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/</url>
+    <url>/blog/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/</url>
     <content><![CDATA[<blockquote>
 <p>在面试中经常会遇到单例模式的问题，动不动就是你知道几种单例模式，请手写几种你知道的单例模式，为了能彻底厘清该问题，本文详细阐述了单例模式的最全的八种写法以及茴香豆的茴字的四种写法（手动狗头），并比较其存在的优劣，如果本文对你有所帮助的话点赞哦亲。</p>
 </blockquote>
