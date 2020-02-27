@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"exclusiver.gitee.io","root":"/blog/","scheme":"Muse","version":"7.7.1","sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true,"offset":12,"b2t":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="MySQL是一个开源的关系型数据库，由MySQL AB公司开发，目前已被Oracle收购。其遵循GPL协议，用户可根据需求定制化开发资金的MySQL。MySQL可移植性高，支持多种语言，例如：Java、PHP、C++、Python、Perl、Eiffel、Rubby等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL相关基础与SQL索引优化分析">
+<meta property="og:url" content="https://exclusiver.gitee.io/blog/2020/02/27/MySQL%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E4%B8%8ESQL%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="补 阙 阁">
+<meta property="og:description" content="MySQL是一个开源的关系型数据库，由MySQL AB公司开发，目前已被Oracle收购。其遵循GPL协议，用户可根据需求定制化开发资金的MySQL。MySQL可移植性高，支持多种语言，例如：Java、PHP、C++、Python、Perl、Eiffel、Rubby等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200227105100741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200227105039257.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200227105100741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200227105125196.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200227105138922.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200227105208553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200227105226954.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200227105249657.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-02-27T03:04:45.000Z">
+<meta property="article:modified_time" content="2020-02-27T03:29:15.926Z">
+<meta property="article:author" content="Doug Li">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="索引优化">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200227105100741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70">
+
+<link rel="canonical" href="https://exclusiver.gitee.io/blog/2020/02/27/MySQL%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E4%B8%8ESQL%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>MySQL相关基础与SQL索引优化分析 | 补 阙 阁</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a452b4c4a1cd7c9a9f62d952a88dc832";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script type="text/javascript" src="/blog/js/jquery/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="/blog/js/src/dytitle.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+
+
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">补 阙 阁</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">不积跬步无以至千里</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <section id = "posts" class = "posts-expand">
+  <article itemscope itemtype="http://schema.org/Article" class="post " lang="zh-CN">
+    <div class = "post-block">
+    <link itemprop="mainEntityOfPage" href="https://exclusiver.gitee.io/blog/2020/02/27/MySQL%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E4%B8%8ESQL%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/timg.jpg">
+      <meta itemprop="name" content="Doug Li">
+      <meta itemprop="description" content="言念君子，当温其如玉">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="补 阙 阁">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL相关基础与SQL索引优化分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-02-27 11:04:45 / 修改时间：11:29:15" itemprop="dateCreated datePublished" datetime="2020-02-27T11:04:45+08:00">2020-02-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+            <div class="post-description">MySQL是一个开源的关系型数据库，由MySQL AB公司开发，目前已被Oracle收购。其遵循GPL协议，用户可根据需求定制化开发资金的MySQL。MySQL可移植性高，支持多种语言，例如：Java、PHP、C++、Python、Perl、Eiffel、Rubby等。</div>
+
+        </div>
+      </header>
+
+   
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <img src="https://img-blog.csdnimg.cn/20200227105100741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+<a id="more"></a>
+## 一、MySQL基本知识
+
+<h3 id="1-MySQL简介"><a href="#1-MySQL简介" class="headerlink" title="1. MySQL简介"></a>1. MySQL简介</h3><h4 id="1-1-什么是MySQL"><a href="#1-1-什么是MySQL" class="headerlink" title="1.1 什么是MySQL"></a>1.1 什么是MySQL</h4><p>​    MySQL是一个开源的关系型数据库，由MySQL AB公司开发，目前已被Oracle收购。其遵循GPL协议，用户可根据需求定制化开发资金的MySQL。MySQL可移植性高，支持多种语言，例如：Java、PHP、C++、Python、Perl、Eiffel、Rubby等。其使用标准的SQL数据语言形式，可通过如下数据语言进行使用：</p>
+<ul>
+<li><p>DQL：数据查询语言，select、from、where；</p>
+</li>
+<li><p>DML：数据操作语言，insert、delete、update；</p>
+</li>
+<li><p>DDL：数据定义语言，create、alter、drop、truncate；</p>
+</li>
+<li><p>DCL：数据控制语言，grant、rollback、commit</p>
+<p>MySQL常用的SQL说明：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">SQL</th>
+<th align="center">描述</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">show databases</td>
+<td align="center">列出所有数据库</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">create database test01</td>
+<td align="center">创建数据库test01</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">create database test01 character set utf8</td>
+<td align="center">创建数据库，并设置字符集为utf-8</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">show create database test01</td>
+<td align="center">查看数据库字符集</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">show variables like ’%char%‘</td>
+<td align="center">查询参数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">set [字符集属性]=utf8</td>
+<td align="center">设置字符集属性为utf8</td>
+<td align="center">仅临时更改，如需彻底修改需改配置文件</td>
+</tr>
+<tr>
+<td align="center">alter database test01 character set ‘utf8’</td>
+<td align="center">修改数据库字符集</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">alter table table01 convert to character set ’utf8‘</td>
+<td align="center">修改数据表字符集</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>MySQL支持大型数据库，支持5000万条记录的数据仓库，32位系统表文件最大支持4GB，64位系统表文件最大支持8TB。在200万条记录下不加索引性能依旧较好。</p>
+<p>注意：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字符集需要安装之后立即修改，如果插入数据之后再进行修改则之前数据库、表格及数据依然为原编码格式！</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-安装MySQL"><a href="#2-安装MySQL" class="headerlink" title="2. 安装MySQL"></a>2. 安装MySQL</h3><h4 id="2-1-Windows安装"><a href="#2-1-Windows安装" class="headerlink" title="2.1 Windows安装"></a>2.1 Windows安装</h4><p>​    以5.7.28为例：参考博文<a href="https://blog.csdn.net/YueYingGuang/article/details/103410868" target="_blank" rel="noopener" title="MySQL 5.7.28安装最稳教程">MySQL 5.7.28安装最稳教程</a></p>
+<h4 id="2-2-Linux安装"><a href="#2-2-Linux安装" class="headerlink" title="2.2 Linux安装"></a>2.2 Linux安装</h4><h5 id="2-2-1-docker安装"><a href="#2-2-1-docker安装" class="headerlink" title="2.2.1 docker安装"></a>2.2.1 docker安装</h5><p><a href="https://blog.csdn.net/YueYingGuang/article/details/103577110" target="_blank" rel="noopener">    CentOS 7 使用docker安装mysql</a></p>
+<h5 id="2-2-2-yum-安装"><a href="#2-2-2-yum-安装" class="headerlink" title="2.2.2 yum 安装"></a>2.2.2 yum 安装</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mysql</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-3-rpm安装"><a href="#2-2-3-rpm安装" class="headerlink" title="2.2.3 rpm安装"></a>2.2.3 rpm安装</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa|grep mysql</span><br><span class="line">rpm -ivh MySQL-client-xxx.linu.xxx.rpm</span><br><span class="line">rpm -ivh MySQL-server-xxx.linu.xxx.rpm</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-Linux下常用命令"><a href="#2-3-Linux下常用命令" class="headerlink" title="2.3 Linux下常用命令"></a>2.3 Linux下常用命令</h4><p> tips：</p>
+<ul>
+<li>查看MySQL所属用户：cat /etc/passwd/|grep mysql</li>
+<li>查看MySQL所属组：cat /etc/group/|grep mysql</li>
+<li>查看MySQL当前服务状态：service mysql status</li>
+<li>启动关闭MySQL： service mysql start、service mysql stop、service mysql restart</li>
+<li>设置MySQL开机启动：chkconfig mysql on、chkconfig –list|grep mysql、cat /etc/inittab或者netsysv图形化操作</li>
+<li>设置MySQL用户名密码：mysqladmin -u root -p 123456</li>
+<li>进程查看：ps -ef|grep mysql </li>
+<li>设置大小写不敏感：show variables like ’%lower_case_table_names%‘，修改my.cnf下lower_case_table_names=1，即大小写不敏感。</li>
+</ul>
+<h4 id="2-4-sql-mode"><a href="#2-4-sql-mode" class="headerlink" title="2.4 sql_mode"></a>2.4 sql_mode</h4><p>​    sql_mode定义了对MySQL中的语法校验规则，其默认值是空值，这种情况下是可以进行一些非法操作的，生产环境下必须将该值设置为严格模式，以下为sql_mode常用的值。</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ONLY_FULL_GROUP_BY</td>
+<td align="center">若select未选中group by的字段，则SQL不合法</td>
+</tr>
+<tr>
+<td align="center">NO_AUTO_VALUE_ON_ZERO</td>
+<td align="center">自增长列可插入0或者null</td>
+</tr>
+<tr>
+<td align="center">STRICT_TRANS_TABLES</td>
+<td align="center">若一个值不能插入到事务表中，则中断，对非事务表不做限制</td>
+</tr>
+<tr>
+<td align="center">NO_ZERO_IN_DATE</td>
+<td align="center">严格模式下不允许日期和月份为零</td>
+</tr>
+<tr>
+<td align="center">NO_ZERO_DATE</td>
+<td align="center">日期不允许插入零</td>
+</tr>
+<tr>
+<td align="center">ERROR_FOR_DIVISION_BY_ZERO</td>
+<td align="center">insert或update中，若数据被零除，则报错，如果未给出该模式，则返回null</td>
+</tr>
+<tr>
+<td align="center">NO_AUTO_CREATE_USER</td>
+<td align="center">禁止grant创建密码为空的用户</td>
+</tr>
+<tr>
+<td align="center">NO_ENGINE_SUBSTITUTION</td>
+<td align="center">存储引擎被禁用则报错，若未设置则使用默认的存储引擎代替</td>
+</tr>
+</tbody></table>
+<h5 id="2-4-1-查看和修改sql-mode"><a href="#2-4-1-查看和修改sql-mode" class="headerlink" title="2.4.1 查看和修改sql_mode"></a>2.4.1 查看和修改sql_mode</h5><p>查看：select @@sql_mode</p>
+<p>修改：set @@sql_mode=’’;</p>
+<h4 id="2-5-用户管理"><a href="#2-5-用户管理" class="headerlink" title="2.5 用户管理"></a>2.5 用户管理</h4><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">说明</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">create user z3 identified by ’123456‘</td>
+<td align="center">创建名称为z3，密码为12346的用户</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">select host,user,password,select_priv,insert_priv,drop_priv from mysql.user</td>
+<td align="center">查看用户和权限信息</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">set password = password(‘123456’)</td>
+<td align="center">修改当前用户密码</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">update mysql.user set password=password(‘123456’) where user = ‘z3’</td>
+<td align="center">修改其他用户密码</td>
+<td align="center">通过user表的修改需要flush privileges才能生效</td>
+</tr>
+<tr>
+<td align="center">update mysql.user set user = ‘li4’ where user =’z3’</td>
+<td align="center">修改用户名</td>
+<td align="center">通过user表的修改需要flush privileges才能生效</td>
+</tr>
+<tr>
+<td align="center">drop user li4</td>
+<td align="center">删除用户</td>
+<td align="center">不要通过user表删除，系统会有残留</td>
+</tr>
+</tbody></table>
+<p>host:表示连接类型</p>
+<ul>
+<li>%表示所有远程通过TCP连接</li>
+<li>IP地址</li>
+<li>机器名</li>
+<li>::1 ipv6本机地址</li>
+<li>localhost</li>
+</ul>
+<h4 id="2-6-权限管理"><a href="#2-6-权限管理" class="headerlink" title="2.6 权限管理"></a>2.6 权限管理</h4><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">grant select,insert,delete,drop on mydb.* to z3@localhost</td>
+<td align="center">给本地的z3用户的mydb数据库所有表授予增删改查权限</td>
+</tr>
+<tr>
+<td align="center">grant all privileges on *.* to z3@’%’ identified by ‘123’</td>
+<td align="center">授予通过网络登录的z3用户对所有库的权限，密码为123</td>
+</tr>
+<tr>
+<td align="center">show grants</td>
+<td align="center">查看权限</td>
+</tr>
+<tr>
+<td align="center">revoke all privileges on mysql.* from z3@localhost</td>
+<td align="center">收回z3全库全表所有权限</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、SQL优化"><a href="#二、SQL优化" class="headerlink" title="二、SQL优化"></a>二、SQL优化</h2><p>一般使用SQL操作数据库时，当遇到SQL执行时间太长怎么办呢？一般我们都是从下面四个方面进行查摆问题一一优化：</p>
+<ul>
+<li>查询语句过于粗糙</li>
+<li>索引失效，明明增加了单值索引或者复合索引，但是explain查看执行计划却发现依旧是全表扫描</li>
+<li>系统设计问题导致join关联查询太多</li>
+<li>硬件方面需要优化，各缓冲参数设置过小（比如order by所使用的sort_buffer_size）</li>
+</ul>
+<p>在优化开始之前，我们需要了解MySQL的逻辑架构是怎样的，也就是MySQL是如何处理我们的SQL语句的呢？</p>
+<hr>
+<h3 id="1-MySQL架构分析"><a href="#1-MySQL架构分析" class="headerlink" title="1. MySQL架构分析"></a>1. MySQL架构分析</h3><img src="https://img-blog.csdnimg.cn/20200227105039257.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70,color_FFFFFF,t_70" alt="" style="width:100%" />
+
+
+
+<p>上图为MySQL逻辑架构图，其主要分为连接层、服务层、引擎层及存储层。</p>
+<ul>
+<li><p>连接层，MySQL最上层，它是一些客户端和连接服务，包含本地socket通信和基于客户端连接的类似tcp/ip通信，主要完成连接处理、授权认证及相关安全方案，该层引入了线程池的概念为安全认证客户端提供线程，<strong>例如驱动连接</strong>。</p>
+</li>
+<li><p>服务层：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Management Services &amp; Utilities</th>
+<th>系统管理和控制工具</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">SQL Interface</td>
+<td>SQL接口：接收SQL返回查询结果</td>
+</tr>
+<tr>
+<td align="center">Parser</td>
+<td>解析器：验证和解析SQL语句</td>
+</tr>
+<tr>
+<td align="center">Optimizer</td>
+<td>查询优化器：MySQL对SQL会根据优化器结果进行优化</td>
+</tr>
+<tr>
+<td align="center">Cache&amp;Buffer</td>
+<td>查询缓存：提高查询效率</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>引擎层</p>
+<p>可插拔式引擎的选择，负责MySQL中数据的存储和查询，目前MySQL最常用的两种数据库存储引擎为InnoDB与MyISAM，下表为二者的区别。</p>
+<table>
+<thead>
+<tr>
+<th align="center">特性</th>
+<th align="center">InnoDB</th>
+<th align="center">MyISAM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">是否支持事务</td>
+<td align="center">支持</td>
+<td align="center">不支持事务</td>
+</tr>
+<tr>
+<td align="center">是否支持外键</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td align="center">索引类型</td>
+<td align="center">聚簇索引</td>
+<td align="center">非聚簇索引</td>
+</tr>
+<tr>
+<td align="center">是否保存表的行数</td>
+<td align="center">否</td>
+<td align="center">是（通过变量保存，避免select count(*) 时进行全表扫描）</td>
+</tr>
+<tr>
+<td align="center">全文索引</td>
+<td align="center">5.7以后支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">是否可压缩后查询</td>
+<td align="center">否</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">锁的粒度</td>
+<td align="center">行锁</td>
+<td align="center">表锁</td>
+</tr>
+<tr>
+<td align="center">主键是否必须</td>
+<td align="center">是（聚簇索引特性）</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">存储文件</td>
+<td align="center">frm（表结构），ibd（数据文件）</td>
+<td align="center">frm（表结构），myd（数据文件），myi（索引文件）</td>
+</tr>
+</tbody></table>
+<img src="https://img-blog.csdnimg.cn/20200227105100741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+
+<blockquote>
+<p>tips: </p>
+<p>1、聚簇索引与非聚簇索引</p>
+<p>聚簇索引：数据与索引是在同一B+Tree上的，非叶子节点存放的是索引（数据的指针），叶子节点存放的是数据，该索引类型必须有主键，数据可通过主键进行查询，之后建立的索引为辅助索引，辅助索引需要两次查询，先查询到主键，然后通过主键查询数据，所以主键最好设置为自增，否则主键过大会带来额外开销；</p>
+<p>非聚簇索引：B+Tree的非叶子节点和叶子节点存放的都是数据的引用地址，数据文件与索引文件是分开保存的。</p>
+<p>2、<strong>InnoDB的行锁是实现在索引上的，而不是锁在物理上，如果索引失效则行锁会退化为表锁。</strong></p>
+</blockquote>
+</li>
+<li><p>存储层<br>数据库文件的数据存储在文件系统上的方式，并通过该存储方式与存储引擎交互。</p>
+</li>
+</ul>
+<hr>
+<h3 id="2-SQL执行分析"><a href="#2-SQL执行分析" class="headerlink" title="2. SQL执行分析"></a>2. SQL执行分析</h3><h4 id="2-1-SQL查询流程"><a href="#2-1-SQL查询流程" class="headerlink" title="2.1 SQL查询流程"></a>2.1 SQL查询流程</h4><p>通过对MySQL逻辑结构的分析，我们可以知道SQL查询的流程大致为：</p>
+<ol>
+<li>MySQL客户端通过协议与MySQL服务器建立连接，发送查询语句；</li>
+<li>MySQL检查查询缓存，缓存如果命中则直接返回，未命中则将语句交由解析器处理；</li>
+<li>解析器通过关键字对SQL语句预处理，生成解析树并验证SQL语法，若语法通过则交由优化器；</li>
+<li>优化器将SQL转化成执行计划并选择最好的执行；</li>
+<li>优化器将最终的查询结果返回。</li>
+</ol>
+<p>SQL手写为：<img src="https://img-blog.csdnimg.cn/20200227105125196.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" /></p>
+<p>优化器优化之后的顺序：</p>
+<img src="https://img-blog.csdnimg.cn/20200227105138922.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+
+
+
+<blockquote>
+<p>tips: </p>
+<ul>
+<li>show engines可查看所有数据库引擎</li>
+<li>show variables like ‘%storage_engine%’ 可查看当前默认数据库引擎</li>
+</ul>
+</blockquote>
+<hr>
+<h4 id="2-2-show-profile"><a href="#2-2-show-profile" class="headerlink" title="2.2 show profile"></a>2.2 show profile</h4><h5 id="2-2-1-SQL执行周期"><a href="#2-2-1-SQL执行周期" class="headerlink" title="2.2.1 SQL执行周期"></a>2.2.1 SQL执行周期</h5><p>通过show profile可以查看SQL的详细执行周期，可以作为优化SQL最强有力的工具。</p>
+<ol>
+<li><p>通过show variables like ‘%profiling%’查看是否开启该功能；</p>
+<img src="https://img-blog.csdnimg.cn/20200227105208553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+</li>
+<li><p>set profiling = 1；开启show profile；</p>
+</li>
+<li><p>show profile cpu,block io for query Query_id；查询SQL详细执行信息。</p>
+<img src="https://img-blog.csdnimg.cn/20200227105226954.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+
+</li>
+</ol>
+<p>show profiles可以提供SQL执行的详细信息，但是实际中我们更多使用explain对SQL进行解释优化，查看SQL是否使用索引等等，下文更多是针对explain的使用进行介绍。</p>
+<hr>
+<h3 id="3-SQL索引优化"><a href="#3-SQL索引优化" class="headerlink" title="3. SQL索引优化"></a>3. SQL索引优化</h3><hr>
+<p>如何提高SQL执行速度？许多人第一反应就是增加索引，什么是索引呢？如何增加索引且增加的索引不会因为SQL问题导致失效呢？</p>
+<p>我们知道MySQL底层使用B+树实现，索引作为数据的另一种表现形式同样也会耗费存储空间的。</p>
+<p>如果单纯的为了提升某个字段的查询效率而在全表字段上都增加索引，那么无疑给存储空间带来了巨大负担。而且索引增加之后虽然给查询带来了便利，但是在增加和删除方面，为了维护索引而带来的工作量也是极为繁重的，这说明了不经研究而随意建立索引的方法是不可取的。</p>
+<hr>
+<h4 id="3-1-索引简介"><a href="#3-1-索引简介" class="headerlink" title="3.1 索引简介"></a>3.1 索引简介</h4><h5 id="3-1-什么是索引？"><a href="#3-1-什么是索引？" class="headerlink" title="3.1 什么是索引？"></a>3.1 什么是索引？</h5><p>​        索引是帮助MySQL高效获取数据的数据结构，所以索引可以简单理解为排好序的快速查找数据结构。</p>
+<h5 id="3-2-索引的优缺点"><a href="#3-2-索引的优缺点" class="headerlink" title="3.2 索引的优缺点"></a>3.2 索引的优缺点</h5><p><strong>优点：</strong></p>
+<ul>
+<li>提高数据检索的效率，降低数据库的IO成本；</li>
+<li>索引是一种排好序的数据结构，通过索引进行排序可以降低数据的排序成本。</li>
+</ul>
+<p><strong>劣势：</strong></p>
+<ul>
+<li>降低更新表的速度，加了索引的字段在insert、update、delete时会带来额外的开销；</li>
+<li>占用多余的空间。</li>
+</ul>
+<hr>
+<h4 id="3-2-适合创建索引的情况"><a href="#3-2-适合创建索引的情况" class="headerlink" title="3.2 适合创建索引的情况"></a>3.2 适合创建索引的情况</h4><ul>
+<li>主键自动建立唯一索引</li>
+<li>频繁作为查询条件的字段需要建立索引</li>
+<li>查询中与其他表关联的字段，外键关系建立索引</li>
+<li>组合索引性价比优于单值索引</li>
+<li>查询中排序的字段</li>
+<li>查询中统计或者分组的字段</li>
+</ul>
+<hr>
+<h4 id="3-3-不适合创建索引的情况"><a href="#3-3-不适合创建索引的情况" class="headerlink" title="3.3 不适合创建索引的情况"></a>3.3 不适合创建索引的情况</h4><ul>
+<li>表记录太少</li>
+<li>经常增删改的表或者字段</li>
+<li>where条件里用不到的字段不创建索引</li>
+<li>字段中重复内容较多，过滤性不好的不适合建立索引</li>
+</ul>
+<hr>
+<h4 id="3-4-explain性能参数分析"><a href="#3-4-explain性能参数分析" class="headerlink" title="3.4 explain性能参数分析"></a>3.4 explain性能参数分析</h4><p>在日常工作中，使用最为频繁的就是通过explain+SQL模拟优化器执行SQL语句，从而知道MySQL是如何处理SQL语句的，并根据情况分析SQL的性能瓶颈以优化SQL。</p>
+<p>那么，通过explain我们可以获得什么信息呢？</p>
+<ul>
+<li>表的读取顺序</li>
+<li>数据读取操作的操作类型</li>
+<li>哪些索引可以使用</li>
+<li>哪些索引被实际使用</li>
+<li>表之间的引用</li>
+<li>每张表有多少行被优化器查询</li>
+</ul>
+<h5 id="3-4-1-explain参数"><a href="#3-4-1-explain参数" class="headerlink" title="3.4.1 explain参数"></a>3.4.1 explain参数</h5><p>我们通过explain+SQL的方式可以获得如下所示的列表：</p>
+<img src="https://img-blog.csdnimg.cn/20200227105249657.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+
+<p>可以看出主要参数即：id，select_type,table,partitions,<strong>type</strong>,<strong>possible_keys,key</strong>,key_len,ref,rows,filtered,<strong>Extra</strong>。</p>
+<p>以下针对第一行参数进行详细分析：</p>
+<ul>
+<li><p><strong>id</strong>：select查询的序列号，包含一组数字，表示查询中select子句或操作表的顺序，主要分以下三种情况：</p>
+<ul>
+<li>id相同，执行顺序由上至下；</li>
+<li>id不同，如果是子查询，id的序号会较大，此时优先级越高，也就越先被执行；</li>
+<li>id相同不同，同时存在时先根据不同定优先级，再由上至下进行执行；</li>
+</ul>
+</li>
+<li><p>select_type：查询的类型，主要用于区别普通查询、联合查询、子查询等的复杂查询，具体参数如下：</p>
+<ul>
+<li>SIMPLE：简单的select查询，不包含子查询或者UNION；</li>
+<li>PRIMARY：查询中若包含其他子查询，则最外层会被标记为PRIMARY；</li>
+<li>SUBQUERY：select或者where中包含了子查询；</li>
+<li>DERIVED：From中包含的子查询，临时表；</li>
+<li>UNION：第二个select出现在UNION之后则会被标记为UNION；</li>
+<li>UNION RESULT：从UNION中获取结果的select；</li>
+</ul>
+</li>
+<li><p>table：显示改行的数据来源于哪张表</p>
+</li>
+<li><p>partitions：是否分区</p>
+</li>
+<li><p><strong>type：</strong>优化器定义的访问类型，从最好到最差依次是<strong>scerria</strong>（system&gt;const&gt;ref_eq&gt;ref&gt;range&gt;index&gt;all），具体含义如下：</p>
+<ul>
+<li>system：表中只有一行记录，相当于const类型的特例，平时不会出现；</li>
+<li>const：通过索引一次就找到了，const用于比较primary key或者unique索引；</li>
+<li>eq_ref：唯一性索引，对于每个索引键，表中只有一条记录与之匹配，<strong>简单地说是const是直接按主键或唯一键读取，eq_ref用于联表查询的情况，按联表的主键或唯一键联合查询</strong>；</li>
+<li>ref：非唯一性索引，返回匹配某个值的所有行（一值找多行）;</li>
+<li>range：索引给定范围的行，例如where中的between、in，这种范围索引较全表扫描要好，因为范围决定了不用全表扫描；</li>
+<li>index：full index，全表索引扫描，效果与all的区别就是index扫描的是全表的索引，而all扫描的是数据；</li>
+<li>all：全表数据扫描，匹配到之后返回结果。</li>
+</ul>
+<blockquote>
+<p>一般来说，保证查询达到range或者ref效果为佳。</p>
+</blockquote>
+</li>
+<li><p><strong>possible_keys：</strong>显示可能应用在这张表中的索引，一个或多个。查询所涉及字段若存在索引，则索引将被列出，但不一定被使用</p>
+</li>
+<li><p><strong>key：</strong>查询中实际使用的索引，如果没有则为null，查询中如果使用了覆盖索引，则索引和查询的字段一一吻合</p>
+</li>
+<li><p>key_len：表示索引使用到的字节数，可通过该值计算查询中使用的索引长度。在不损失精度的情况下，该值越小越好。该值为索引最大可能长度，并非实际使用长度。</p>
+</li>
+<li><p>ref：显示索引哪一列被使用了，哪些列或者常数被用于索引进行查询（最好是常数）。也就是说key 列是实际使用的 index ， 但 index 可能建立在数据表的若干列上。ref 列列出具体哪些列或常数被使用了。</p>
+</li>
+<li><p>rows：根据表统计信息及索引使用情况大致估算除所需要读取的行数</p>
+</li>
+<li><p>filtered：返回结果的行占需要读到的行(rows列的值)的百分比，因为对于join操作，前一个表的结果集大小直接影响了循环的次数</p>
+</li>
+<li><p><strong>Extra：包含不适合在其他列中显示但十分重要的额外信息</strong>，其主要会有以下几个常数：</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Using filesort</td>
+<td align="center">MySQL会对数据使用外部的文件索引排序，而不是按照表内索引顺序读取，文件的建立删除会耗费大量资源，出现该项一定要优化</td>
+</tr>
+<tr>
+<td align="center">Using temporary</td>
+<td align="center">使用临时表保存中间结果，常见于order by、group by，临时表的创建与删除会耗费大量资源，出现该项一定要优化</td>
+</tr>
+<tr>
+<td align="center">Using index</td>
+<td align="center">相应的select中使用了覆盖索引，避免访问冗余数据，效果不错，同时出现Using where则表明索引被用来执行索引键的查找，若没有出现Using where 则表明索引用于读取数据而非执行查找</td>
+</tr>
+<tr>
+<td align="center">Using where</td>
+<td align="center">表明使用了where过滤</td>
+</tr>
+<tr>
+<td align="center">Using join buffer</td>
+<td align="center">使用了连接缓存，可在my.cnf中增加缓存大小</td>
+</tr>
+<tr>
+<td align="center">impossible where</td>
+<td align="center">where的值总是false，不能获取任何值</td>
+</tr>
+<tr>
+<td align="center">select tables optimized away</td>
+<td align="center">在没有GROUPBY子句的情况下，基于索引优化MIN/MAX操作或者对于MyISAM存储引擎优化COUNT(*)操作，不必等到执行阶段再进行计算，查询执行计划生成的阶段即完成优化。</td>
+</tr>
+<tr>
+<td align="center">distinct</td>
+<td align="center">优化distinct，找到第一匹配值即停止</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p>以上就是对explain参数的分析，通过对这些参数的学习，将使得我们以后在SQL优化方面无论遇到什么问题都能对症下药，迎刃而解。</p>
+<hr>
+<h4 id="3-5-索引失效情况分析"><a href="#3-5-索引失效情况分析" class="headerlink" title="3.5 索引失效情况分析"></a>3.5 索引失效情况分析</h4><p>有时候我们明明在字段上建立了索引，但是explain之后发现优化器并没有使用到索引，那什么情况下会导致索引失效？写SQL语句时应该注意些什么才能避免索引失效呢？</p>
+<h5 id="3-5-1-索引失效"><a href="#3-5-1-索引失效" class="headerlink" title="3.5.1 索引失效"></a>3.5.1 索引失效</h5><p>以下是常见导致索引失效的几种情况：</p>
+<ol>
+<li>最左前缀法则：建立的复合索引在使用时没有遵循最左前缀法则，例如索引使用了（a,b,c）三个字段，但是使用的时候a没有使用到，索引失效；</li>
+<li>在索引字段上进行计算，函数处理，类型转换等二次操作；</li>
+<li>范围条件右边的列索引失效，即范围之后全失效，例如索引为（id,age,name）,使用时如果出现where id=xx and age&gt;10 and name=xx，则age之后索引失效；</li>
+<li>尽量使用覆盖索引，避免select *，即复合索引的字段与查询字段一一吻合；</li>
+<li>!=或&lt;&gt;会导致索引失效；</li>
+<li>is null，is not null会导致索引失效；</li>
+<li>使用like模糊查询时如果%出现在最左边则索引失效，解决办法就是使用覆盖索引；</li>
+<li>字符串不加单引号；</li>
+<li>多次使用or会导致索引失效。</li>
+</ol>
+<p>以上就是会造成MySQL索引失效的一些情况，为了避免这些情况的出现而造成索引失效，建议：</p>
+<ul>
+<li>对于单值索引，尽量选择针对查询过滤性更好的字段来建立索引，例如性别只有男、女、未知的三类就没有必要建立索引；</li>
+<li>复合索引过滤性最好的字段要放在最前面；</li>
+<li>复合索引尽可能包含查询字段中where子句中更多的字段；</li>
+<li>通过分析统计信息和调整SQL查询的写法来选择建立合适的索引。</li>
+</ul>
+
+        <div>
+          <p id="div-border-left-red">
+          <b>本文为个人原创</b><br/>
+            <span>
+            <br/><b>转载请注明出处，谢谢！</b>
+            </span>
+          </p>
+      </div>
+       <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
+    
+    </div>
+
+    
+      
+
+    
+    
+    
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/MySQL/" rel="tag"># MySQL</a>
+              <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+              <a href="/blog/tags/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" rel="tag"># 索引优化</a>
+              <a href="/blog/tags/SQL/" rel="tag"># SQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2020/02/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94Java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B9%8B%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%8F%8A%E4%BC%98%E5%8C%96/" rel="prev" title="数据结构与算法——Java排序算法之冒泡排序及优化">
+      <i class="fa fa-chevron-left"></i> 数据结构与算法——Java排序算法之冒泡排序及优化
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+    </div>
+  </article>
+  </section>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-MySQL简介"><span class="nav-number">1.</span> <span class="nav-text">1. MySQL简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-什么是MySQL"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么是MySQL</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装MySQL"><span class="nav-number">2.</span> <span class="nav-text">2. 安装MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Windows安装"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Windows安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Linux安装"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Linux安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-docker安装"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 docker安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-yum-安装"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 yum 安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-3-rpm安装"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 rpm安装</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-Linux下常用命令"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Linux下常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-sql-mode"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 sql_mode</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-1-查看和修改sql-mode"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1 查看和修改sql_mode</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-用户管理"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 用户管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-权限管理"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 权限管理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、SQL优化"><span class="nav-number"></span> <span class="nav-text">二、SQL优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-MySQL架构分析"><span class="nav-number">1.</span> <span class="nav-text">1. MySQL架构分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SQL执行分析"><span class="nav-number">2.</span> <span class="nav-text">2. SQL执行分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-SQL查询流程"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 SQL查询流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-show-profile"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 show profile</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-SQL执行周期"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 SQL执行周期</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-SQL索引优化"><span class="nav-number">3.</span> <span class="nav-text">3. SQL索引优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-索引简介"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 索引简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-什么是索引？"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1 什么是索引？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-索引的优缺点"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.2 索引的优缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-适合创建索引的情况"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 适合创建索引的情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-不适合创建索引的情况"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 不适合创建索引的情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-explain性能参数分析"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 explain性能参数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-1-explain参数"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 explain参数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-索引失效情况分析"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 索引失效情况分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-5-1-索引失效"><span class="nav-number">3.5.1.</span> <span class="nav-text">3.5.1 索引失效</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/">
+    <img class="site-author-image" itemprop="image" alt="Doug Li"
+      src="/blog/images/timg.jpg">
+  <a/>
+  <p class="site-author-name" itemprop="name">Doug Li</p>
+  <div class="site-description" itemprop="description">言念君子，当温其如玉</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/copyers" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;copyers" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1206227301@qq.com" title="E-Mail → mailto:1206227301@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/YueYingGuang" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;YueYingGuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-list"></i>
+      近期文章
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://exclusiver.gitee.io/blog/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/" title="https:&#x2F;&#x2F;exclusiver.gitee.io&#x2F;blog&#x2F;2020&#x2F;02&#x2F;11&#x2F;%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F&#x2F;">面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://exclusiver.gitee.io/blog/2020/02/11/%E9%83%BD2020%E5%B9%B4%E4%BA%86%E4%BD%A0%E8%BF%98%E5%9C%A8%E9%97%AD%E9%97%A8%E9%80%A0%E8%BD%A6%E5%90%97%EF%BC%9F%E5%BF%AB%E6%9D%A5%E7%9C%8B%E7%9C%8B%E8%BF%99%E7%AF%87%E9%9D%A2%E5%90%91B%E7%AB%99%E5%AD%A6%E4%B9%A0Java%E4%B9%8B%E6%9C%80%E6%96%B0%E6%9C%80%E5%85%A8%E6%8E%A8%E8%8D%90%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" title="https:&#x2F;&#x2F;exclusiver.gitee.io&#x2F;blog&#x2F;2020&#x2F;02&#x2F;11&#x2F;%E9%83%BD2020%E5%B9%B4%E4%BA%86%E4%BD%A0%E8%BF%98%E5%9C%A8%E9%97%AD%E9%97%A8%E9%80%A0%E8%BD%A6%E5%90%97%EF%BC%9F%E5%BF%AB%E6%9D%A5%E7%9C%8B%E7%9C%8B%E8%BF%99%E7%AF%87%E9%9D%A2%E5%90%91B%E7%AB%99%E5%AD%A6%E4%B9%A0Java%E4%B9%8B%E6%9C%80%E6%96%B0%E6%9C%80%E5%85%A8%E6%8E%A8%E8%8D%90%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89&#x2F;">都2020年了你还在闭门造车吗？快来看看这篇面向B站学习Java之最新最全推荐（长期更新）</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://exclusiver.gitee.io/blog/2020/02/11/Java-%E5%B0%86%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9%E4%B8%BA%E6%8B%BC%E9%9F%B3%E9%A6%96%E5%AD%97%E6%AF%8D%E3%80%81%E6%8B%BC%E9%9F%B3%E5%85%A8%E7%A7%B0/" title="https:&#x2F;&#x2F;exclusiver.gitee.io&#x2F;blog&#x2F;2020&#x2F;02&#x2F;11&#x2F;Java-%E5%B0%86%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9%E4%B8%BA%E6%8B%BC%E9%9F%B3%E9%A6%96%E5%AD%97%E6%AF%8D%E3%80%81%E6%8B%BC%E9%9F%B3%E5%85%A8%E7%A7%B0&#x2F;">Java 将中文文件名称修改为拼音首字母、拼音全称）</a>
+        </li>
+    </ul>
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1318881224&auto=0&height=66"></iframe>
+  </div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Doug Li</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">31k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">28 分钟</span>
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2020,02,11,15,00,00); //北京时间2020-2-11 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+	siteTime();
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
+  <script>
+  //$("body").backstretch("https://dss0.bdstatic.com/k4oZeXSm1A5BphGlnYG/skin/879.jpg?2");
+  </script>
+<script src="/blog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/blog/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":0,"vOffset":-20},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>
