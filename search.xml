@@ -2,8 +2,8 @@
 <search>
   <entry>
     <title>那些年我常用的IDEA快捷键</title>
-    <url>/blog/2020/02/28/%E9%82%A3%E4%BA%9B%E5%B9%B4%E6%88%91%E5%B8%B8%E7%94%A8%E7%9A%84IDEA%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
-    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200228143656334.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+    <url>/blog/2020/02/28/na-xie-nian-wo-chang-yong-de-idea-kuai-jie-jian/</url>
+    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200228143656334.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 <a id="more"></a>
 
 
@@ -341,7 +341,25 @@
 </tbody></table>
 <hr>
 <p>更多快捷键可参考：<a href="https://github.com/judasn/IntelliJ-IDEA-Tutorial/blob/master/keymap-introduce.md" target="_blank" rel="noopener">IntelliJ-IDEA-Tutorial</a></p>
-]]></content>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -352,8 +370,8 @@
   </entry>
   <entry>
     <title>MySQL相关基础与SQL索引优化分析</title>
-    <url>/blog/2020/02/27/MySQL%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E4%B8%8ESQL%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200227105100741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+    <url>/blog/2020/02/27/mysql-xiang-guan-ji-chu-yu-sql-suo-yin-you-hua-fen-xi/</url>
+    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200227105100741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 <a id="more"></a>
 
 <h2 id="一、MySQL基本知识"><a href="#一、MySQL基本知识" class="headerlink" title="一、MySQL基本知识"></a>一、MySQL基本知识</h2><h3 id="1-MySQL简介"><a href="#1-MySQL简介" class="headerlink" title="1. MySQL简介"></a>1. MySQL简介</h3><h4 id="1-1-什么是MySQL"><a href="#1-1-什么是MySQL" class="headerlink" title="1.1 什么是MySQL"></a>1.1 什么是MySQL</h4><p>​    MySQL是一个开源的关系型数据库，由MySQL AB公司开发，目前已被Oracle收购。其遵循GPL协议，用户可根据需求定制化开发资金的MySQL。MySQL可移植性高，支持多种语言，例如：Java、PHP、C++、Python、Perl、Eiffel、Rubby等。其使用标准的SQL数据语言形式，可通过如下数据语言进行使用：</p>
@@ -419,16 +437,13 @@
 </tbody></table>
 <p>MySQL支持大型数据库，支持5000万条记录的数据仓库，32位系统表文件最大支持4GB，64位系统表文件最大支持8TB。在200万条记录下不加索引性能依旧较好。</p>
 <p>注意：</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">字符集需要安装之后立即修改，如果插入数据之后再进行修改则之前数据库、表格及数据依然为原编码格式！</span><br></pre></td></tr></table></figure>
-
-
-
+<pre class=" language-markdown"><code class="language-markdown">字符集需要安装之后立即修改，如果插入数据之后再进行修改则之前数据库、表格及数据依然为原编码格式！</code></pre>
 <h3 id="2-安装MySQL"><a href="#2-安装MySQL" class="headerlink" title="2. 安装MySQL"></a>2. 安装MySQL</h3><h4 id="2-1-Windows安装"><a href="#2-1-Windows安装" class="headerlink" title="2.1 Windows安装"></a>2.1 Windows安装</h4><p>​    以5.7.28为例：参考博文<a href="https://blog.csdn.net/YueYingGuang/article/details/103410868" target="_blank" rel="noopener" title="MySQL 5.7.28安装最稳教程">MySQL 5.7.28安装最稳教程</a></p>
 <h4 id="2-2-Linux安装"><a href="#2-2-Linux安装" class="headerlink" title="2.2 Linux安装"></a>2.2 Linux安装</h4><h5 id="2-2-1-docker安装"><a href="#2-2-1-docker安装" class="headerlink" title="2.2.1 docker安装"></a>2.2.1 docker安装</h5><p><a href="https://blog.csdn.net/YueYingGuang/article/details/103577110" target="_blank" rel="noopener">    CentOS 7 使用docker安装mysql</a></p>
-<h5 id="2-2-2-yum-安装"><a href="#2-2-2-yum-安装" class="headerlink" title="2.2.2 yum 安装"></a>2.2.2 yum 安装</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install mysql</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-2-3-rpm安装"><a href="#2-2-3-rpm安装" class="headerlink" title="2.2.3 rpm安装"></a>2.2.3 rpm安装</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rpm -qa|grep mysql</span><br><span class="line">rpm -ivh MySQL-client-xxx.linu.xxx.rpm</span><br><span class="line">rpm -ivh MySQL-server-xxx.linu.xxx.rpm</span><br></pre></td></tr></table></figure>
-
+<h5 id="2-2-2-yum-安装"><a href="#2-2-2-yum-安装" class="headerlink" title="2.2.2 yum 安装"></a>2.2.2 yum 安装</h5><pre class=" language-bash"><code class="language-bash">yum <span class="token function">install</span> mysql</code></pre>
+<h5 id="2-2-3-rpm安装"><a href="#2-2-3-rpm安装" class="headerlink" title="2.2.3 rpm安装"></a>2.2.3 rpm安装</h5><pre class=" language-bash"><code class="language-bash">rpm -qa<span class="token operator">|</span><span class="token function">grep</span> mysql
+rpm -ivh MySQL-client-xxx.linu.xxx.rpm
+rpm -ivh MySQL-server-xxx.linu.xxx.rpm</code></pre>
 <h4 id="2-3-Linux下常用命令"><a href="#2-3-Linux下常用命令" class="headerlink" title="2.3 Linux下常用命令"></a>2.3 Linux下常用命令</h4><p> tips：</p>
 <ul>
 <li>查看MySQL所属用户：cat /etc/passwd/|grep mysql</li>
@@ -564,7 +579,7 @@
 </ul>
 <p>在优化开始之前，我们需要了解MySQL的逻辑架构是怎样的，也就是MySQL是如何处理我们的SQL语句的呢？</p>
 <hr>
-<h3 id="1-MySQL架构分析"><a href="#1-MySQL架构分析" class="headerlink" title="1. MySQL架构分析"></a>1. MySQL架构分析</h3><img src="https://img-blog.csdnimg.cn/20200227105039257.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70,color_FFFFFF,t_70" alt="" style="width:100%" />
+<h3 id="1-MySQL架构分析"><a href="#1-MySQL架构分析" class="headerlink" title="1. MySQL架构分析"></a>1. MySQL架构分析</h3><img src="https://img-blog.csdnimg.cn/20200227105039257.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70,color_FFFFFF,t_70" alt="" style="width:100%">
 
 
 
@@ -654,7 +669,7 @@
 <td align="center">frm（表结构），myd（数据文件），myi（索引文件）</td>
 </tr>
 </tbody></table>
-<img src="https://img-blog.csdnimg.cn/20200227105100741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+<img src="https://img-blog.csdnimg.cn/20200227105100741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 
 <blockquote>
 <p>tips: </p>
@@ -676,9 +691,9 @@
 <li>优化器将SQL转化成执行计划并选择最好的执行；</li>
 <li>优化器将最终的查询结果返回。</li>
 </ol>
-<p>SQL手写为：<img src="https://img-blog.csdnimg.cn/20200227105125196.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" /></p>
+<p>SQL手写为：<img src="https://img-blog.csdnimg.cn/20200227105125196.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%"></p>
 <p>优化器优化之后的顺序：</p>
-<img src="https://img-blog.csdnimg.cn/20200227105138922.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+<img src="https://img-blog.csdnimg.cn/20200227105138922.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 
 
 
@@ -693,12 +708,12 @@
 <h4 id="2-2-show-profile"><a href="#2-2-show-profile" class="headerlink" title="2.2 show profile"></a>2.2 show profile</h4><h5 id="2-2-1-SQL执行周期"><a href="#2-2-1-SQL执行周期" class="headerlink" title="2.2.1 SQL执行周期"></a>2.2.1 SQL执行周期</h5><p>通过show profile可以查看SQL的详细执行周期，可以作为优化SQL最强有力的工具。</p>
 <ol>
 <li><p>通过show variables like ‘%profiling%’查看是否开启该功能；</p>
-<img src="https://img-blog.csdnimg.cn/20200227105208553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+<img src="https://img-blog.csdnimg.cn/20200227105208553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 </li>
 <li><p>set profiling = 1；开启show profile；</p>
 </li>
 <li><p>show profile cpu,block io for query Query_id；查询SQL详细执行信息。</p>
-<img src="https://img-blog.csdnimg.cn/20200227105226954.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+<img src="https://img-blog.csdnimg.cn/20200227105226954.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 
 </li>
 </ol>
@@ -748,7 +763,7 @@
 <li>每张表有多少行被优化器查询</li>
 </ul>
 <h5 id="3-4-1-explain参数"><a href="#3-4-1-explain参数" class="headerlink" title="3.4.1 explain参数"></a>3.4.1 explain参数</h5><p>我们通过explain+SQL的方式可以获得如下所示的列表：</p>
-<img src="https://img-blog.csdnimg.cn/20200227105249657.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+<img src="https://img-blog.csdnimg.cn/20200227105249657.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 
 <p>可以看出主要参数即：id，select_type,table,partitions,<strong>type</strong>,<strong>possible_keys,key</strong>,key_len,ref,rows,filtered,<strong>Extra</strong>。</p>
 <p>以下针对第一行参数进行详细分析：</p>
@@ -865,7 +880,25 @@
 <li>复合索引尽可能包含查询字段中where子句中更多的字段；</li>
 <li>通过分析统计信息和调整SQL查询的写法来选择建立合适的索引。</li>
 </ul>
-]]></content>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <categories>
         <category>MySQL</category>
       </categories>
@@ -878,7 +911,7 @@
   </entry>
   <entry>
     <title>数据结构与算法——Java排序算法之冒泡排序及优化</title>
-    <url>/blog/2020/02/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94Java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B9%8B%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%8F%8A%E4%BC%98%E5%8C%96/</url>
+    <url>/blog/2020/02/12/shu-ju-jie-gou-yu-suan-fa-java-pai-xu-suan-fa-zhi-mou-pao-pai-xu-ji-you-hua/</url>
     <content><![CDATA[<p>通过增加了判断数组在某一轮下是否已经有序的标识来提高冒泡排序的运算效率</p>
 <a id="more"></a>
 
@@ -889,7 +922,27 @@
 <ul>
 <li>普通的冒泡排序</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//普通的冒泡排序：比较相邻元素之间的大小，如果发现当前顺序与所期望的顺序不一致则进行交换</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length - <span class="number">1</span> - i; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//普通的冒泡排序：比较相邻元素之间的大小，如果发现当前顺序与所期望的顺序不一致则进行交换</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">bubbleSort</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arrs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">//接收数组长度</span>
+        <span class="token keyword">int</span> length <span class="token operator">=</span> arrs<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//定义一个临时变量用于交换</span>
+        <span class="token keyword">int</span> temp<span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> length <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">-</span> i<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token comment" spellcheck="true">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span>
+                    temp <span class="token operator">=</span> arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
 <p>但是此时，该算法的平均时间复杂度为O(n^2)，当数据量较大的时候需要大量的时间，为此，出现了对上面算法的改进。</p>
 <ul>
 <li>改进一</li>
@@ -897,26 +950,177 @@
 <blockquote>
 <p>通过增加了判断数组在某一轮下是否已经有序的标识来提高冒泡排序的运算效率。</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">improved1BubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line">        <span class="comment">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span></span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length - i - <span class="number">1</span>; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                    <span class="comment">//上面表示发生了数据交换，则把flag置为1</span></span><br><span class="line">                    flag = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">improved1BubbleSort</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arrs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
+        <span class="token comment" spellcheck="true">//接收数组长度</span>
+        <span class="token keyword">int</span> length <span class="token operator">=</span> arrs<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//定义一个临时变量用于交换</span>
+        <span class="token keyword">int</span> temp<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span>
+        <span class="token keyword">int</span> flag <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> length <span class="token operator">-</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token comment" spellcheck="true">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span>
+                    temp <span class="token operator">=</span> arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">//上面表示发生了数据交换，则把flag置为1</span>
+                    flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment" spellcheck="true">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>flag <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span></code></pre>
 <ul>
 <li>改进二</li>
 </ul>
 <blockquote>
 <p>记录上一轮最后比较位置作为下一轮比较的末位置缩短比较次数，因为我选定的顺序是从小到大，所以后面的顺序先确定。如果选定的顺序是从大到小，则该记录位置应该作为下一次的起始位置。</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//在每轮比较中增加一个判断标识，如果当前一轮中一次数据交换都没有发生，则说明数据已经有序，后面的轮数也不用再进行，直接break跳出循环</span></span><br><span class="line"><span class="comment">//当产生了数据交换则记录当前交换的位置作为下一轮起始位置</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">improved2BubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line">        <span class="comment">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span></span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//pos用于记录最后一次交换的位置</span></span><br><span class="line">        <span class="keyword">int</span> pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//innerlength用于记录内层比较的位置</span></span><br><span class="line">        <span class="keyword">int</span> innerlength = length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; innerlength; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                    <span class="comment">//上面表示发生了数据交换，则把flag置为1</span></span><br><span class="line">                    flag = <span class="number">1</span>;</span><br><span class="line">                    <span class="comment">//记录当前轮最后交换的位置</span></span><br><span class="line">                    <span class="comment">// 因为这里我选择的顺序是从小到大，所以是后面的顺序是最先确定，下一轮判断到该位置即可</span></span><br><span class="line">                    <span class="comment">// 如果选择的顺序是从大到小，则前面的顺序是最先确定，下一轮要从该位置开始</span></span><br><span class="line">                    pos = j;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//下一轮循环至该位置即可</span></span><br><span class="line">            innerlength = pos;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//在每轮比较中增加一个判断标识，如果当前一轮中一次数据交换都没有发生，则说明数据已经有序，后面的轮数也不用再进行，直接break跳出循环</span>
+<span class="token comment" spellcheck="true">//当产生了数据交换则记录当前交换的位置作为下一轮起始位置</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">improved2BubbleSort</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arrs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
+        <span class="token comment" spellcheck="true">//接收数组长度</span>
+        <span class="token keyword">int</span> length <span class="token operator">=</span> arrs<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//定义一个临时变量用于交换</span>
+        <span class="token keyword">int</span> temp<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span>
+        <span class="token keyword">int</span> flag <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//pos用于记录最后一次交换的位置</span>
+        <span class="token keyword">int</span> pos <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//innerlength用于记录内层比较的位置</span>
+        <span class="token keyword">int</span> innerlength <span class="token operator">=</span> length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
 
+        <span class="token comment" spellcheck="true">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> innerlength<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token comment" spellcheck="true">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span>
+                    temp <span class="token operator">=</span> arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">//上面表示发生了数据交换，则把flag置为1</span>
+                    flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">//记录当前轮最后交换的位置</span>
+                    <span class="token comment" spellcheck="true">// 因为这里我选择的顺序是从小到大，所以是后面的顺序是最先确定，下一轮判断到该位置即可</span>
+                    <span class="token comment" spellcheck="true">// 如果选择的顺序是从大到小，则前面的顺序是最先确定，下一轮要从该位置开始</span>
+                    pos <span class="token operator">=</span> j<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment" spellcheck="true">//下一轮循环至该位置即可</span>
+            innerlength <span class="token operator">=</span> pos<span class="token punctuation">;</span>
+
+            <span class="token comment" spellcheck="true">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>flag <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span></code></pre>
 <ul>
 <li>改进三</li>
 </ul>
 <blockquote>
 <p>在上一算法的基础上，新增了在当前轮数中增加同时寻找最小值。</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//在每轮比较中增加一个判断标识，如果当前一轮中一次数据交换都没有发生，则说明数据已经有序，后面的轮数也不用再进行，直接break跳出循环</span></span><br><span class="line">    <span class="comment">//当产生了数据交换则记录当前交换的位置作为下一轮起始位置，同时在每轮中增加寻找最小数的过程</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">improved3BubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收数组长度</span></span><br><span class="line">        <span class="keyword">int</span> length = arrs.length;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换</span></span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line">        <span class="comment">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span></span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//pos用于记录最后一次交换的位置</span></span><br><span class="line">        <span class="keyword">int</span> pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//寻找最小值的下标</span></span><br><span class="line">        <span class="keyword">int</span> minindex = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//innerlength用于记录内层比较的位置</span></span><br><span class="line">        <span class="keyword">int</span> innerlength = length - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//定义一个临时变量用于交换最小数</span></span><br><span class="line">        <span class="keyword">int</span> tempmin = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//用于记录最小数交换的位置</span></span><br><span class="line">        <span class="keyword">int</span> minnext = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; innerlength; j++) &#123;</span><br><span class="line">                <span class="comment">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span></span><br><span class="line">                <span class="keyword">if</span> (arrs[j] &gt; arrs[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="comment">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span></span><br><span class="line">                    temp = arrs[j];</span><br><span class="line">                    arrs[j] = arrs[j + <span class="number">1</span>];</span><br><span class="line">                    arrs[j + <span class="number">1</span>] = temp;</span><br><span class="line">                    <span class="comment">//上面表示发生了数据交换，则把flag置为1</span></span><br><span class="line">                    flag = <span class="number">1</span>;</span><br><span class="line">                    <span class="comment">//记录当前轮最后交换的位置</span></span><br><span class="line">                    <span class="comment">// 因为这里我选择的顺序是从小到大，所以是后面的顺序是最先确定，所以下一轮判断到该位置即可</span></span><br><span class="line">                    <span class="comment">// 如果选择的顺序是从大到小，则前面的顺序是最先确定，下一轮要从该位置开始</span></span><br><span class="line">                    pos = j;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//下一轮循环至该位置即可</span></span><br><span class="line">            innerlength = pos;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//反向寻找最小值</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = innerlength; j &gt; minindex; j--) &#123;</span><br><span class="line">                tempmin = arrs[j];</span><br><span class="line">                arrs[j] = arrs[j - <span class="number">1</span>];</span><br><span class="line">                arrs[j - <span class="number">1</span>] = tempmin;</span><br><span class="line">                flag = <span class="number">1</span>;</span><br><span class="line">                <span class="comment">//记录作为下一次的起始位置</span></span><br><span class="line">                minnext = j;</span><br><span class="line">            &#125;</span><br><span class="line">            minindex = minnext;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//在每轮比较中增加一个判断标识，如果当前一轮中一次数据交换都没有发生，则说明数据已经有序，后面的轮数也不用再进行，直接break跳出循环</span>
+    <span class="token comment" spellcheck="true">//当产生了数据交换则记录当前交换的位置作为下一轮起始位置，同时在每轮中增加寻找最小数的过程</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">improved3BubbleSort</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arrs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">//接收数组长度</span>
+        <span class="token keyword">int</span> length <span class="token operator">=</span> arrs<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//定义一个临时变量用于交换</span>
+        <span class="token keyword">int</span> temp<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//判断是否进行了数据交换的标识，0为发生了数据交换，1表示没有发生交换（即数据当前顺序符合期望顺序）</span>
+        <span class="token keyword">int</span> flag <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//pos用于记录最后一次交换的位置</span>
+        <span class="token keyword">int</span> pos <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//寻找最小值的下标</span>
+        <span class="token keyword">int</span> minindex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//innerlength用于记录内层比较的位置</span>
+        <span class="token keyword">int</span> innerlength <span class="token operator">=</span> length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//定义一个临时变量用于交换最小数</span>
+        <span class="token keyword">int</span> tempmin <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//用于记录最小数交换的位置</span>
+        <span class="token keyword">int</span> minnext <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">//for循环遍历数组元素，外层为交换的轮数，内循环为每轮比较的次数</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> innerlength<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">//判断当前数如果大于其后面的数时进行交换（因为我们的顺序是从小到大，只有当前数小于等于后一个数时不用交换）</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token comment" spellcheck="true">//通过临时变量来进行交换，如果不使用临时变量直接赋值会造成覆盖</span>
+                    temp <span class="token operator">=</span> arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    arrs<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">//上面表示发生了数据交换，则把flag置为1</span>
+                    flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">//记录当前轮最后交换的位置</span>
+                    <span class="token comment" spellcheck="true">// 因为这里我选择的顺序是从小到大，所以是后面的顺序是最先确定，所以下一轮判断到该位置即可</span>
+                    <span class="token comment" spellcheck="true">// 如果选择的顺序是从大到小，则前面的顺序是最先确定，下一轮要从该位置开始</span>
+                    pos <span class="token operator">=</span> j<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment" spellcheck="true">//下一轮循环至该位置即可</span>
+            innerlength <span class="token operator">=</span> pos<span class="token punctuation">;</span>
+
+            <span class="token comment" spellcheck="true">//当前轮完成之后，立即判断该轮是否进行过交换，如果flag为0则说明没有交换，数组已经有序直接跳出for循环，反之则继续进行冒泡排序</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>flag <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment" spellcheck="true">//反向寻找最小值</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> innerlength<span class="token punctuation">;</span> j <span class="token operator">></span> minindex<span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                tempmin <span class="token operator">=</span> arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                arrs<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arrs<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                arrs<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> tempmin<span class="token punctuation">;</span>
+                flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//记录作为下一次的起始位置</span>
+                minnext <span class="token operator">=</span> j<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            minindex <span class="token operator">=</span> minnext<span class="token punctuation">;</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>flag <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span></code></pre>
 <p>但是不管怎么优化，因为涉及到两次遍历数组，冒泡排序的最好时间复杂度为O(n)，最坏时间复杂度依然为O(n^2)。</p>
-]]></content>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <categories>
         <category>数据结构与算法</category>
       </categories>
@@ -929,17 +1133,17 @@
   </entry>
   <entry>
     <title>MATLAB图像处理（一）——计算机图形学之图像形状识别</title>
-    <url>/blog/2020/02/12/MATLAB%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8B%E5%9B%BE%E5%83%8F%E5%BD%A2%E7%8A%B6%E8%AF%86%E5%88%AB/</url>
-    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20190718133000508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+    <url>/blog/2020/02/12/matlab-tu-xiang-chu-li-yi-ji-suan-ji-tu-xing-xue-zhi-tu-xiang-xing-zhuang-shi-bie/</url>
+    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20190718133000508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 <a id="more"></a>
 
 <h1>MATLAB图像处理（一）——计算机图形学之图像形状识别</h1>
 由于遇到了很多次这个课题，这次做完之后结合手上的资料总结一下。
 
-<h2 >基本步骤：</h2>
-<h3 ><a href="#1" target="_self">1、读取彩色图像转化为二值图像；</a></h3>
+<h2>基本步骤：</h2>
+<h3><a href="#1" target="_self">1、读取彩色图像转化为二值图像；</a></h3>
 <h3><a href="#2" target="_self">2、确定图像中的形状边界；</a></h3>
-<h3 ><a href="#3" target="_self">3、确定所需形状的目标；</a></h3>
+<h3><a href="#3" target="_self">3、确定所需形状的目标；</a></h3>
 本文主要通过识别圆形目标来进行说明，原图如下所示，本例需要识别出下图中的圆形物体：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190718133000508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70)
 
@@ -947,27 +1151,108 @@
 针对图像中可能有不同形状的目标物体，为了进行目标筛选，可以先通过形状判断，过滤掉我们不需要的物体，极大地提高图像识别的效率。
 
 <p>1） 读取彩色图像</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% 1、读取图像并转化为二值图像</span><br><span class="line">RGB &#x3D; imread(&#39;ImageSeg.png&#39;);</span><br><span class="line">figure;imshow(RGB);title(&#39;原图像&#39;);</span><br></pre></td></tr></table></figure>
-<p>2）将彩色图像转化为二值图像</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% 转化为灰度图像</span><br><span class="line">I &#x3D; rgb2gray(RGB);</span><br><span class="line">% 设置阈值</span><br><span class="line">threshold &#x3D; graythresh(I);</span><br><span class="line">% 转化为二值图像</span><br><span class="line">bw &#x3D; im2bw(I,threshold);</span><br></pre></td></tr></table></figure>
-<p>注意：如果使用阈值公式进行转化，转化出的效果如果不符合预期的话需要手动调整阈值，上面代码的效果如下：<br><img src="https://img-blog.csdnimg.cn/20190718133707689.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>所以我们根据图像像素的特性人为调整阈值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bw &#x3D; im2bw(I,0.69);</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20190718133845638.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>调整后的二值图像如上图所示，可以看到物体形状非常清晰，但是明显看到背景有许多噪点，所以在这里为了去除这些噪点我们进行了人工去噪，去噪的代码如下，即简单的领域判断。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% 通过领域判断手动去噪</span><br><span class="line">[m,n] &#x3D; size(bw);</span><br><span class="line">for i &#x3D; 2:m-1</span><br><span class="line">   for j &#x3D; 2:n-1</span><br><span class="line">       %同上下元素判断       </span><br><span class="line">       if(bw(i,j)~&#x3D;bw(i+1,j) &amp;&amp; bw(i,j)~&#x3D;bw(i-1,j))</span><br><span class="line">           bw(i,j) &#x3D; 1;</span><br><span class="line">       %同左右元素判断</span><br><span class="line">       elseif(bw(i,j)~&#x3D;bw(i,j+1) &amp;&amp; bw(i,j)~&#x3D;bw(i,j-1))</span><br><span class="line">           bw(i,j) &#x3D; 1;</span><br><span class="line">       %同斜边元素判断</span><br><span class="line">       elseif(bw(i,j)~&#x3D;bw(i+1,j+1) &amp;&amp; bw(i,j)~&#x3D;bw(i-1,j-1))</span><br><span class="line">           bw(i,j) &#x3D; 1;</span><br><span class="line">       %同斜边元素判断</span><br><span class="line">       elseif(bw(i,j)~&#x3D;bw(i-1,j+1) &amp;&amp; bw(i,j)~&#x3D;bw(i+1,j-1))</span><br><span class="line">           bw(i,j) &#x3D; 1;</span><br><span class="line">       end</span><br><span class="line">   end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>去噪之后的二值图像为：<br><img src="https://img-blog.csdnimg.cn/20190718134319330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>然后对以上图像进行取反，以备下面使用。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for i &#x3D; 1:m</span><br><span class="line">    for j &#x3D; 1:n</span><br><span class="line">        bw(i,j) &#x3D; ~bw(i,j);</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>结果为<br><img src="https://img-blog.csdnimg.cn/20190718134548374.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<pre><code>% 1、读取图像并转化为二值图像
+RGB = imread('ImageSeg.png');
+figure;imshow(RGB);title('原图像');</code></pre><p>2）将彩色图像转化为二值图像</p>
+<pre><code>% 转化为灰度图像
+I = rgb2gray(RGB);
+% 设置阈值
+threshold = graythresh(I);
+% 转化为二值图像
+bw = im2bw(I,threshold);</code></pre><p>注意：如果使用阈值公式进行转化，转化出的效果如果不符合预期的话需要手动调整阈值，上面代码的效果如下：<br><img src="https://img-blog.csdnimg.cn/20190718133707689.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>所以我们根据图像像素的特性人为调整阈值。</p>
+<pre><code>bw = im2bw(I,0.69);</code></pre><p><img src="https://img-blog.csdnimg.cn/20190718133845638.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>调整后的二值图像如上图所示，可以看到物体形状非常清晰，但是明显看到背景有许多噪点，所以在这里为了去除这些噪点我们进行了人工去噪，去噪的代码如下，即简单的领域判断。</p>
+<pre><code>% 通过领域判断手动去噪
+[m,n] = size(bw);
+for i = 2:m-1
+   for j = 2:n-1
+       %同上下元素判断       
+       if(bw(i,j)~=bw(i+1,j) &amp;&amp; bw(i,j)~=bw(i-1,j))
+           bw(i,j) = 1;
+       %同左右元素判断
+       elseif(bw(i,j)~=bw(i,j+1) &amp;&amp; bw(i,j)~=bw(i,j-1))
+           bw(i,j) = 1;
+       %同斜边元素判断
+       elseif(bw(i,j)~=bw(i+1,j+1) &amp;&amp; bw(i,j)~=bw(i-1,j-1))
+           bw(i,j) = 1;
+       %同斜边元素判断
+       elseif(bw(i,j)~=bw(i-1,j+1) &amp;&amp; bw(i,j)~=bw(i+1,j-1))
+           bw(i,j) = 1;
+       end
+   end
+end</code></pre><p>去噪之后的二值图像为：<br><img src="https://img-blog.csdnimg.cn/20190718134319330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>然后对以上图像进行取反，以备下面使用。</p>
+<pre><code>for i = 1:m
+    for j = 1:n
+        bw(i,j) = ~bw(i,j);
+    end
+end</code></pre><p>结果为<br><img src="https://img-blog.csdnimg.cn/20190718134548374.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h2 id="2">2、确定图像中的形状边界</h2>
 首先去除小目标，由于本例图像中不存在小目标，所以可省略该步骤，其次进行孔洞填充并进行白色描边，最后通过bwboundaries函数确定图像边界。
 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% 去除小目标，因为本图没有小目标，所以可以不需要本条语句</span><br><span class="line">bw &#x3D; bwareaopen(bw,30);</span><br><span class="line">% 图形学结构元素构建，圆形</span><br><span class="line">se &#x3D; strel(&#39;disk&#39;,8);</span><br><span class="line">% 关操作</span><br><span class="line">bw &#x3D; imclose(bw,se);</span><br><span class="line">% 填充孔洞</span><br><span class="line">bw &#x3D; imfill(bw,&#39;holes&#39;);</span><br><span class="line">% 二值化图像显示</span><br><span class="line">figure(1);imshow(bw);title(&#39;二值图像&#39;);</span><br><span class="line">[B,L] &#x3D; bwboundaries(bw,&#39;noholes&#39;);</span><br><span class="line">figure(2);imshow(label2rgb(L,@jet,[.5 .5 .5]));</span><br><span class="line">hold on;</span><br><span class="line">for k &#x3D; 1:length(B)</span><br><span class="line">boundary &#x3D; B&#123;k&#125;;</span><br><span class="line">% 显示白色边界</span><br><span class="line">plot(boundary(:,2),boundary(:,1),&#39;w&#39;,&#39;LineWidth&#39;,2)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20190718135018675.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<pre><code>% 去除小目标，因为本图没有小目标，所以可以不需要本条语句
+bw = bwareaopen(bw,30);
+% 图形学结构元素构建，圆形
+se = strel('disk',8);
+% 关操作
+bw = imclose(bw,se);
+% 填充孔洞
+bw = imfill(bw,'holes');
+% 二值化图像显示
+figure(1);imshow(bw);title('二值图像');
+[B,L] = bwboundaries(bw,'noholes');
+figure(2);imshow(label2rgb(L,@jet,[.5 .5 .5]));
+hold on;
+for k = 1:length(B)
+boundary = B{k};
+% 显示白色边界
+plot(boundary(:,2),boundary(:,1),'w','LineWidth',2)
+end</code></pre><p><img src="https://img-blog.csdnimg.cn/20190718135018675.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h2 id="3">3、确定所需形状的目标</h2>
 确定圆形目标，求取图形周长，圆心，面积，人为设置阈值进行过滤，在这里我设置阈值为0.85，即形状比对大于这个阈值的就是我们所需要的目标物体。
 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hold on;</span><br><span class="line">% 确定圆形目标</span><br><span class="line">stats &#x3D; regionprops(L,&#39;Area&#39;,&#39;Centroid&#39;);</span><br><span class="line">% 设置求面积</span><br><span class="line">threshold &#x3D; 0.85;</span><br><span class="line">for k &#x3D; 1:length(B)</span><br><span class="line">    boundary &#x3D; B&#123;k&#125;;</span><br><span class="line">    delta_sq &#x3D; diff(boundary).^2;</span><br><span class="line">    % 求周长     </span><br><span class="line">    perimeter &#x3D; sum(sqrt(sum(delta_sq,2)));</span><br><span class="line">    % 求面积     </span><br><span class="line">    area &#x3D; stats(k).Area;</span><br><span class="line">    metric &#x3D; 4*pi*area&#x2F;perimeter^2;</span><br><span class="line">    metric_string &#x3D; sprintf(&#39;%2.2f&#39;,metric);</span><br><span class="line">    % 根据阈值匹配</span><br><span class="line">    if metric &gt; threshold  </span><br><span class="line">       centroid &#x3D; stats(k).Centroid;</span><br><span class="line">       plot(centroid(1),centroid(2),&#39;ko&#39;);</span><br><span class="line">       text(centroid(1)-2,centroid(2)-2, &#39;这是圆形&#39;,&#39;Color&#39;,...</span><br><span class="line">        &#39;k&#39;,&#39;FontSize&#39;,14,&#39;FontWeight&#39;,&#39;bold&#39;);</span><br><span class="line">    end</span><br><span class="line">       text(boundary(1,2)-10,boundary(1,1)-12, metric_string,&#39;Color&#39;,...</span><br><span class="line">        &#39;k&#39;,&#39;FontSize&#39;,14,&#39;FontWeight&#39;,&#39;bold&#39;);</span><br><span class="line">end</span><br><span class="line">title(&#39;图像形状识别&#39;)</span><br></pre></td></tr></table></figure>
-<p>最后识别的效果图为：<br><img src="https://img-blog.csdnimg.cn/20190718135431953.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>源代码及所使用的文件链接：<a href="https://download.csdn.net/download/yueyingguang/11381702" target="_blank" rel="noopener">https://download.csdn.net/download/yueyingguang/11381702</a></p>
-]]></content>
+<pre><code>hold on;
+% 确定圆形目标
+stats = regionprops(L,'Area','Centroid');
+% 设置求面积
+threshold = 0.85;
+for k = 1:length(B)
+    boundary = B{k};
+    delta_sq = diff(boundary).^2;
+    % 求周长     
+    perimeter = sum(sqrt(sum(delta_sq,2)));
+    % 求面积     
+    area = stats(k).Area;
+    metric = 4*pi*area/perimeter^2;
+    metric_string = sprintf('%2.2f',metric);
+    % 根据阈值匹配
+    if metric &gt; threshold  
+       centroid = stats(k).Centroid;
+       plot(centroid(1),centroid(2),'ko');
+       text(centroid(1)-2,centroid(2)-2, '这是圆形','Color',...
+        'k','FontSize',14,'FontWeight','bold');
+    end
+       text(boundary(1,2)-10,boundary(1,1)-12, metric_string,'Color',...
+        'k','FontSize',14,'FontWeight','bold');
+end
+title('图像形状识别')</code></pre><p>最后识别的效果图为：<br><img src="https://img-blog.csdnimg.cn/20190718135431953.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>源代码及所使用的文件链接：<a href="https://download.csdn.net/download/yueyingguang/11381702" target="_blank" rel="noopener">https://download.csdn.net/download/yueyingguang/11381702</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <categories>
         <category>MATLAB</category>
       </categories>
@@ -979,8 +1264,8 @@
   </entry>
   <entry>
     <title>Java面试——关于synchronized与ReentrantLock的详细区别</title>
-    <url>/blog/2020/02/12/Java%E9%9D%A2%E8%AF%95%E2%80%94%E2%80%94%E5%85%B3%E4%BA%8Esynchronized%E4%B8%8EReentrantLock%E7%9A%84%E8%AF%A6%E7%BB%86%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/2020010912445595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+    <url>/blog/2020/02/12/java-mian-shi-guan-yu-synchronized-yu-reentrantlock-de-xiang-xi-qu-bie/</url>
+    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/2020010912445595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 
 <a id="more"></a>
 
@@ -989,8 +1274,11 @@
 </blockquote>
 <p>① <strong>底层实现</strong>上来说，synchronized 是<strong>JVM</strong>层面的锁，是<strong>Java关键字</strong>，通过monitor–对象来完成（monitorenter与monitorexit），对象只有在同步块或同步方法中才能调用wait/notify方法，ReentrantLock 是从jdk1.5以来（java.util.concurrent.locks.Lock）提供的<strong>API层面</strong>的锁。</p>
 <p>synchronzied的实现涉及到锁的升级，具体为无锁、偏向锁、自旋锁、向OS申请重量级锁，ReentrantLock实现则是通过利用CAS（CompareAndSwap）自旋机制保证线程操作的原子性和volatile保证数据可见性以实现锁的功能。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (<span class="keyword">new</span> Object())&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> ReentrantLock();</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 
+<span class="token punctuation">}</span>
+
+<span class="token keyword">new</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>使用javap -c对如上代码进行反编译得到如下代码：<br><img src="https://img-blog.csdnimg.cn/2020010912445595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>② <strong>是否可手动释放：</strong></p>
 <ul>
@@ -999,10 +1287,29 @@
 <ul>
 <li>ReentrantLock则需要用户去手动释放锁，如果没有手动释放锁，就可能导致死锁现象。一般通过lock()和unlock()方法配合try/finally语句块来完成，使用释放更加灵活。</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> number = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> Condition condition = lock.newCondition();</span><br><span class="line">    <span class="keyword">private</span> AtomicInteger atomicInteger;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">increment</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (number != <span class="number">0</span>) &#123;</span><br><span class="line">                condition.await();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//do something</span></span><br><span class="line">            number++;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">"\t"</span> + number);</span><br><span class="line">            condition.signalAll();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">int</span> number <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Lock lock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Condition condition <span class="token operator">=</span> lock<span class="token punctuation">.</span><span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> AtomicInteger atomicInteger<span class="token punctuation">;</span>
 
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">increment</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
 
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>number <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                condition<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment" spellcheck="true">//do something</span>
+            number<span class="token operator">++</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\t"</span> <span class="token operator">+</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            condition<span class="token punctuation">.</span><span class="token function">signalAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
+    <span class="token punctuation">}</span></code></pre>
 <p>③ <strong>是否可中断</strong></p>
 <ul>
 <li><p>synchronized是不可中断类型的锁，除非加锁的代码中出现异常或正常执行完成；</p>
@@ -1010,12 +1317,13 @@
 <li><p>ReentrantLock则可以中断，可通过trylock(long timeout,TimeUnit unit)设置超时方法或者将lockInterruptibly()放到代码块中，调用interrupt方法进行中断。</p>
 </li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> sync.tryAcquireNanos(<span class="number">1</span>, unit.toNanos(timeout));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">lockInterruptibly</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    sync.acquireInterruptibly(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">tryLock</span><span class="token punctuation">(</span><span class="token keyword">long</span> timeout<span class="token punctuation">,</span> TimeUnit unit<span class="token punctuation">)</span>
+            <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> sync<span class="token punctuation">.</span><span class="token function">tryAcquireNanos</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> unit<span class="token punctuation">.</span><span class="token function">toNanos</span><span class="token punctuation">(</span>timeout<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">lockInterruptibly</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
+        sync<span class="token punctuation">.</span><span class="token function">acquireInterruptibly</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
 <p>④  <strong>是否公平锁</strong></p>
 <ul>
 <li><p>synchronized为非公平锁</p>
@@ -1023,10 +1331,23 @@
 <li><p>ReentrantLock则即可以选公平锁也可以选非公平锁，通过构造方法new ReentrantLock时传入boolean值进行选择，为空默认false非公平锁，true为公平锁。</p>
 </li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Creates an instance of &#123;<span class="doctag">@code</span> ReentrantLock&#125;.</span></span><br><span class="line"><span class="comment"> * This is equivalent to using &#123;<span class="doctag">@code</span> ReentrantLock(false)&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ReentrantLock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    sync = <span class="keyword">new</span> NonfairSync();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Creates an instance of &#123;<span class="doctag">@code</span> ReentrantLock&#125; with the</span></span><br><span class="line"><span class="comment"> * given fairness policy.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> fair &#123;<span class="doctag">@code</span> true&#125; if this lock should use a fair ordering policy</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ReentrantLock</span><span class="params">(<span class="keyword">boolean</span> fair)</span> </span>&#123;</span><br><span class="line">    sync = fair ? <span class="keyword">new</span> FairSync() : <span class="keyword">new</span> NonfairSync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
+     * Creates an instance of {@code ReentrantLock}.
+     * This is equivalent to using {@code ReentrantLock(false)}.
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        sync <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NonfairSync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-
-
+    <span class="token comment" spellcheck="true">/**
+     * Creates an instance of {@code ReentrantLock} with the
+     * given fairness policy.
+     *
+     * @param fair {@code true} if this lock should use a fair ordering policy
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">ReentrantLock</span><span class="token punctuation">(</span><span class="token keyword">boolean</span> fair<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        sync <span class="token operator">=</span> fair <span class="token operator">?</span> <span class="token keyword">new</span> <span class="token class-name">FairSync</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">NonfairSync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
 <p>⑤ <strong>锁是否可绑定条件Condition</strong></p>
 <ul>
 <li><p>synchronized不能绑定；</p>
@@ -1035,17 +1356,140 @@
 <p>  示例：用ReentrantLock绑定三个条件实现线程A打印一次1，线程B打印两次2，线程C打印三次3</p>
 </li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Resource</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> number = <span class="number">1</span>;<span class="comment">//A:1  B:2  C:3</span></span><br><span class="line">    <span class="keyword">private</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> Condition c1 = lock.newCondition();</span><br><span class="line">    <span class="keyword">private</span> Condition c2 = lock.newCondition();</span><br><span class="line">    <span class="keyword">private</span> Condition c3 = lock.newCondition();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1 判断</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print1</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        lock.lock();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//判断</span></span><br><span class="line">            <span class="keyword">while</span> (number != <span class="number">1</span>) &#123;</span><br><span class="line">                c1.await();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//2 do sth</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">2</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">"\t"</span> + number);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//3 通知</span></span><br><span class="line">            number = <span class="number">2</span>;</span><br><span class="line">            c2.signal();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1 判断</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print2</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        lock.lock();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//判断</span></span><br><span class="line">            <span class="keyword">while</span> (number != <span class="number">2</span>) &#123;</span><br><span class="line">                c2.await();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//2 do sth</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">"\t"</span> + number);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//3 通知</span></span><br><span class="line">            number = <span class="number">3</span>;</span><br><span class="line">            c3.signal();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1 判断</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print3</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        lock.lock();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//判断</span></span><br><span class="line">            <span class="keyword">while</span> (number != <span class="number">3</span>) &#123;</span><br><span class="line">                c3.await();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//2 do sth</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">"\t"</span> + number);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//3 通知</span></span><br><span class="line">            number = <span class="number">1</span>;</span><br><span class="line">            c1.signal();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Resource resource = <span class="keyword">new</span> Resource();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2</span>; i++) &#123;</span><br><span class="line">                resource.print1();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="string">"A"</span>).start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2</span>; i++) &#123;</span><br><span class="line">                resource.print2();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="string">"B"</span>).start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2</span>; i++) &#123;</span><br><span class="line">                resource.print3();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="string">"C"</span>).start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Resource</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> number <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//A:1  B:2  C:3</span>
+    <span class="token keyword">private</span> Lock lock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Condition c1 <span class="token operator">=</span> lock<span class="token punctuation">.</span><span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Condition c2 <span class="token operator">=</span> lock<span class="token punctuation">.</span><span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Condition c3 <span class="token operator">=</span> lock<span class="token punctuation">.</span><span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//1 判断</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//判断</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>number <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                c1<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment" spellcheck="true">//2 do sth</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\t"</span> <span class="token operator">+</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment" spellcheck="true">//3 通知</span>
+            number <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+            c2<span class="token punctuation">.</span><span class="token function">signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//1 判断</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//判断</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>number <span class="token operator">!=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                c2<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment" spellcheck="true">//2 do sth</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\t"</span> <span class="token operator">+</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment" spellcheck="true">//3 通知</span>
+            number <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+            c3<span class="token punctuation">.</span><span class="token function">signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//1 判断</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//判断</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>number <span class="token operator">!=</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                c3<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment" spellcheck="true">//2 do sth</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\t"</span> <span class="token operator">+</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment" spellcheck="true">//3 通知</span>
+            number <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            c1<span class="token punctuation">.</span><span class="token function">signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        Resource resource <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Resource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                resource<span class="token punctuation">.</span><span class="token function">print1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                resource<span class="token punctuation">.</span><span class="token function">print2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token string">"B"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
+
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                resource<span class="token punctuation">.</span><span class="token function">print3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token string">"C"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+    <span class="token punctuation">}</span></code></pre>
 <p>输出结果为：</p>
 <p>A    1<br>B    2<br>B    2<br>C    3<br>C    3<br>C    3<br>A    1<br>B    2<br>B    2<br>C    3<br>C    3<br>C    3</p>
 <p>⑥ <strong>锁的对象</strong></p>
 <ul>
 <li>synchronzied锁的是对象，锁是保存在对象头里面的，根据对象头数据来标识是否有线程获得锁/争抢锁；ReentrantLock锁的是线程，根据进入的线程和int类型的state标识锁的获得/争抢。</li>
 </ul>
-]]></content>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -1058,7 +1502,7 @@
   </entry>
   <entry>
     <title>Navicat Premium 12下看不到PostgreSQL下已创建的表</title>
-    <url>/blog/2020/02/12/Navicat-Premium-%E4%B8%8B%E7%9C%8B%E4%B8%8D%E5%88%B0PostgreSQL%E4%B8%8B%E5%B7%B2%E5%88%9B%E5%BB%BA%E7%9A%84%E8%A1%A8/</url>
+    <url>/blog/2020/02/12/navicat-premium-xia-kan-bu-dao-postgresql-xia-yi-chuang-jian-de-biao/</url>
     <content><![CDATA[<p>通过Navicat Premium 12连接PostgreSQL之后发现找不到已存在的表，通过PostgreSQL自带的连接工具可以看到表是已经存在了的。</p>
 <a id="more"></a>
 
@@ -1078,7 +1522,26 @@
 </li>
 <li><h3 id="网盘下载地址（附注册机）"><a href="#网盘下载地址（附注册机）" class="headerlink" title="网盘下载地址（附注册机）"></a>网盘下载地址（附注册机）</h3></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">百度网盘地址：   https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1_uPZwgL4EUC9P6r_MYs0nw</span><br><span class="line">提取码：        2h9f</span><br></pre></td></tr></table></figure>]]></content>
+<pre><code>百度网盘地址：   https://pan.baidu.com/s/1_uPZwgL4EUC9P6r_MYs0nw
+提取码：        2h9f</code></pre><script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <categories>
         <category>PostgreSQL,Navicat</category>
       </categories>
@@ -1089,7 +1552,7 @@
   </entry>
   <entry>
     <title>Java 将中文文件名称修改为拼音首字母、拼音全称）</title>
-    <url>/blog/2020/02/11/Java-%E5%B0%86%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9%E4%B8%BA%E6%8B%BC%E9%9F%B3%E9%A6%96%E5%AD%97%E6%AF%8D%E3%80%81%E6%8B%BC%E9%9F%B3%E5%85%A8%E7%A7%B0/</url>
+    <url>/blog/2020/02/11/java-jiang-zhong-wen-wen-jian-ming-cheng-xiu-gai-wei-pin-yin-shou-zi-mu-pin-yin-quan-cheng/</url>
     <content><![CDATA[<p>在日常工作中，由于一些软件导入文件时对中文不支持，需要修改文件名称为拼音或者拼音首字母，修改方式也多种多样，本文通过Java来进行修改。</p>
 <a id="more"></a>
 
@@ -1098,16 +1561,155 @@
 </blockquote>
 <p>在日常工作中，由于一些软件导入文件时对中文不支持，需要修改文件名称为拼音或者拼音首字母，修改方式也多种多样，本文通过Java来进行修改。</p>
 <ul>
-<li><h3 id="引入Maven依赖"><a href="#引入Maven依赖" class="headerlink" title="引入Maven依赖"></a>引入Maven依赖</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.belerweb<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pinyin4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.hutool<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hutool-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<li><h3 id="引入Maven依赖"><a href="#引入Maven依赖" class="headerlink" title="引入Maven依赖"></a>引入Maven依赖</h3><pre class=" language-xml"><code class="language-xml">      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.belerweb<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>pinyin4j<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.5.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>cn.hutool<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>hutool-all<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>5.1.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
 </li>
 <li><h3 id="中文转拼音"><a href="#中文转拼音" class="headerlink" title="中文转拼音"></a>中文转拼音</h3><p>主要通过pinyin4j进行处理。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取汉字串拼音首字母，英文字符不变</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> chinese</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getFirstSpell</span><span class="params">(String chinese)</span> </span>&#123;</span><br><span class="line">        StringBuffer pybf = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">        <span class="keyword">char</span>[] arr = chinese.toCharArray();</span><br><span class="line">        HanyuPinyinOutputFormat defaultFormat = <span class="keyword">new</span> HanyuPinyinOutputFormat();</span><br><span class="line">        defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);</span><br><span class="line">        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] &gt; <span class="number">128</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    String[] temp = PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat);</span><br><span class="line">                    <span class="keyword">if</span> (temp != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        pybf.append(temp[<span class="number">0</span>].charAt(<span class="number">0</span>));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (BadHanyuPinyinOutputFormatCombination e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                pybf.append(arr[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pybf.toString().replaceAll(<span class="string">"\\W"</span>, <span class="string">""</span>).trim().toUpperCase();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取汉字串拼音，英文字符不变</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> chinese</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getFullSpell</span><span class="params">(String chinese)</span> </span>&#123;</span><br><span class="line">        StringBuffer pybf = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">        <span class="keyword">char</span>[] arr = chinese.toCharArray();</span><br><span class="line">        HanyuPinyinOutputFormat defaultFormat = <span class="keyword">new</span> HanyuPinyinOutputFormat();</span><br><span class="line">        defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);</span><br><span class="line">        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] &gt; <span class="number">128</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    pybf.append(PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat)[<span class="number">0</span>]);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (BadHanyuPinyinOutputFormatCombination e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                pybf.append(arr[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pybf.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+   * 获取汉字串拼音首字母，英文字符不变
+   *
+   * @param chinese
+   * @return
+   */</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">static</span> String <span class="token function">getFirstSpell</span><span class="token punctuation">(</span>String chinese<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      StringBuffer pybf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> chinese<span class="token punctuation">.</span><span class="token function">toCharArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      HanyuPinyinOutputFormat defaultFormat <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HanyuPinyinOutputFormat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      defaultFormat<span class="token punctuation">.</span><span class="token function">setCaseType</span><span class="token punctuation">(</span>HanyuPinyinCaseType<span class="token punctuation">.</span>LOWERCASE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      defaultFormat<span class="token punctuation">.</span><span class="token function">setToneType</span><span class="token punctuation">(</span>HanyuPinyinToneType<span class="token punctuation">.</span>WITHOUT_TONE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">128</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                  String<span class="token punctuation">[</span><span class="token punctuation">]</span> temp <span class="token operator">=</span> PinyinHelper<span class="token punctuation">.</span><span class="token function">toHanyuPinyinStringArray</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> defaultFormat<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                  <span class="token keyword">if</span> <span class="token punctuation">(</span>temp <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                      pybf<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>temp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                  <span class="token punctuation">}</span>
+              <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">BadHanyuPinyinOutputFormatCombination</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                  e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+              pybf<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">return</span> pybf<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">replaceAll</span><span class="token punctuation">(</span><span class="token string">"\\W"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment" spellcheck="true">/**
+   * 获取汉字串拼音，英文字符不变
+   *
+   * @param chinese
+   * @return
+   */</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> String <span class="token function">getFullSpell</span><span class="token punctuation">(</span>String chinese<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      StringBuffer pybf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> chinese<span class="token punctuation">.</span><span class="token function">toCharArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      HanyuPinyinOutputFormat defaultFormat <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HanyuPinyinOutputFormat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      defaultFormat<span class="token punctuation">.</span><span class="token function">setCaseType</span><span class="token punctuation">(</span>HanyuPinyinCaseType<span class="token punctuation">.</span>LOWERCASE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      defaultFormat<span class="token punctuation">.</span><span class="token function">setToneType</span><span class="token punctuation">(</span>HanyuPinyinToneType<span class="token punctuation">.</span>WITHOUT_TONE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">128</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                  pybf<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>PinyinHelper<span class="token punctuation">.</span><span class="token function">toHanyuPinyinStringArray</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> defaultFormat<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">BadHanyuPinyinOutputFormatCombination</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                  e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+              pybf<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">return</span> pybf<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span></code></pre>
+</li>
 <li><h3 id="批量修改"><a href="#批量修改" class="headerlink" title="批量修改"></a>批量修改</h3><p>使用<strong>Hutool</strong>的<code>IOUtil、FileUtil</code>工具类对文件进行复制。</p>
 </li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1、待转换文件所在文件夹</span></span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"E:\\needConvert\\"</span>);</span><br><span class="line">        <span class="comment">//2、转换之后文件生成的文件夹位置</span></span><br><span class="line">        File filecopy = <span class="keyword">new</span> File(<span class="string">"E:\\converted\\"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!filecopy.exists()) &#123;</span><br><span class="line">            filecopy.mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        BufferedInputStream in = <span class="keyword">null</span>;</span><br><span class="line">        BufferedOutputStream out = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        File[] filelist = file.listFiles();</span><br><span class="line">        <span class="keyword">for</span> (File fi : filelist) &#123;</span><br><span class="line">            <span class="comment">//1、获取到文件名</span></span><br><span class="line">            String substring = fi.getName().substring(<span class="number">0</span>, fi.getName().indexOf(<span class="string">'.'</span>));</span><br><span class="line">            <span class="comment">//2、文件名中文转换为拼音首字母</span></span><br><span class="line">            String newPrefix = getFirstSpell(substring);</span><br><span class="line">            <span class="comment">//3、获取文件的后缀</span></span><br><span class="line">            String suffix = fi.getName().substring(fi.getName().lastIndexOf(<span class="string">'.'</span>));</span><br><span class="line">            <span class="comment">//4、将需要处理的文件输入到流中</span></span><br><span class="line">            in = FileUtil.getInputStream(fi);</span><br><span class="line">            <span class="comment">//5、新文件的名称及地址：filecopy + newPrefix + suffix</span></span><br><span class="line">            String newFilePath = filecopy + File.separator + newPrefix + suffix;</span><br><span class="line"></span><br><span class="line">            File newfile = <span class="keyword">new</span> File(newFilePath);</span><br><span class="line">            <span class="keyword">if</span> (!newfile.exists()) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    newfile.createNewFile();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            out = FileUtil.getOutputStream(newFilePath);</span><br><span class="line">            <span class="comment">//6、使用Hutool进行复制</span></span><br><span class="line">            <span class="keyword">long</span> copyTime = IoUtil.copy(in, out, IoUtil.DEFAULT_BUFFER_SIZE);</span><br><span class="line">            System.out.printf(<span class="string">"转换耗时: %d \n"</span>, copyTime);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (in != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (out != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                out.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">//1、待转换文件所在文件夹</span>
+        File file <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"E:\\needConvert\\"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//2、转换之后文件生成的文件夹位置</span>
+        File filecopy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"E:\\converted\\"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>filecopy<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            filecopy<span class="token punctuation">.</span><span class="token function">mkdirs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        BufferedInputStream in <span class="token operator">=</span> null<span class="token punctuation">;</span>
+        BufferedOutputStream out <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+        File<span class="token punctuation">[</span><span class="token punctuation">]</span> filelist <span class="token operator">=</span> file<span class="token punctuation">.</span><span class="token function">listFiles</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>File fi <span class="token operator">:</span> filelist<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//1、获取到文件名</span>
+            String substring <span class="token operator">=</span> fi<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> fi<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//2、文件名中文转换为拼音首字母</span>
+            String newPrefix <span class="token operator">=</span> <span class="token function">getFirstSpell</span><span class="token punctuation">(</span>substring<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//3、获取文件的后缀</span>
+            String suffix <span class="token operator">=</span> fi<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>fi<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//4、将需要处理的文件输入到流中</span>
+            in <span class="token operator">=</span> FileUtil<span class="token punctuation">.</span><span class="token function">getInputStream</span><span class="token punctuation">(</span>fi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//5、新文件的名称及地址：filecopy + newPrefix + suffix</span>
+            String newFilePath <span class="token operator">=</span> filecopy <span class="token operator">+</span> File<span class="token punctuation">.</span>separator <span class="token operator">+</span> newPrefix <span class="token operator">+</span> suffix<span class="token punctuation">;</span>
+
+            File newfile <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>newFilePath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>newfile<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                    newfile<span class="token punctuation">.</span><span class="token function">createNewFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+
+            out <span class="token operator">=</span> FileUtil<span class="token punctuation">.</span><span class="token function">getOutputStream</span><span class="token punctuation">(</span>newFilePath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//6、使用Hutool进行复制</span>
+            <span class="token keyword">long</span> copyTime <span class="token operator">=</span> IoUtil<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>in<span class="token punctuation">,</span> out<span class="token punctuation">,</span> IoUtil<span class="token punctuation">.</span>DEFAULT_BUFFER_SIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"转换耗时: %d \n"</span><span class="token punctuation">,</span> copyTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>in <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                in<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>out <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                out<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
 <p>代码地址： <a href="https://github.com/copyers/JavaUtils" target="_blank" rel="noopener">https://github.com/copyers/JavaUtils</a>.<br>以上就是通过Java来转换中文的过程，不过个人觉得批量修改文件名可以通过脚本来遍历修改，更加方便快捷。</p>
-]]></content>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -1118,8 +1720,8 @@
   </entry>
   <entry>
     <title>都2020年了你还在闭门造车吗？快来看看这篇面向B站学习Java之最新最全推荐（长期更新）</title>
-    <url>/blog/2020/02/11/%E9%83%BD2020%E5%B9%B4%E4%BA%86%E4%BD%A0%E8%BF%98%E5%9C%A8%E9%97%AD%E9%97%A8%E9%80%A0%E8%BD%A6%E5%90%97%EF%BC%9F%E5%BF%AB%E6%9D%A5%E7%9C%8B%E7%9C%8B%E8%BF%99%E7%AF%87%E9%9D%A2%E5%90%91B%E7%AB%99%E5%AD%A6%E4%B9%A0Java%E4%B9%8B%E6%9C%80%E6%96%B0%E6%9C%80%E5%85%A8%E6%8E%A8%E8%8D%90%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
-    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200130212950684.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%" />
+    <url>/blog/2020/02/11/du-2020-nian-liao-ni-huan-zai-bi-men-zao-che-ma-kuai-lai-kan-kan-zhe-pian-mian-xiang-b-zhan-xue-xi-java-zhi-zui-xin-zui-quan-tui-jian-chang-qi-geng-xin/</url>
+    <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200130212950684.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 <a id="more"></a>
 
 <h3 id="新型冠状病毒的肆虐，提醒大家少出门、戴口罩、勤洗手，武汉加油，中国加油！！！"><a href="#新型冠状病毒的肆虐，提醒大家少出门、戴口罩、勤洗手，武汉加油，中国加油！！！" class="headerlink" title="新型冠状病毒的肆虐，提醒大家少出门、戴口罩、勤洗手，武汉加油，中国加油！！！"></a>新型冠状病毒的肆虐，提醒大家少出门、戴口罩、勤洗手，武汉加油，中国加油！！！</h3><p>趁着这段时间回顾了2019年自己的学习情况，2019年其实主要是通过B站观看视频教程进行学习，个人几乎把以下推荐的全部视频都抽时间看了一遍以上，筛选了以下教程推荐给想要学习Java的同学，该教程涵盖了<strong>Java从入门</strong>、<strong>进阶以及到高级</strong>的全部知识，适合现在想要学习Java的所有同学，同时也非常感谢互联网，感谢小破站，感谢各大慷慨的教育机构，感谢韩顺平老师，感谢周阳老师，感谢雷丰阳老师等等，正是他们的无私让现在学习变得越来越简单。</p>
@@ -1184,7 +1786,25 @@
 <blockquote>
 <p>相信看完以上教程，吸收完其中的知识点，那么你会对Java有一个更深刻的认识，不过就像韩顺平老师说的那样，“纸上得来终觉浅，绝知此事要躬行”，应用型的知识技能一定要经常使用，经常练才能理解，才能掌握，所以一定要将所学到的知识应用到实际项目中，这样才能通过解决问题来获得更快的成长。</p>
 </blockquote>
-]]></content>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -1203,7 +1823,7 @@
   </entry>
   <entry>
     <title>面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？</title>
-    <url>/blog/2020/02/11/%E9%9D%A2%E8%AF%95%E5%AE%98%EF%BC%9A%E5%86%99%E5%87%A0%E7%A7%8D%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%81Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F3%EF%BC%8C5%EF%BC%9F%E9%A5%BF%E6%B1%89%EF%BC%8C%E6%87%92%E6%B1%89%EF%BC%81%EF%BC%9F/</url>
+    <url>/blog/2020/02/11/mian-shi-guan-xie-ji-chong-ni-zhi-dao-de-dan-li-mo-shi-java-shi-xian-dan-li-mo-shi-you-ji-chong-fang-shi-3-5-e-han-lan-han/</url>
     <content><![CDATA[<blockquote>
 <p>在面试中经常会遇到单例模式的问题，动不动就是你知道几种单例模式，请手写几种你知道的单例模式，为了能彻底厘清该问题，本文详细阐述了单例模式的最全的八种写法以及茴香豆的茴字的四种写法（手动狗头），并比较其存在的优劣，如果本文对你有所帮助的话点赞哦亲。</p>
 </blockquote>
@@ -1220,7 +1840,7 @@
 </li>
 </ul>
 <blockquote>
-<p><font size = 6>正文开始</font></p>
+<p><font size="6">正文开始</font></p>
 </blockquote>
 <ul>
 <li><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p><strong>单例模式就是通过某种实现方式使得在整个软件系统中，对某个类只能存在一个对象实例，并且该类只提供一个取得该对象实例的静态方法。</strong></p>
@@ -1251,8 +1871,21 @@
 <p>  ​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
 <p>  ​    ②、提供一个同类型的常量,用于接收内部实例</p>
 <p>  ​    ③、提供一个<code>public</code>方法供外部调用以获取生成的实例</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、定义一个Singleton类型的常量,用于接收Singleton内部实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">{</span>
 
+      <span class="token comment" spellcheck="true">//1、私有化构造器,防止外部new产生实例</span>
+      <span class="token keyword">private</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+      <span class="token punctuation">}</span>
+
+      <span class="token comment" spellcheck="true">//2、定义一个Singleton类型的常量,用于接收Singleton内部实例</span>
+      <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">static</span> Singleton instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token comment" spellcheck="true">//3、定义一个public方法提供给外部调用，获取实例对象</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> Singleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span></code></pre>
 <ul>
 <li><p><strong>优点：</strong></p>
 <blockquote>
@@ -1261,7 +1894,7 @@
 </li>
 <li><p><strong>缺点：</strong></p>
 <blockquote>
-<p>根据<code>JVM</code>加载类的方式得知类加载器并不需要等到某个类被主动使用时才加载，<code>JVM</code>允许类加载器在预料到某个类将要被使用时就预先加载它，所以类加载是一种<font color=#ff0000><strong>不确定行为</strong></font>，而这种饿汉式的实现方式会在类加载的时候就完成实例化，所以不能达到懒加载（<code>Lazy Loading</code>）的效果。<font color=#ff0000><strong>可能造成内存浪费。</strong></font></p>
+<p>根据<code>JVM</code>加载类的方式得知类加载器并不需要等到某个类被主动使用时才加载，<code>JVM</code>允许类加载器在预料到某个类将要被使用时就预先加载它，所以类加载是一种<font color="#ff0000"><strong>不确定行为</strong></font>，而这种饿汉式的实现方式会在类加载的时候就完成实例化，所以不能达到懒加载（<code>Lazy Loading</code>）的效果。<font color="#ff0000"><strong>可能造成内存浪费。</strong></font></p>
 </blockquote>
 </li>
 </ul>
@@ -1270,17 +1903,50 @@
 <p>  ​    ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
 <p>  ​    ③、通过静态代码块创建对象实例</p>
 <p>  ​    ④、提供一个<code>public</code>方法供外部调用以获取生成的实例</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、定义实例对象准备接收</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3、通过静态代码块创建对象实例</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//4、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">//1、私有化构造器,防止外部new产生实例</span>
+      <span class="token keyword">private</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 
+      <span class="token punctuation">}</span>
+
+      <span class="token comment" spellcheck="true">//2、定义实例对象准备接收</span>
+      <span class="token keyword">private</span> <span class="token keyword">static</span> Singleton instance<span class="token punctuation">;</span>
+
+      <span class="token comment" spellcheck="true">//3、通过静态代码块创建对象实例</span>
+      <span class="token keyword">static</span> <span class="token punctuation">{</span>
+          instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token comment" spellcheck="true">//4、定义一个public方法提供给外部调用，获取实例对象</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> Singleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+          <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span></code></pre>
 <ul>
-<li><strong>该方法优缺点同上（<font color=#ff0000>可能造成内存浪费</font>）</strong></li>
+<li><strong>该方法优缺点同上（<font color="#ff0000">可能造成内存浪费</font>）</strong></li>
 </ul>
 <h4 id="3-懒汉式（线程不安全）"><a href="#3-懒汉式（线程不安全）" class="headerlink" title="3. 懒汉式（线程不安全）"></a>3. 懒汉式（线程不安全）</h4><p>​        步骤：</p>
 <p>​        ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
 <p>​        ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
 <p>​        ③、提供一个<code>public</code>方法供外部调用以获取生成的实例，首先判断该实例是否已经生成，如果已经生成则直接使用，否则再实例化生成。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2、定义一个static实例对象接收对象实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">{</span>
 
+      <span class="token comment" spellcheck="true">//1、私有化构造器,防止外部new产生实例</span>
+      <span class="token keyword">private</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+      <span class="token punctuation">}</span>
+
+      <span class="token comment" spellcheck="true">//2、定义一个static实例对象接收对象实例</span>
+      <span class="token keyword">private</span> <span class="token keyword">static</span> Singleton instance<span class="token punctuation">;</span>
+
+      <span class="token comment" spellcheck="true">//3、定义一个public方法提供给外部调用，获取实例对象</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> Singleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">==</span> instance<span class="token punctuation">)</span>
+              instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+  <span class="token punctuation">}</span></code></pre>
 <ul>
 <li><p><strong>优点：</strong></p>
 <blockquote>
@@ -1289,7 +1955,7 @@
 </li>
 <li><p><strong>缺点：</strong></p>
 <blockquote>
-<p>if(null == instance)该句代码在多线程环境存在线程不安全问题，可能生成多个实例，破坏了单例模式。<font color=#ff0000><strong>实际开发中不要使用这种方式。</strong></font></p>
+<p>if(null == instance)该句代码在多线程环境存在线程不安全问题，可能生成多个实例，破坏了单例模式。<font color="#ff0000"><strong>实际开发中不要使用这种方式。</strong></font></p>
 </blockquote>
 </li>
 </ul>
@@ -1297,8 +1963,24 @@
 <p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
 <p>​    ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
 <p>​    ③、提供一个<code>public</code>方法供外部调用以获取生成的实例并通过<code>synchronized</code>加锁，首先判断该实例是否已经生成，如果已经生成则直接使用，否则再实例化生成。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2、定义一个static实例对象接收对象实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，通过synchronized加锁，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">{</span>
 
+      <span class="token comment" spellcheck="true">//1、私有化构造器,防止外部new产生实例</span>
+      <span class="token keyword">private</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+      <span class="token punctuation">}</span>
+
+      <span class="token comment" spellcheck="true">//2、定义一个static实例对象接收对象实例</span>
+      <span class="token keyword">private</span> <span class="token keyword">static</span> Singleton instance<span class="token punctuation">;</span>
+
+      <span class="token comment" spellcheck="true">//3、定义一个public方法提供给外部调用，通过synchronized加锁，获取实例对象</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">synchronized</span> Singleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">==</span> instance<span class="token punctuation">)</span>
+              instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+  <span class="token punctuation">}</span></code></pre>
 <ul>
 <li><p><strong>优点：</strong></p>
 <blockquote>
@@ -1307,7 +1989,7 @@
 </li>
 <li><p><strong>缺点：</strong></p>
 <blockquote>
-<p>由于通过synchronized加锁，多线程环境下获取对象实例效率极低。<font color=#ff0000><strong>实际开发不推荐使用。</strong></font></p>
+<p>由于通过synchronized加锁，多线程环境下获取对象实例效率极低。<font color="#ff0000"><strong>实际开发不推荐使用。</strong></font></p>
 </blockquote>
 </li>
 </ul>
@@ -1315,12 +1997,30 @@
 <p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
 <p>​    ②、定义<code>static</code>实例对象,用于接收静态代码块生成的内部实例</p>
 <p>​    ③、提供一个<code>public</code>方法供外部调用以获取生成的实例并通过<code>synchronized</code>加锁，首先判断该实例是否已经生成，如果已经生成则直接使用，否则再实例化生成。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2、定义一个static实例对象接收对象实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，通过synchronized同步代码块加锁，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">         		instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">          &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">{</span>
 
+      <span class="token comment" spellcheck="true">//1、私有化构造器,防止外部new产生实例</span>
+      <span class="token keyword">private</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+      <span class="token punctuation">}</span>
+
+      <span class="token comment" spellcheck="true">//2、定义一个static实例对象接收对象实例</span>
+      <span class="token keyword">private</span> <span class="token keyword">static</span> Singleton instance<span class="token punctuation">;</span>
+
+      <span class="token comment" spellcheck="true">//3、定义一个public方法提供给外部调用，通过synchronized同步代码块加锁，获取实例对象</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> Singleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">==</span> instance<span class="token punctuation">)</span>
+              <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>Singleton<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                   instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+          <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+  <span class="token punctuation">}</span></code></pre>
 <ul>
 <li><p><strong>缺点：</strong></p>
 <blockquote>
-<p>通过synchronized代码块加锁，依然线程不安全。<font color=#ff0000><strong>实际开发不推荐使用。</strong></font></p>
+<p>通过synchronized代码块加锁，依然线程不安全。<font color="#ff0000"><strong>实际开发不推荐使用。</strong></font></p>
 </blockquote>
 </li>
 </ul>
@@ -1328,8 +2028,27 @@
 <p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
 <p>​    ②、定义<code>volatile</code>实例对象,保证生成实例对象的可见性,并用于接收静态代码块生成的内部实例</p>
 <p>​    ③、定义一个public方法提供给外部调用，获取实例对象，同时再在内部进行两次判断，第二次进行synchronized代码块加锁，一旦实例化成功，锁外的线程即可通过<code>volatile</code>获得实例。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、定义volatile实例对象,保证数据可见性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象，同时再在内部进行进行synchronized代码块加锁</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> == instance)</span><br><span class="line">                    instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">{</span>
 
+    <span class="token comment" spellcheck="true">//1、私有化构造器,防止外部new产生实例</span>
+    <span class="token keyword">private</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//2、定义volatile实例对象,保证数据可见性</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">volatile</span> Singleton instance<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//3、定义一个public方法提供给外部调用，获取实例对象，同时再在内部进行进行synchronized代码块加锁</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> Singleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">==</span> instance<span class="token punctuation">)</span>
+            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>Singleton<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">==</span> instance<span class="token punctuation">)</span>
+                    instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span></code></pre>
 <ul>
 <li><p><strong>优点：</strong></p>
 <blockquote>
@@ -1339,13 +2058,29 @@
 </blockquote>
 </li>
 </ul>
-<p><font color=#ff0000><strong>推荐使用。</strong></font></p>
+<p><font color="#ff0000"><strong>推荐使用。</strong></font></p>
 <h4 id="7-静态内部类"><a href="#7-静态内部类" class="headerlink" title="7. 静态内部类"></a>7. 静态内部类</h4><p>​    步骤：</p>
 <p>​    ①、私有化构造器,防止外部通过<code>new</code>生成实例</p>
 <p>​    ②、通过静态内部类的属性获得<code>Singleton</code>实例</p>
 <p>​    ③、定义一个<code>public</code>方法提供给外部调用，获取实例对象。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、私有化构造器,防止外部new产生实例</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、通过静态内部类的属性获得Singleton实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonInstance</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3、定义一个public方法提供给外部调用，获取实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonInstance.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">{</span>
 
+    <span class="token comment" spellcheck="true">//1、私有化构造器,防止外部new产生实例</span>
+    <span class="token keyword">private</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//2、通过静态内部类的属性获得Singleton实例</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">SingletonInstance</span><span class="token punctuation">{</span>
+        <span class="token keyword">private</span> <span class="token keyword">static</span> Singleton INSTANCE <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//3、定义一个public方法提供给外部调用，获取实例对象</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> Singleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> SingletonInstance<span class="token punctuation">.</span>INSTANCE<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span></code></pre>
 <ul>
 <li><p><strong>优点：</strong></p>
 <blockquote>
@@ -1354,11 +2089,15 @@
 </blockquote>
 </li>
 </ul>
-<p><font color=#ff0000><strong>推荐使用。</strong></font></p>
+<p><font color="#ff0000"><strong>推荐使用。</strong></font></p>
 <h4 id="8-枚举"><a href="#8-枚举" class="headerlink" title="8. 枚举"></a>8. 枚举</h4><p>​    步骤：</p>
 <p>​    ①、通过枚举类属性实现</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="keyword">enum</span> Singleton &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token keyword">enum</span> Singleton <span class="token punctuation">{</span>
+    INSTANCE<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <ul>
 <li><p><strong>优点：</strong></p>
 <blockquote>
@@ -1367,9 +2106,27 @@
 </blockquote>
 </li>
 </ul>
-<p><font color=#ff0000><strong>强烈推荐使用。</strong></font></p>
+<p><font color="#ff0000"><strong>强烈推荐使用。</strong></font></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>单例模式保证了 系统内存中该类只存在一个对象，节省了系统资源，对于一些需要频繁创建销毁的对象，使用单例模式可以极大地提高系统性能，例如数据库连接池，<code>session</code>工厂等。</p>
-]]></content>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <categories>
         <category>Java</category>
       </categories>
