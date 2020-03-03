@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>那些年我常用的IDEA快捷键</title>
-    <url>/blog/2020/02/28/na-xie-nian-wo-chang-yong-de-idea-kuai-jie-jian/</url>
+    <url>/2020/02/28/na-xie-nian-wo-chang-yong-de-idea-kuai-jie-jian/</url>
     <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200228143656334.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 <a id="more"></a>
 
@@ -370,7 +370,7 @@
   </entry>
   <entry>
     <title>MySQL相关基础与SQL索引优化分析</title>
-    <url>/blog/2020/02/27/mysql-xiang-guan-ji-chu-yu-sql-suo-yin-you-hua-fen-xi/</url>
+    <url>/2020/02/27/mysql-xiang-guan-ji-chu-yu-sql-suo-yin-you-hua-fen-xi/</url>
     <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200227105100741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 <a id="more"></a>
 
@@ -911,7 +911,7 @@ rpm -ivh MySQL-server-xxx.linu.xxx.rpm</code></pre>
   </entry>
   <entry>
     <title>数据结构与算法——Java排序算法之冒泡排序及优化</title>
-    <url>/blog/2020/02/12/shu-ju-jie-gou-yu-suan-fa-java-pai-xu-suan-fa-zhi-mou-pao-pai-xu-ji-you-hua/</url>
+    <url>/2020/02/12/shu-ju-jie-gou-yu-suan-fa-java-pai-xu-suan-fa-zhi-mou-pao-pai-xu-ji-you-hua/</url>
     <content><![CDATA[<p>通过增加了判断数组在某一轮下是否已经有序的标识来提高冒泡排序的运算效率</p>
 <a id="more"></a>
 
@@ -1133,7 +1133,7 @@ rpm -ivh MySQL-server-xxx.linu.xxx.rpm</code></pre>
   </entry>
   <entry>
     <title>MATLAB图像处理（一）——计算机图形学之图像形状识别</title>
-    <url>/blog/2020/02/12/matlab-tu-xiang-chu-li-yi-ji-suan-ji-tu-xing-xue-zhi-tu-xiang-xing-zhuang-shi-bie/</url>
+    <url>/2020/02/12/matlab-tu-xiang-chu-li-yi-ji-suan-ji-tu-xing-xue-zhi-tu-xiang-xing-zhuang-shi-bie/</url>
     <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20190718133000508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 <a id="more"></a>
 
@@ -1264,7 +1264,7 @@ title('图像形状识别')</code></pre><p>最后识别的效果图为：<br><im
   </entry>
   <entry>
     <title>Java面试——关于synchronized与ReentrantLock的详细区别</title>
-    <url>/blog/2020/02/12/java-mian-shi-guan-yu-synchronized-yu-reentrantlock-de-xiang-xi-qu-bie/</url>
+    <url>/2020/02/12/java-mian-shi-guan-yu-synchronized-yu-reentrantlock-de-xiang-xi-qu-bie/</url>
     <content><![CDATA[<img src="https://img-blog.csdnimg.cn/2020010912445595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 
 <a id="more"></a>
@@ -1502,7 +1502,7 @@ title('图像形状识别')</code></pre><p>最后识别的效果图为：<br><im
   </entry>
   <entry>
     <title>Navicat Premium 12下看不到PostgreSQL下已创建的表</title>
-    <url>/blog/2020/02/12/navicat-premium-xia-kan-bu-dao-postgresql-xia-yi-chuang-jian-de-biao/</url>
+    <url>/2020/02/12/navicat-premium-xia-kan-bu-dao-postgresql-xia-yi-chuang-jian-de-biao/</url>
     <content><![CDATA[<p>通过Navicat Premium 12连接PostgreSQL之后发现找不到已存在的表，通过PostgreSQL自带的连接工具可以看到表是已经存在了的。</p>
 <a id="more"></a>
 
@@ -1552,7 +1552,7 @@ title('图像形状识别')</code></pre><p>最后识别的效果图为：<br><im
   </entry>
   <entry>
     <title>Java 将中文文件名称修改为拼音首字母、拼音全称）</title>
-    <url>/blog/2020/02/11/java-jiang-zhong-wen-wen-jian-ming-cheng-xiu-gai-wei-pin-yin-shou-zi-mu-pin-yin-quan-cheng/</url>
+    <url>/2020/02/11/java-jiang-zhong-wen-wen-jian-ming-cheng-xiu-gai-wei-pin-yin-shou-zi-mu-pin-yin-quan-cheng/</url>
     <content><![CDATA[<p>在日常工作中，由于一些软件导入文件时对中文不支持，需要修改文件名称为拼音或者拼音首字母，修改方式也多种多样，本文通过Java来进行修改。</p>
 <a id="more"></a>
 
@@ -1720,7 +1720,7 @@ title('图像形状识别')</code></pre><p>最后识别的效果图为：<br><im
   </entry>
   <entry>
     <title>都2020年了你还在闭门造车吗？快来看看这篇面向B站学习Java之最新最全推荐（长期更新）</title>
-    <url>/blog/2020/02/11/du-2020-nian-liao-ni-huan-zai-bi-men-zao-che-ma-kuai-lai-kan-kan-zhe-pian-mian-xiang-b-zhan-xue-xi-java-zhi-zui-xin-zui-quan-tui-jian-chang-qi-geng-xin/</url>
+    <url>/2020/02/11/du-2020-nian-liao-ni-huan-zai-bi-men-zao-che-ma-kuai-lai-kan-kan-zhe-pian-mian-xiang-b-zhan-xue-xi-java-zhi-zui-xin-zui-quan-tui-jian-chang-qi-geng-xin/</url>
     <content><![CDATA[<img src="https://img-blog.csdnimg.cn/20200130212950684.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1l1ZVlpbmdHdWFuZw==,size_16,color_FFFFFF,t_70" alt="" style="width:100%">
 <a id="more"></a>
 
@@ -1823,7 +1823,7 @@ title('图像形状识别')</code></pre><p>最后识别的效果图为：<br><im
   </entry>
   <entry>
     <title>面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？</title>
-    <url>/blog/2020/02/11/mian-shi-guan-xie-ji-chong-ni-zhi-dao-de-dan-li-mo-shi-java-shi-xian-dan-li-mo-shi-you-ji-chong-fang-shi-3-5-e-han-lan-han/</url>
+    <url>/2020/02/11/mian-shi-guan-xie-ji-chong-ni-zhi-dao-de-dan-li-mo-shi-java-shi-xian-dan-li-mo-shi-you-ji-chong-fang-shi-3-5-e-han-lan-han/</url>
     <content><![CDATA[<blockquote>
 <p>在面试中经常会遇到单例模式的问题，动不动就是你知道几种单例模式，请手写几种你知道的单例模式，为了能彻底厘清该问题，本文详细阐述了单例模式的最全的八种写法以及茴香豆的茴字的四种写法（手动狗头），并比较其存在的优劣，如果本文对你有所帮助的话点赞哦亲。</p>
 </blockquote>
