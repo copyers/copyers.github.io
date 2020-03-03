@@ -3,11 +3,11 @@
   <title>补 阙 阁</title>
   
   <subtitle>不积跬步无以至千里</subtitle>
-  <link href="/blog/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
-  <link href="https://exclusiver.gitee.io/"/>
+  <link href="http://yoursite.com/"/>
   <updated>2020-02-28T06:38:23.607Z</updated>
-  <id>https://exclusiver.gitee.io/</id>
+  <id>http://yoursite.com/</id>
   
   <author>
     <name>Doug Li</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>那些年我常用的IDEA快捷键</title>
-    <link href="https://exclusiver.gitee.io/2020/02/28/na-xie-nian-wo-chang-yong-de-idea-kuai-jie-jian/"/>
-    <id>https://exclusiver.gitee.io/2020/02/28/na-xie-nian-wo-chang-yong-de-idea-kuai-jie-jian/</id>
+    <link href="http://yoursite.com/2020/02/28/na-xie-nian-wo-chang-yong-de-idea-kuai-jie-jian/"/>
+    <id>http://yoursite.com/2020/02/28/na-xie-nian-wo-chang-yong-de-idea-kuai-jie-jian/</id>
     <published>2020-02-28T04:37:39.000Z</published>
     <updated>2020-02-28T06:38:23.607Z</updated>
     
@@ -30,19 +30,19 @@
     </summary>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/categories/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/tags/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
-      <category term="IDEA" scheme="https://exclusiver.gitee.io/tags/IDEA/"/>
+      <category term="IDEA" scheme="http://yoursite.com/tags/IDEA/"/>
     
   </entry>
   
   <entry>
     <title>MySQL相关基础与SQL索引优化分析</title>
-    <link href="https://exclusiver.gitee.io/2020/02/27/mysql-xiang-guan-ji-chu-yu-sql-suo-yin-you-hua-fen-xi/"/>
-    <id>https://exclusiver.gitee.io/2020/02/27/mysql-xiang-guan-ji-chu-yu-sql-suo-yin-you-hua-fen-xi/</id>
+    <link href="http://yoursite.com/2020/02/27/mysql-xiang-guan-ji-chu-yu-sql-suo-yin-you-hua-fen-xi/"/>
+    <id>http://yoursite.com/2020/02/27/mysql-xiang-guan-ji-chu-yu-sql-suo-yin-you-hua-fen-xi/</id>
     <published>2020-02-27T03:04:45.000Z</published>
     <updated>2020-02-27T03:40:50.236Z</updated>
     
@@ -53,23 +53,23 @@
     </summary>
     
     
-      <category term="MySQL" scheme="https://exclusiver.gitee.io/categories/MySQL/"/>
+      <category term="MySQL" scheme="http://yoursite.com/categories/MySQL/"/>
     
     
-      <category term="MySQL" scheme="https://exclusiver.gitee.io/tags/MySQL/"/>
+      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
     
-      <category term="数据库" scheme="https://exclusiver.gitee.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+      <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
-      <category term="索引优化" scheme="https://exclusiver.gitee.io/tags/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/"/>
+      <category term="索引优化" scheme="http://yoursite.com/tags/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/"/>
     
-      <category term="SQL" scheme="https://exclusiver.gitee.io/tags/SQL/"/>
+      <category term="SQL" scheme="http://yoursite.com/tags/SQL/"/>
     
   </entry>
   
   <entry>
     <title>数据结构与算法——Java排序算法之冒泡排序及优化</title>
-    <link href="https://exclusiver.gitee.io/2020/02/12/shu-ju-jie-gou-yu-suan-fa-java-pai-xu-suan-fa-zhi-mou-pao-pai-xu-ji-you-hua/"/>
-    <id>https://exclusiver.gitee.io/2020/02/12/shu-ju-jie-gou-yu-suan-fa-java-pai-xu-suan-fa-zhi-mou-pao-pai-xu-ji-you-hua/</id>
+    <link href="http://yoursite.com/2020/02/12/shu-ju-jie-gou-yu-suan-fa-java-pai-xu-suan-fa-zhi-mou-pao-pai-xu-ji-you-hua/"/>
+    <id>http://yoursite.com/2020/02/12/shu-ju-jie-gou-yu-suan-fa-java-pai-xu-suan-fa-zhi-mou-pao-pai-xu-ji-you-hua/</id>
     <published>2020-02-12T07:18:36.000Z</published>
     <updated>2020-02-12T07:21:05.725Z</updated>
     
@@ -80,23 +80,23 @@
     </summary>
     
     
-      <category term="数据结构与算法" scheme="https://exclusiver.gitee.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+      <category term="数据结构与算法" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/tags/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
-      <category term="数据结构与算法" scheme="https://exclusiver.gitee.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+      <category term="数据结构与算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
     
-      <category term="排序" scheme="https://exclusiver.gitee.io/tags/%E6%8E%92%E5%BA%8F/"/>
+      <category term="排序" scheme="http://yoursite.com/tags/%E6%8E%92%E5%BA%8F/"/>
     
-      <category term="冒泡排序" scheme="https://exclusiver.gitee.io/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/"/>
+      <category term="冒泡排序" scheme="http://yoursite.com/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/"/>
     
   </entry>
   
   <entry>
     <title>MATLAB图像处理（一）——计算机图形学之图像形状识别</title>
-    <link href="https://exclusiver.gitee.io/2020/02/12/matlab-tu-xiang-chu-li-yi-ji-suan-ji-tu-xing-xue-zhi-tu-xiang-xing-zhuang-shi-bie/"/>
-    <id>https://exclusiver.gitee.io/2020/02/12/matlab-tu-xiang-chu-li-yi-ji-suan-ji-tu-xing-xue-zhi-tu-xiang-xing-zhuang-shi-bie/</id>
+    <link href="http://yoursite.com/2020/02/12/matlab-tu-xiang-chu-li-yi-ji-suan-ji-tu-xing-xue-zhi-tu-xiang-xing-zhuang-shi-bie/"/>
+    <id>http://yoursite.com/2020/02/12/matlab-tu-xiang-chu-li-yi-ji-suan-ji-tu-xing-xue-zhi-tu-xiang-xing-zhuang-shi-bie/</id>
     <published>2020-02-12T07:11:29.000Z</published>
     <updated>2020-02-12T07:14:44.897Z</updated>
     
@@ -107,21 +107,21 @@
     </summary>
     
     
-      <category term="MATLAB" scheme="https://exclusiver.gitee.io/categories/MATLAB/"/>
+      <category term="MATLAB" scheme="http://yoursite.com/categories/MATLAB/"/>
     
     
-      <category term="MATLAB" scheme="https://exclusiver.gitee.io/tags/MATLAB/"/>
+      <category term="MATLAB" scheme="http://yoursite.com/tags/MATLAB/"/>
     
-      <category term="图像处理" scheme="https://exclusiver.gitee.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
+      <category term="图像处理" scheme="http://yoursite.com/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
     
-      <category term="图形学" scheme="https://exclusiver.gitee.io/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+      <category term="图形学" scheme="http://yoursite.com/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
     
   </entry>
   
   <entry>
     <title>Java面试——关于synchronized与ReentrantLock的详细区别</title>
-    <link href="https://exclusiver.gitee.io/2020/02/12/java-mian-shi-guan-yu-synchronized-yu-reentrantlock-de-xiang-xi-qu-bie/"/>
-    <id>https://exclusiver.gitee.io/2020/02/12/java-mian-shi-guan-yu-synchronized-yu-reentrantlock-de-xiang-xi-qu-bie/</id>
+    <link href="http://yoursite.com/2020/02/12/java-mian-shi-guan-yu-synchronized-yu-reentrantlock-de-xiang-xi-qu-bie/"/>
+    <id>http://yoursite.com/2020/02/12/java-mian-shi-guan-yu-synchronized-yu-reentrantlock-de-xiang-xi-qu-bie/</id>
     <published>2020-02-12T06:56:00.000Z</published>
     <updated>2020-02-12T07:06:53.350Z</updated>
     
@@ -132,23 +132,23 @@
     </summary>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/categories/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/tags/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
-      <category term="面试" scheme="https://exclusiver.gitee.io/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="锁" scheme="https://exclusiver.gitee.io/tags/%E9%94%81/"/>
+      <category term="锁" scheme="http://yoursite.com/tags/%E9%94%81/"/>
     
-      <category term="并发" scheme="https://exclusiver.gitee.io/tags/%E5%B9%B6%E5%8F%91/"/>
+      <category term="并发" scheme="http://yoursite.com/tags/%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>Navicat Premium 12下看不到PostgreSQL下已创建的表</title>
-    <link href="https://exclusiver.gitee.io/2020/02/12/navicat-premium-xia-kan-bu-dao-postgresql-xia-yi-chuang-jian-de-biao/"/>
-    <id>https://exclusiver.gitee.io/2020/02/12/navicat-premium-xia-kan-bu-dao-postgresql-xia-yi-chuang-jian-de-biao/</id>
+    <link href="http://yoursite.com/2020/02/12/navicat-premium-xia-kan-bu-dao-postgresql-xia-yi-chuang-jian-de-biao/"/>
+    <id>http://yoursite.com/2020/02/12/navicat-premium-xia-kan-bu-dao-postgresql-xia-yi-chuang-jian-de-biao/</id>
     <published>2020-02-12T06:02:17.000Z</published>
     <updated>2020-02-12T06:08:56.313Z</updated>
     
@@ -159,19 +159,19 @@
     </summary>
     
     
-      <category term="PostgreSQL,Navicat" scheme="https://exclusiver.gitee.io/categories/PostgreSQL-Navicat/"/>
+      <category term="PostgreSQL,Navicat" scheme="http://yoursite.com/categories/PostgreSQL-Navicat/"/>
     
     
-      <category term="Navicat" scheme="https://exclusiver.gitee.io/tags/Navicat/"/>
+      <category term="Navicat" scheme="http://yoursite.com/tags/Navicat/"/>
     
-      <category term="PostgreSQL" scheme="https://exclusiver.gitee.io/tags/PostgreSQL/"/>
+      <category term="PostgreSQL" scheme="http://yoursite.com/tags/PostgreSQL/"/>
     
   </entry>
   
   <entry>
     <title>Java 将中文文件名称修改为拼音首字母、拼音全称）</title>
-    <link href="https://exclusiver.gitee.io/2020/02/11/java-jiang-zhong-wen-wen-jian-ming-cheng-xiu-gai-wei-pin-yin-shou-zi-mu-pin-yin-quan-cheng/"/>
-    <id>https://exclusiver.gitee.io/2020/02/11/java-jiang-zhong-wen-wen-jian-ming-cheng-xiu-gai-wei-pin-yin-shou-zi-mu-pin-yin-quan-cheng/</id>
+    <link href="http://yoursite.com/2020/02/11/java-jiang-zhong-wen-wen-jian-ming-cheng-xiu-gai-wei-pin-yin-shou-zi-mu-pin-yin-quan-cheng/"/>
+    <id>http://yoursite.com/2020/02/11/java-jiang-zhong-wen-wen-jian-ming-cheng-xiu-gai-wei-pin-yin-shou-zi-mu-pin-yin-quan-cheng/</id>
     <published>2020-02-11T14:07:55.000Z</published>
     <updated>2020-02-11T14:11:23.189Z</updated>
     
@@ -182,19 +182,19 @@
     </summary>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/categories/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/tags/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
-      <category term="MAVEN" scheme="https://exclusiver.gitee.io/tags/MAVEN/"/>
+      <category term="MAVEN" scheme="http://yoursite.com/tags/MAVEN/"/>
     
   </entry>
   
   <entry>
     <title>都2020年了你还在闭门造车吗？快来看看这篇面向B站学习Java之最新最全推荐（长期更新）</title>
-    <link href="https://exclusiver.gitee.io/2020/02/11/du-2020-nian-liao-ni-huan-zai-bi-men-zao-che-ma-kuai-lai-kan-kan-zhe-pian-mian-xiang-b-zhan-xue-xi-java-zhi-zui-xin-zui-quan-tui-jian-chang-qi-geng-xin/"/>
-    <id>https://exclusiver.gitee.io/2020/02/11/du-2020-nian-liao-ni-huan-zai-bi-men-zao-che-ma-kuai-lai-kan-kan-zhe-pian-mian-xiang-b-zhan-xue-xi-java-zhi-zui-xin-zui-quan-tui-jian-chang-qi-geng-xin/</id>
+    <link href="http://yoursite.com/2020/02/11/du-2020-nian-liao-ni-huan-zai-bi-men-zao-che-ma-kuai-lai-kan-kan-zhe-pian-mian-xiang-b-zhan-xue-xi-java-zhi-zui-xin-zui-quan-tui-jian-chang-qi-geng-xin/"/>
+    <id>http://yoursite.com/2020/02/11/du-2020-nian-liao-ni-huan-zai-bi-men-zao-che-ma-kuai-lai-kan-kan-zhe-pian-mian-xiang-b-zhan-xue-xi-java-zhi-zui-xin-zui-quan-tui-jian-chang-qi-geng-xin/</id>
     <published>2020-02-11T14:00:10.798Z</published>
     <updated>2020-02-11T14:05:48.898Z</updated>
     
@@ -205,35 +205,35 @@
     </summary>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/categories/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/tags/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
-      <category term="MySQL" scheme="https://exclusiver.gitee.io/tags/MySQL/"/>
+      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
     
-      <category term="IDEA" scheme="https://exclusiver.gitee.io/tags/IDEA/"/>
+      <category term="IDEA" scheme="http://yoursite.com/tags/IDEA/"/>
     
-      <category term="Spring" scheme="https://exclusiver.gitee.io/tags/Spring/"/>
+      <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
     
-      <category term="SpringMVC" scheme="https://exclusiver.gitee.io/tags/SpringMVC/"/>
+      <category term="SpringMVC" scheme="http://yoursite.com/tags/SpringMVC/"/>
     
-      <category term="Mybatis" scheme="https://exclusiver.gitee.io/tags/Mybatis/"/>
+      <category term="Mybatis" scheme="http://yoursite.com/tags/Mybatis/"/>
     
-      <category term="SpringBoot" scheme="https://exclusiver.gitee.io/tags/SpringBoot/"/>
+      <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
     
-      <category term="Git" scheme="https://exclusiver.gitee.io/tags/Git/"/>
+      <category term="Git" scheme="http://yoursite.com/tags/Git/"/>
     
-      <category term="JVM" scheme="https://exclusiver.gitee.io/tags/JVM/"/>
+      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
     
-      <category term="Linux" scheme="https://exclusiver.gitee.io/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>面试官：写几种你知道的单例模式！Java实现单例模式有几种方式？3，5？饿汉，懒汉！？</title>
-    <link href="https://exclusiver.gitee.io/2020/02/11/mian-shi-guan-xie-ji-chong-ni-zhi-dao-de-dan-li-mo-shi-java-shi-xian-dan-li-mo-shi-you-ji-chong-fang-shi-3-5-e-han-lan-han/"/>
-    <id>https://exclusiver.gitee.io/2020/02/11/mian-shi-guan-xie-ji-chong-ni-zhi-dao-de-dan-li-mo-shi-java-shi-xian-dan-li-mo-shi-you-ji-chong-fang-shi-3-5-e-han-lan-han/</id>
+    <link href="http://yoursite.com/2020/02/11/mian-shi-guan-xie-ji-chong-ni-zhi-dao-de-dan-li-mo-shi-java-shi-xian-dan-li-mo-shi-you-ji-chong-fang-shi-3-5-e-han-lan-han/"/>
+    <id>http://yoursite.com/2020/02/11/mian-shi-guan-xie-ji-chong-ni-zhi-dao-de-dan-li-mo-shi-java-shi-xian-dan-li-mo-shi-you-ji-chong-fang-shi-3-5-e-han-lan-han/</id>
     <published>2020-02-11T05:11:42.000Z</published>
     <updated>2020-02-12T01:51:35.106Z</updated>
     
@@ -244,12 +244,12 @@
     </summary>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/categories/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
-      <category term="Java" scheme="https://exclusiver.gitee.io/tags/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
-      <category term="Design Pattern" scheme="https://exclusiver.gitee.io/tags/Design-Pattern/"/>
+      <category term="Design Pattern" scheme="http://yoursite.com/tags/Design-Pattern/"/>
     
   </entry>
   
